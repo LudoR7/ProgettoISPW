@@ -1,12 +1,10 @@
 package com.artigianhair.persistence.fs;
 
+import com.artigianhair.model.Ruolo;
 import com.artigianhair.model.User;
 import com.artigianhair.persistence.dao.UserDAO;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +37,22 @@ public class FileSystemUserDAO implements UserDAO {
             logger.log(Level.SEVERE, "Errore scrittura", ex);
         }
 
+    }
+    @Override
+    public User findUserByEmail(String email) throws IOException {
+        if(!file.exists()){
+            return null;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if(data.length>=5 && data[2].equals(email)){
+                   return new User(data[1], data[1], data[2], data[3], Ruolo.valueOf(data[4])) ;
+                }
+            }
+        }
+    return null;
     }
 
 }

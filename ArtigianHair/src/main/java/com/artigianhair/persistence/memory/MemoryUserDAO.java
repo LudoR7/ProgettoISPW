@@ -13,4 +13,8 @@ public class MemoryUserDAO implements UserDAO {
     public void saveUser(User user) {
         users.put(user.getEmail(), user);
     }
+    @Override
+    public User findUserByEmail(String email) {
+        return users.get(email);
+    }
 }

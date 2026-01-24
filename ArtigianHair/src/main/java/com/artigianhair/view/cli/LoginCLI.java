@@ -2,6 +2,7 @@ package com.artigianhair.view.cli;
 
 import com.artigianhair.controller.LoginController;
 import com.artigianhair.bean.UserBean;
+import com.artigianhair.engineering.exception.LoginException;
 import com.artigianhair.model.Ruolo;
 import java.io.IOException;
 
@@ -19,6 +20,7 @@ public class LoginCLI {
             switch (input){
                 case 1:
                     System.out.println("Inizio Login");
+                    eseguiLogin();
                     break;
                 case 2:
                     eseguiRegistrazione();
@@ -33,7 +35,7 @@ public class LoginCLI {
     }
     private void eseguiRegistrazione(){
         UserBean userBean = new UserBean();
-        System.out.println("Inizio Registrazione: ");
+        System.out.println("REGISTRAZIONE: ");
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
         userBean.setCognome(GestioneInputCLI.leggiString("Cognome:  "));
         userBean.setEmail(GestioneInputCLI.leggiString("Email:  "));
@@ -46,6 +48,23 @@ public class LoginCLI {
             System.out.println("Registrazione eseguita");
         }catch (Exception e){
             System.out.println("Errore nella registrazione" + e.getMessage());
+        }
+    }
+
+    private void eseguiLogin(){
+        UserBean loginBean = new UserBean();
+        System.out.println("LOGIN:  ");
+        loginBean.setEmail(GestioneInputCLI.leggiString("Email:  "));
+        loginBean.setPassword(GestioneInputCLI.leggiString("Password:  "));
+
+        try{
+            UserBean userLoggato = loginController.login(loginBean);
+            System.out.println("Benvenuto: " + userLoggato.getNome() + " " + userLoggato.getCognome() + ".");
+
+        }catch (LoginException e) {
+            System.out.println("Errore nel login" + e.getMessage());
+        }catch (Exception e){
+            System.out.println("Errore nel caricamento dei dati");
         }
     }
 }
