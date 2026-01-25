@@ -60,7 +60,7 @@ public class LoginCLI {
         try{
             UserBean userLoggato = loginController.login(loginBean);
             System.out.println("Benvenuto: " + userLoggato.getNome() + " " + userLoggato.getCognome() + ".");
-
+            new HomeCLI(userLoggato).start();
         }catch (LoginException e) {
             System.out.println("Errore nel login" + e.getMessage());
         }catch (Exception e){

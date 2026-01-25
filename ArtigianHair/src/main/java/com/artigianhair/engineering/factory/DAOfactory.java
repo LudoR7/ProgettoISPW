@@ -1,9 +1,13 @@
 package com.artigianhair.engineering.factory;
 
 import com.artigianhair.model.User;
+import com.artigianhair.persistence.dao.AppuntamentoDAO;
 import com.artigianhair.persistence.dao.UserDAO;
+import com.artigianhair.persistence.fs.FileSystemAppuntamentoDAO;
 import com.artigianhair.persistence.fs.FileSystemUserDAO;
+import com.artigianhair.persistence.fs.SerializableAppuntamentoDAO;
 import com.artigianhair.persistence.fs.SerializableUserDAO;
+import com.artigianhair.persistence.memory.MemoryAppuntamentoDAO;
 import com.artigianhair.persistence.memory.MemoryUserDAO;
 
 import java.io.IOException;
@@ -51,5 +55,14 @@ public class DAOfactory {
             return "DEMO";
         }
 
+    }
+    public static AppuntamentoDAO getAppuntamentoDAO() throws IOException {
+        String type = readPersistenceTypeFromConfiguration();
+        return switch (type.toUpperCase()){
+            case "DEMO" -> new MemoryAppuntamentoDAO();
+            case "FS" -> new FileSystemAppuntamentoDAO();
+            case "SER" -> new SerializableAppuntamentoDAO();
+            default ->  new com.artigianhair.persistence.memory.MemoryAppuntamentoDAO();
+        };
     }
 }

@@ -1,0 +1,45 @@
+package com.artigianhair.persistence.fs;
+
+import com.artigianhair.model.Appuntamento;
+import com.artigianhair.persistence.dao.AppuntamentoDAO;
+
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
+    private static final String FILE_NAME = "appuntamenti.csv";
+
+    @Override
+    public void save(Appuntamento appuntamento) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+            String line = String.format("%s,%s,%s,%s", appuntamento.getData(), appuntamento.getOrario(), String.join(";", appuntamento.getTrattamenti()),appuntamento.getClienteEmail());
+            writer.write(line);
+            writer.newLine();
+        }
+    }
+
+    @Override
+    public List<Appuntamento> findAll() throws IOException {
+        List<Appuntamento> list = new ArrayList<>();
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            return list;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4) {
+                    list.add(new Appuntamento(LocalDate.parse(parts[0]), LocalTime.parse(parts[1]), Arrays.asList(parts[2].split(";")), parts[3]));
+                }
+            }
+        }
+
+
+        return list;
+    }
+}
