@@ -1,4 +1,4 @@
-package com.artigianhair.persistence.fs;
+package com.artigianhair.persistence.serializable;
 
 import com.artigianhair.model.Appuntamento;
 import com.artigianhair.persistence.dao.AppuntamentoDAO;

@@ -10,34 +10,46 @@ public class LoginCLI {
     private final LoginController loginController = new LoginController();
     public void start(){
         boolean valido = true;
-        System.out.println("Benvenuto da ArtigianHair...");
+
         while(valido){
+            System.out.println("__________________________________________");
+            System.out.println("[ Benvenuto da ArtigianHair ] \nScegli un'opzione:");
             System.out.println("\n1) Login");
             System.out.println("2) Registrazione");
             System.out.println("3) Logout");
 
-            int input = GestioneInputCLI.leggiInt(" Scegli un'opzione: ");
+            int input = GestioneInputCLI.leggiInt("...");
             switch (input){
                 case 1:
-                    System.out.println("Inizio Login");
-                    eseguiLogin();
+                    System.out.println("\nInizio Login");
+                    if(eseguiLogin()){
+                        HomeCLI home = new HomeCLI();
+                        home.start();
+                    }
                     break;
                 case 2:
                     eseguiRegistrazione();
                     break;
                 case 3:
                     valido = false;
+                case 4:
+                    System.out.println("Nessun utente loggato al momento, impossibile eseguire il Logout.");
+                    LoginCLI login = new LoginCLI();
+                    login.start();
+
                 default:
-                    System.out.println("opzione non valida");
+                    System.out.println("Opzione non valida");
 
             }
         }
     }
     private void eseguiRegistrazione(){
         UserBean userBean = new UserBean();
-        System.out.println("REGISTRAZIONE: ");
+        System.out.println("\nREGISTRAZIONE: ");
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
         userBean.setCognome(GestioneInputCLI.leggiString("Cognome:  "));
+
+    // metti un CONTROLLO su Email e Password
         userBean.setEmail(GestioneInputCLI.leggiString("Email:  "));
         userBean.setPassword(GestioneInputCLI.leggiString("Password:  "));
 
@@ -45,26 +57,35 @@ public class LoginCLI {
 
         try{
             loginController.registraUtente(userBean);
-            System.out.println("Registrazione eseguita");
+            System.out.println("\nRegistrazione eseguita. \nOra esegui il Login per accedere.");
+
+
+
         }catch (Exception e){
-            System.out.println("Errore nella registrazione" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
-    private void eseguiLogin(){
+    private boolean eseguiLogin(){
         UserBean loginBean = new UserBean();
-        System.out.println("LOGIN:  ");
+        System.out.println("\nLOGIN:  ");
         loginBean.setEmail(GestioneInputCLI.leggiString("Email:  "));
         loginBean.setPassword(GestioneInputCLI.leggiString("Password:  "));
 
         try{
-            UserBean userLoggato = loginController.login(loginBean);
-            System.out.println("Benvenuto: " + userLoggato.getNome() + " " + userLoggato.getCognome() + ".");
-            new HomeCLI(userLoggato).start();
+            boolean succes = loginController.login(loginBean);
+            if(succes){
+                System.out.println("\nLogin eseguito");
+                return true;
+            }else{
+                System.out.println("\nATTENZIONE: Credenziale non valide, riprova. ");
+                return false;
+            }
         }catch (LoginException e) {
-            System.out.println("Errore nel login" + e.getMessage());
+            System.out.println("\nErrore nel login. " + e.getMessage());
         }catch (Exception e){
-            System.out.println("Errore nel caricamento dei dati");
+            System.out.println("\nErrore nel caricamento dei dati");
         }
+        return false;
     }
 }

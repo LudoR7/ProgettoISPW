@@ -1,22 +1,21 @@
 package com.artigianhair.view.cli;
 
-import com.artigianhair.bean.UserBean;
+import com.artigianhair.engineering.singleton.SessioneAttuale;
 import com.artigianhair.model.Ruolo;
+import com.artigianhair.model.User;
 
 public class HomeCLI {
-    private final UserBean userBean;
 
-    public HomeCLI(UserBean userBean) {
-        this.userBean = userBean;
-    }
+    public HomeCLI() {}
 
     public void start() {
+        User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         boolean valido = true;
         while (valido) {
-            System.out.println("\n HOME (" + userBean.getRuolo() + ") ");
-            System.out.println("Benvenuto, " + userBean.getNome() + " " + userBean.getCognome());
+            System.out.println("\nHOME (" + userCorrente.getRuolo() + ") ");
+            System.out.println("Benvenuto, " + userCorrente.getNome() + " " + userCorrente.getCognome());
 
-            if (userBean.getRuolo() == Ruolo.PROPRIETARIA) {
+            if (userCorrente.getRuolo() == Ruolo.PROPRIETARIA) {
                 valido = mostraMenuProprietaria();
             } else {
                 valido = mostraMenuUtente();
@@ -32,7 +31,7 @@ public class HomeCLI {
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         switch (scelta) {
             case 1: {
-                new PrenotazioneCLI(userBean).start();
+                new PrenotazioneCLI().start();
                 return true;
             }
             case 2: {

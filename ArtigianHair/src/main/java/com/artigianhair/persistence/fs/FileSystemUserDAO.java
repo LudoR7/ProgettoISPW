@@ -30,7 +30,7 @@ public class FileSystemUserDAO implements UserDAO {
     }
     private void writeToFile(User user) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            String Line = String.format("%s,%s,%s,%s,%s", user.getCognome(), user.getNome(), user.getEmail(), user.getPassword(), user.getRuolo());
+            String Line = String.format("%s,%s,%s,%s,%s", user.getNome(), user.getCognome(), user.getEmail(), user.getPassword(), user.getRuolo());
             writer.write(Line);
             writer.newLine();
         }catch (IOException ex){
@@ -39,7 +39,7 @@ public class FileSystemUserDAO implements UserDAO {
 
     }
     @Override
-    public User findUserByEmail(String email) throws IOException {
+    public User findUserByEmail(String email, String password) throws IOException {
         if(!file.exists()){
             return null;
         }
@@ -47,8 +47,8 @@ public class FileSystemUserDAO implements UserDAO {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
-                if(data.length>=5 && data[2].equals(email)){
-                   return new User(data[1], data[1], data[2], data[3], Ruolo.valueOf(data[4])) ;
+                if(data.length>=5 && data[2].equals(email) && data[3].equals(password)){
+                   return new User(data[0], data[1], data[2], data[3], Ruolo.valueOf(data[4])) ;
                 }
             }
         }

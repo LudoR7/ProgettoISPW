@@ -15,8 +15,12 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
 
     @Override
     public void save(Appuntamento appuntamento) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            String line = String.format("%s,%s,%s,%s", appuntamento.getData(), appuntamento.getOrario(), String.join(";", appuntamento.getTrattamenti()),appuntamento.getClienteEmail());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            String line = String.format("%s,%s,%s,%s",
+                    appuntamento.getData(),
+                    appuntamento.getOrario(),
+                    String.join(" - ", appuntamento.getTrattamenti()),
+                    appuntamento.getClienteEmail());
             writer.write(line);
             writer.newLine();
         }
@@ -32,13 +36,17 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue; //salta le righe vuote
+
                 String[] parts = line.split(",");
                 if (parts.length == 4) {
-                    list.add(new Appuntamento(LocalDate.parse(parts[0]), LocalTime.parse(parts[1]), Arrays.asList(parts[2].split(";")), parts[3]));
+                    list.add(new Appuntamento(
+                            LocalDate.parse(parts[0]),
+                            LocalTime.parse(parts[1]),
+                            new ArrayList<>(Arrays.asList(parts[2].split(";"))), parts[3]));
                 }
             }
         }
-
 
         return list;
     }

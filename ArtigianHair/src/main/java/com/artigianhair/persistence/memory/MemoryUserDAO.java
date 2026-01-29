@@ -14,7 +14,7 @@ public class MemoryUserDAO implements UserDAO {
         users.put(user.getEmail(), user);
     }
     @Override
-    public User findUserByEmail(String email) {
+    public User findUserByEmail(String email,  String password) {
         return users.get(email);
     }
 }

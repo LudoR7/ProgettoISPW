@@ -1,12 +1,11 @@
 package com.artigianhair.engineering.factory;
 
-import com.artigianhair.model.User;
 import com.artigianhair.persistence.dao.AppuntamentoDAO;
 import com.artigianhair.persistence.dao.UserDAO;
 import com.artigianhair.persistence.fs.FileSystemAppuntamentoDAO;
 import com.artigianhair.persistence.fs.FileSystemUserDAO;
-import com.artigianhair.persistence.fs.SerializableAppuntamentoDAO;
-import com.artigianhair.persistence.fs.SerializableUserDAO;
+import com.artigianhair.persistence.serializable.SerializableAppuntamentoDAO;
+import com.artigianhair.persistence.serializable.SerializableUserDAO;
 import com.artigianhair.persistence.memory.MemoryAppuntamentoDAO;
 import com.artigianhair.persistence.memory.MemoryUserDAO;
 
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
 
 public class DAOfactory {
     private static final Logger logger = Logger.getLogger(DAOfactory.class.getName());
-    private static final String CONFIGURATION_FILE = "DAOfactory.properties";
+    private static final String CONFIGURATION_FILE = "config.properties";
     private static final String PERSISTENCE_TYPE_KEY = "persistence.type";
 
     private DAOfactory() {}

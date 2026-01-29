@@ -1,4 +1,4 @@
-package com.artigianhair.persistence.fs;
+package com.artigianhair.persistence.serializable;
 
 import com.artigianhair.model.User;
 import com.artigianhair.persistence.dao.UserDAO;
@@ -23,7 +23,7 @@ public class SerializableUserDAO implements UserDAO {
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User findUserByEmail(String email, String password) throws IOException {
         return users.get(email);
     }
 

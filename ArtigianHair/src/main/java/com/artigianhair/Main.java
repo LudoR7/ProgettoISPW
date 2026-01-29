@@ -1,6 +1,5 @@
 package com.artigianhair;
 
-import com.artigianhair.view.cli.HomeCLI;
 import com.artigianhair.view.cli.LoginCLI;
 
 import java.io.IOException;
@@ -12,7 +11,8 @@ public class Main {
         String viewType = loadViewType();
         if ("CLI".equalsIgnoreCase(viewType)) {
             System.out.println("Avvio interfaccia testuale: CLI...");
-            new LoginCLI().start();
+            LoginCLI loginCli = new LoginCLI();
+            loginCli.start();
 
         }else{
             System.out.println("Avvio interfaccia grafica: GUI...");
@@ -27,7 +27,7 @@ public class Main {
                 return "CLI";
             }
             properties.load(inputStream);
-            return properties.getProperty("view.Type");
+            return properties.getProperty("view.type");
         }catch(IOException e){
             e.printStackTrace(); //da aggiustare dopo
             return "CLI";

@@ -8,6 +8,10 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Appuntamento implements Serializable {
+
+    private static final long serialVersionUID = 1L;//check se serve
+
+
     private final LocalDate data;
     private final LocalTime orario;
     private final List<String> trattamenti;
@@ -19,9 +23,11 @@ public class Appuntamento implements Serializable {
         this.trattamenti = trattamenti;
         this.clienteEmail = clienteEmail;
     }
+
     public LocalDate getData() {
         return data;
     }
+
     public LocalTime getOrario() {
         return orario;
     }
@@ -30,5 +36,23 @@ public class Appuntamento implements Serializable {
     }
     public String getClienteEmail() {
         return clienteEmail;
+    }
+
+    public String getFasciaOraria() {
+        if (orario.isBefore(LocalTime.of(13, 0))) {
+            return "M"; // Mattina
+        } else {
+            return "P"; // Pomeriggio
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Appuntamento{" +
+                "data=" + data +
+                ", orario=" + orario +
+                ", trattamenti=" + trattamenti +
+                ", clienteEmail='" + clienteEmail + '\'' +
+                '}';
     }
 }
