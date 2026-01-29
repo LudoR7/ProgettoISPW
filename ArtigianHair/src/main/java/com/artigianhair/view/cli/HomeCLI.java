@@ -9,11 +9,12 @@ public class HomeCLI {
     public HomeCLI() {}
 
     public void start() {
+
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         boolean valido = true;
         while (valido) {
             System.out.println("\nHOME (" + userCorrente.getRuolo() + ") ");
-            System.out.println("Benvenuto, " + userCorrente.getNome() + " " + userCorrente.getCognome());
+            System.out.println("Ciao, " + userCorrente.getNome() + " " + userCorrente.getCognome());
 
             if (userCorrente.getRuolo() == Ruolo.PROPRIETARIA) {
                 valido = mostraMenuProprietaria();
@@ -35,7 +36,7 @@ public class HomeCLI {
                 return true;
             }
             case 2: {
-                System.out.println("Sezione E-commerce...");
+                new EcommerceCLI().start();
                 return true;
             }
             case 3: {

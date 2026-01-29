@@ -1,5 +1,6 @@
 package com.artigianhair;
 
+import com.artigianhair.view.cli.HomeCLI;
 import com.artigianhair.view.cli.LoginCLI;
 
 import java.io.IOException;

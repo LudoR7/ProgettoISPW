@@ -16,7 +16,7 @@ public class LoginCLI {
             System.out.println("[ Benvenuto da ArtigianHair ] \nScegli un'opzione:");
             System.out.println("\n1) Login");
             System.out.println("2) Registrazione");
-            System.out.println("3) Logout");
+            System.out.println("3) Esci");
 
             int input = GestioneInputCLI.leggiInt("...");
             switch (input){
@@ -32,10 +32,12 @@ public class LoginCLI {
                     break;
                 case 3:
                     valido = false;
+                    break;
                 case 4:
                     System.out.println("Nessun utente loggato al momento, impossibile eseguire il Logout.");
                     LoginCLI login = new LoginCLI();
                     login.start();
+                    break;
 
                 default:
                     System.out.println("Opzione non valida");
