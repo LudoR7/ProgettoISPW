@@ -5,4 +5,8 @@ public record Prodotto(String tipo, String nome, String descrizione) {
     public String toString() {
         return tipo + ": " + nome + " (" + descrizione + ")";
     }
+    public void getNome() {
+        System.out.println(nome);
+    }
+
 }

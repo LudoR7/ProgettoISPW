@@ -8,55 +8,63 @@ import java.util.List;
 
 public class EcommerceCLI {
     private final EcommerceController controller = new EcommerceController();
-
     public void start() {
+        CarrelloBean carrello = new CarrelloBean();
+        carrello.setEmailCliente(SessioneAttuale.getInstance().getCurrentUser().getEmail());
+        start(carrello);
+    }
+    public void start(CarrelloBean carrello) {
         System.out.println("\nACQUISTO PRODOTTI PERSONALIZZATI \n");
-        //String esigenza = GestioneInputCLI.leggiString("Descrivi le caratteristiche dei tuoi capelli (es. secchi, grassi, colorati): ");
-        System.out.println("Scegli le caratteristiche che si avvicinano meglio ai tuoi capelli: ");
+        System.out.println("Prodotti attualmente nel carrello: " + carrello.getProdotti().size());
+        System.out.println("\nScegli le caratteristiche che si avvicinano meglio ai tuoi capelli: ");
         System.out.println(" 1) Secchi e sfibrati.");
         System.out.println(" 2) Grassi.");
         System.out.println(" 3) Normali.");
 
-        List<Prodotto> proposti = controller.generaProdottiPersonalizzati();
-        CarrelloBean carrello = new CarrelloBean();
+        int scelta = GestioneInputCLI.leggiInt("___");
+        List<Prodotto> prodotti = controller.generaProdottiPersonalizzati(scelta);
+
         carrello.setEmailCliente(SessioneAttuale.getInstance().getCurrentUser().getEmail());
 
-        System.out.println("\nAbbiamo creato questi prodotti per te:");
-        for (int i = 0; i < proposti.size(); i++) {
-            System.out.println((i + 1) + ") " + proposti.get(i));
+        for (int i = 0; i < prodotti.size(); i++) {
+            System.out.println(" - " + prodotti.get(i));
         }
+        prodotti.forEach(carrello::addProdotto);
+        confermaCarrello(carrello);
 
-        boolean shopping = true;
+        /*boolean shopping = true;
         while (shopping) {
             System.out.println("\n1) Aggiungi tutti al carrello e procedi");
-            System.out.println("2) Torna alla Home (Annulla)");
-            int scelta = GestioneInputCLI.leggiInt("Scegli: ");
+            System.out.println("2) Torna alla Home (Annulla ordine)");
+            int scelta2 = GestioneInputCLI.leggiInt("Scegli: ");
 
-            if (scelta == 1) {
-                proposti.forEach(carrello::addProdotto);
+            if (scelta2 == 1) {
+                prodotti.forEach(carrello::addProdotto);
                 confermaCarrello(carrello);
                 shopping = false;
-            } else if (scelta == 2) {
+            } else if (scelta2 == 2) {
                 shopping = false;
             }
-        }
+        }*/
     }
 
+
+//METTI LE QUANTITA DEI PRODOTTI NEL CARRELLO
     private void confermaCarrello(CarrelloBean carrello) {
         System.out.println("\nIL TUO CARRELLO: ");
         carrello.getProdotti().forEach(p -> System.out.println(" - " + p.nome()));
 
         System.out.println("\n1) Conferma e Procedi all'ordine");
-        System.out.println("2) Cambia esigenza");
+        System.out.println("2) Continua lo shopping");
         System.out.println("3) Torna alla Home");
 
-        int scelta = GestioneInputCLI.leggiInt("Scelta: ");
-        switch (scelta) {
+        int scelta3 = GestioneInputCLI.leggiInt("Scelta: ");
+        switch (scelta3) {
             case 1 -> {
                 controller.processaOrdine(carrello);
                 System.out.println("Grazie! Ordine effettuato. Riceverai i prodotti a breve.");
             }
-            case 2 -> start();
+            case 2 -> start(carrello);
             default -> System.out.println("Ritorno alla home...");
         }
     }

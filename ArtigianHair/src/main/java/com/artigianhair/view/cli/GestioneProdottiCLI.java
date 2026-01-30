@@ -1,0 +1,77 @@
+package com.artigianhair.view.cli;
+
+import com.artigianhair.controller.GestioneOrdiniController;
+import com.artigianhair.model.Ordine;
+import com.artigianhair.model.StatoOrdine;
+import java.io.IOException;
+import java.util.List;
+
+public class GestioneProdottiCLI {
+    private final GestioneOrdiniController controller = new GestioneOrdiniController();
+
+    public void start() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\nGESTIONE ORDINI: \n");
+            System.out.println("1) Visualizza Ordini e Cambia Stato");
+            System.out.println("2) Torna alla Home\n");
+
+            int scelta = GestioneInputCLI.leggiInt("Scelta: ");
+            if (scelta == 1) {
+                gestisciOrdini();
+            }
+            else {
+                back = true;
+            }
+        }
+    }
+
+    private void gestisciOrdini() {
+        try {
+            List<Ordine> ordini = controller.visualizzaTuttiOrdini();
+            if (ordini.isEmpty()) {
+                System.out.println("Nessun ordine presente.");
+                return;
+            }
+
+
+
+            boolean b = true;
+            while (b) {
+                for (int i = 0; i < ordini.size(); i++) {
+                    Ordine o = ordini.get(i);
+                    System.out.println((i + 1) + ") [" + o.getStato() + "] Cliente: " + o.getEmailCliente());
+                }
+                int index = GestioneInputCLI.leggiInt("Seleziona ID ordine per cambiare stato (0 per annullare): ") - 1;
+                if (index >= 0 && index < ordini.size()) {
+                    modificaStato(ordini.get(index));
+                } else {
+                    System.out.println("Seleziona un numero valido.");
+                    b = false;
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Errore: " + e.getMessage());
+        }
+    }
+
+    private void modificaStato(Ordine ordine) throws IOException {
+        System.out.println("\nNuovo stato per l'ordine di " + ordine.getEmailCliente() + ":");
+        System.out.println("1) IN LAVORAZIONE\n2) SPEDITO\n3) CONSEGNATO");
+        int s = GestioneInputCLI.leggiInt("Scegli: ");
+
+        StatoOrdine nuovo = switch(s) {
+            case 2 -> StatoOrdine.SPEDITO;
+            case 3 -> StatoOrdine.CONSEGNATO;
+            default -> StatoOrdine.IN_LAVORAZIONE;
+        };
+
+        try {
+            controller.cambiaStatoOrdine(ordine, nuovo);
+            System.out.println("[OK] Stato aggiornato con successo sul file ordini.csv!");
+        } catch (IOException e) {
+            System.out.println("[ERRORE] Impossibile aggiornare il file: " + e.getMessage());
+        }
+    }
+}

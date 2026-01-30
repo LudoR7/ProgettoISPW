@@ -2,23 +2,32 @@ package com.artigianhair.controller;
 
 import com.artigianhair.bean.CarrelloBean;
 import com.artigianhair.engineering.singleton.SessioneAttuale;
+import com.artigianhair.model.Ordine;
 import com.artigianhair.model.Prodotto;
+import com.artigianhair.model.StatoOrdine;
+import com.artigianhair.persistence.dao.OrdineDAO;
+import com.artigianhair.persistence.fs.FileSystemOrdineDAO;
 import com.artigianhair.view.cli.GestioneInputCLI;
 
+import java.io.IOException;
+import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EcommerceController {
 
-    public List<Prodotto> generaProdottiPersonalizzati() {
+    private final FileSystemOrdineDAO OrdineDAO = new FileSystemOrdineDAO();
+
+    public List<Prodotto> generaProdottiPersonalizzati(int scelta) {
         List<Prodotto> personalizzati = new ArrayList<>();
         CarrelloBean carrello = new CarrelloBean();
 
-        int scelta = GestioneInputCLI.leggiInt("...");
+        System.out.println("\nAbbiamo creato questi prodotti per te: aggiungi al carrello quelli che preferisci");
+
         switch (scelta) {
-            case 1 -> caso1(carrello);
-            case 2 -> caso2(carrello);
-            case 3 -> caso3(carrello);
+            case 1 -> generaCaso1(personalizzati);
+            case 2 -> generaCaso2(personalizzati);
+            case 3 -> generaCaso3(personalizzati);
             default ->
                     System.out.println("Scelta non valide.");
         }
@@ -26,109 +35,95 @@ public class EcommerceController {
     }
 
     public void processaOrdine(CarrelloBean carrello) {
-        // Qui andrebbe la logica di persistenza (es. salvataggio su CSV o DB)
-        System.out.println("Ordine ricevuto per: " + carrello.getEmailCliente());
-        System.out.println("Prodotti acquistati: " + carrello.getProdotti().size());
-    }
+        try {
+             List<String> nomiProdotti = carrello.getProdotti().stream()
+                    .map(Prodotto::nome) // <-- ATTENZIONE: Se Prodotto è un record, si usa nome(), non getNome()
+                    .toList();
 
-    private void caso1(CarrelloBean carrello) {
-        boolean b = true;
-        int i = 0;
-        boolean conteggio1 = false;
-        boolean conteggio2 = false;
-        boolean conteggio3 = false;
+            Ordine nuovoOrdine = new Ordine(
+                    carrello.getEmailCliente(),
+                    nomiProdotti,
+                    StatoOrdine.IN_LAVORAZIONE
+            );
 
-        System.out.println("\n1) Shampoo: Hydra-Soft. Arricchito con olio di Argan per idratare in profondità.");
-        System.out.println("\n2) Maschera: Nutri-Gloss. Trattamento intensivo emolliente.");
-        System.out.println("\n3) Siero: Silk-Drop. Elimina l'effetto crespo istantaneamente.");
-        while(b && i<=3){
-            int scelta = GestioneInputCLI.leggiInt("...");
-            if(scelta == 0){
-                b = false;
-            }else if(scelta == 1 && !conteggio1){
-                carrello.addProdotto(new Prodotto("Shampoo", "Pure-Balance", "Estratti di menta e argilla per purificare la cute."));
-                conteggio1 = true;
-                i++;
-            }else if(scelta == 2 && !conteggio2){
-                carrello.addProdotto(new Prodotto("Maschera", "Nutri-Gloss", "Trattamento intensivo emolliente."));
-                conteggio2 = true;
-                i++;
-            }else if(scelta == 3 && !conteggio3){
-                carrello.addProdotto(new Prodotto("Siero", "Silk-Drop", "Elimina l'effetto crespo istantaneamente."));
-                conteggio3 = true;
-                i++;
-            }else{
-                System.out.println("Opzione non valida, riprova");
-            }
+            OrdineDAO.salvaOrdine(nuovoOrdine);
+            System.out.println("Ordine processato con successo per: " + carrello.getEmailCliente());
 
+        } catch (IOException e) {
+            System.err.println("Errore durante il salvataggio dell'ordine: " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println("Errore: Dati del carrello incompleti.");
         }
     }
 
-    private void caso2(CarrelloBean carrello) {
-        boolean b = true;
-        int i = 0;
-        boolean conteggio1 = false;
-        boolean conteggio2 = false;
-        boolean conteggio3 = false;
-
-        System.out.println("\n1) Shampoo: Pure-Balance. Estratti di menta e argilla per purificare la cute.");
-        System.out.println("\n2) Maschera: Light-Touch. Idratazione leggera che non appesantisce.");
-        System.out.println("\n3) Siero: Fresh-Scalp. Riequilibrante del sebo a lunga durata.");
-        while(b && i<=3){
-            int scelta = GestioneInputCLI.leggiInt("...");
-            if(scelta == 0){
-                b = false;
-            }else if(scelta == 1 && !conteggio1){
-                carrello.addProdotto(new Prodotto("Shampoo", "Hydra-Soft", "Arricchito con olio di Argan per idratare in profondità."));
-                conteggio1 = true;
-                i++;
-            }else if(scelta == 2 && !conteggio2){
-                carrello.addProdotto(new Prodotto("Maschera", "Light-Touch", "Idratazione leggera che non appesantisce."));
-                conteggio2 = true;
-                i++;
-            }else if(scelta == 3 && !conteggio3){
-                carrello.addProdotto(new Prodotto("Siero", "Fresh-Scalp", "Riequilibrante del sebo a lunga durata."));
-                conteggio3 = true;
-                i++;
-            }else{
-                System.out.println("Opzione non valida, riprova");
-            }
-
-        }
+    private void generaCaso1(List<Prodotto> lista) {
+        System.out.println("\n1) Shampoo: Hydra-Soft. Arricchito con olio di Argan per idratare in profondità.\n2) Maschera: Nutri-Gloss. Trattamento intensivo emolliente.\n3) Siero: Silk-Drop. Elimina l'effetto crespo istantaneamente.");
+        selezionaProdotti(lista,
+                new Prodotto("Shampoo", "Hydra-Soft", "Idratazione profonda"),
+                new Prodotto("Maschera", "Nutri-Gloss", "Trattamento emolliente"),
+                new Prodotto("Siero", "Silk-Drop", "Effetto seta")
+        );
     }
-    private void caso3(CarrelloBean carrello) {
-        boolean b = true;
-        int i = 0;
-        boolean conteggio1 = false;
-        boolean conteggio2 = false;
-        boolean conteggio3 = false;
 
+    private void generaCaso2(List<Prodotto> lista) {
+        System.out.println("\n1) Shampoo: Pure-Balance. Estratti di menta e argilla per purificare la cute.\n2) Maschera: Light-Touch. Idratazione leggera che non appesantisce.\n3) Siero: Fresh-Scalp. Riequilibrante del sebo a lunga durata.");
+        selezionaProdotti(lista,
+                new Prodotto("Shampoo", "Pure-Balance", "Purificante"),
+                new Prodotto("Maschera", "Light-Touch", "Idratazione leggera"),
+                new Prodotto("Siero", "Fresh-Scalp", "Riequilibrante")
+        );
+    }
 
+    private void generaCaso3(List<Prodotto> lista) {
+        System.out.println("\n1) Shampoo: Universal-Care. Detergente delicato per uso quotidiano.\n2) Maschera: Basic-Repair. Protezione standard per tutti i tipi di capelli.\n3) Siero: Shine-Boost. Per una lucentezza naturale.");
+        selezionaProdotti(lista,
+                new Prodotto("Shampoo", "Universal-Care", "Detergente delicato"),
+                new Prodotto("Maschera", "Basic-Repair", "Protezione standard"),
+                new Prodotto("Siero", "Shine-Boost", "Lucentezza naturale")
+        );
+    }
 
-        System.out.println("\n1) Shampoo: Universal-Care. Detergente delicato per uso quotidiano.");
-        System.out.println("\n2) Maschera: Basic-Repair. Protezione standard per tutti i tipi di capelli.");
-        System.out.println("\n3) Siero: Shine-Boost. Per una lucentezza naturale.");
-        while (b && i <= 2) {
-            int scelta = GestioneInputCLI.leggiInt("...");
-            if (scelta == 0) {
-                b = false;
-            } else if (scelta == 1 && !conteggio1) {
-                carrello.addProdotto(new Prodotto("Shampoo", "Universal-Care", "Detergente delicato per uso quotidiano."));
-                conteggio1 = true;
-                i++;
-            } else if (scelta == 2 && !conteggio2) {
-                carrello.addProdotto(new Prodotto("Maschera", "Basic-Repair", "Protezione standard per tutti i tipi di capelli."));
-                conteggio2 = true;
-                i++;
-            } else if (scelta == 3 && !conteggio3) {
-                carrello.addProdotto(new Prodotto("Siero", "Shine-Boost", "Per una lucentezza naturale."));
-                conteggio3 = true;
-                i++;
-            } else {
-                System.out.println("Opzione non valida, riprova");
+    private void selezionaProdotti(List<Prodotto> lista, Prodotto p1, Prodotto p2, Prodotto p3) {
+        /*boolean continua = true;
+        while (continua && lista.size() < 3) {
+            int input = GestioneInputCLI.leggiInt("Inserisci ID prodotto: ");
+
+            Prodotto scelto = null;
+            switch (input) {
+                case 0 -> continua = false;
+                case 1 -> scelto = p1;
+                case 2 -> scelto = p2;
+                case 3 -> scelto = p3;
+                default -> System.out.println("Opzione non valida.");
             }
 
-        }
+            if (scelto != null) {
+                // IL CONTROLLO CRUCIALE:
+                // Se la lista non contiene già il prodotto scelto, lo aggiunge.
+                if (!lista.contains(scelto)) {
+                    lista.add(scelto);
+                    System.out.println("Aggiunto: " + scelto.nome());
+                } else {
+                    // Se l'utente clicca due volte, riceve questo feedback
+                    System.out.println("Hai già aggiunto " + scelto.nome() + " al carrello.");
+                }
+            }*/
+
+            boolean b = true;
+            while (b) {
+                int input = GestioneInputCLI.leggiInt("Scelta: ");
+                if (input == 0) {
+                    b = false;
+                    break;
+                }
+
+                switch (input) {
+                    case 1 -> lista.add(p1);
+                    case 2 -> lista.add(p2);
+                    case 3 -> lista.add(p3);
+                    default -> System.out.println("Opzione non valida.");
+                }
+            }
     }
 }
 

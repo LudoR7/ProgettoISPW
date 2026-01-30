@@ -32,7 +32,7 @@ public class HomeCLI {
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         switch (scelta) {
             case 1: {
-                new PrenotazioneCLI().start();
+                new PrenotazioneCLI().start1();
                 return true;
             }
             case 2: {
@@ -56,15 +56,20 @@ public class HomeCLI {
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         switch (scelta) {
             case 1 : {
+
+                // da implementare...
                 new AgendaCLI().start();
                 return true;
             }
             case 2 : {
-                System.out.println("Apertura sezione E-commerce...");
+
+                // da implementare...
+                new GestioneProdottiCLI().start();
                 return true;
             }
             case 3 : {
-                return false; }
+                return false;
+            }
             default : {
                 System.out.println("Opzione non valida.");
                 return true;

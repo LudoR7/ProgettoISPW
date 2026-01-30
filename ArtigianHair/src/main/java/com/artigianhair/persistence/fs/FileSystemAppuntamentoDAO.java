@@ -50,4 +50,19 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
 
         return list;
     }
+    @Override
+    public void delete(Appuntamento appuntamento) throws IOException {
+        List<Appuntamento> list = findAll();
+        list.removeIf(a -> a.getData().equals(appuntamento.getData()) &&
+                a.getOrario().equals(appuntamento.getOrario()) &&
+                a.getClienteEmail().equalsIgnoreCase(appuntamento.getClienteEmail()));
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, false))) {
+            for (Appuntamento a : list) {
+                String line = String.format("%s,%s,%s,%s", a.getData(), a.getOrario(), String.join(" - ", a.getTrattamenti()), a.getClienteEmail());
+                writer.write(line);
+                writer.newLine();
+            }
+        }
+    }
 }

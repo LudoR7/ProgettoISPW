@@ -33,4 +33,20 @@ public class SerializableAppuntamentoDAO implements AppuntamentoDAO {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public void delete(Appuntamento appuntamento) throws IOException {
+        List<Appuntamento> list = findAll();
+
+        boolean rimosso = list.removeIf(a -> a.getData().equals(appuntamento.getData()) &&
+                a.getOrario().equals(appuntamento.getOrario()) &&
+                a.getClienteEmail().equalsIgnoreCase(appuntamento.getClienteEmail()));
+
+
+        if (rimosso) {
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+                oos.writeObject(list);
+            }
+        }
+    }
 }

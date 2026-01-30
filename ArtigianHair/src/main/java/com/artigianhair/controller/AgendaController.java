@@ -6,6 +6,8 @@ import com.artigianhair.model.Appuntamento;
 import com.artigianhair.persistence.dao.AppuntamentoDAO;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +36,15 @@ public class AgendaController {
             beans.add(bean);
         }
         return beans;
+    }
+    public static void cancellaAppuntamento(AppuntamentoBean bean) throws IOException {
+        AppuntamentoDAO dao = DAOfactory.getAppuntamentoDAO();
+
+        LocalDate data = LocalDate.parse(bean.getData());
+        LocalTime orario = bean.getOrario().equalsIgnoreCase("M") ? LocalTime.of(9, 0) : LocalTime.of(13, 0);
+
+        Appuntamento appuntamento = new Appuntamento(data, orario, bean.getTrattamenti(), bean.getClienteEmail());
+        dao.delete(appuntamento);
     }
 }
 
