@@ -1,6 +1,4 @@
 package com.artigianhair.persistence.dao;
-
-import com.artigianhair.engineering.exception.PrenotazioneException;
 import com.artigianhair.model.Appuntamento;
 
 import java.io.IOException;

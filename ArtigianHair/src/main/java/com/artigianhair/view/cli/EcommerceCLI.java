@@ -15,7 +15,6 @@ public class EcommerceCLI {
     }
     public void start(CarrelloBean carrello) {
         System.out.println("\nACQUISTO PRODOTTI PERSONALIZZATI \n");
-        System.out.println("Prodotti attualmente nel carrello: " + carrello.getProdotti().size());
         System.out.println("\nScegli le caratteristiche che si avvicinano meglio ai tuoi capelli: ");
         System.out.println(" 1) Secchi e sfibrati.");
         System.out.println(" 2) Grassi.");
@@ -52,7 +51,8 @@ public class EcommerceCLI {
 //METTI LE QUANTITA DEI PRODOTTI NEL CARRELLO
     private void confermaCarrello(CarrelloBean carrello) {
         System.out.println("\nIL TUO CARRELLO: ");
-        carrello.getProdotti().forEach(p -> System.out.println(" - " + p.nome()));
+
+        carrello.getProdottiConQuantita().forEach((p, qta) -> System.out.println(" - " + p.nome() + " [Quantità: " + qta + "]"));
 
         System.out.println("\n1) Conferma e Procedi all'ordine");
         System.out.println("2) Continua lo shopping");

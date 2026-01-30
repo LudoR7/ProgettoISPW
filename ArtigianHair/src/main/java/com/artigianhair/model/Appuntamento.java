@@ -1,6 +1,6 @@
 package com.artigianhair.model;
 
-import com.artigianhair.bean.UserBean;
+
 
 import java.io.Serializable;
 import java.time.LocalDate;

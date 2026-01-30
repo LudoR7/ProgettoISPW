@@ -1,16 +1,16 @@
 package com.artigianhair.controller;
 
 import com.artigianhair.bean.CarrelloBean;
-import com.artigianhair.engineering.singleton.SessioneAttuale;
+
 import com.artigianhair.model.Ordine;
 import com.artigianhair.model.Prodotto;
 import com.artigianhair.model.StatoOrdine;
-import com.artigianhair.persistence.dao.OrdineDAO;
+
 import com.artigianhair.persistence.fs.FileSystemOrdineDAO;
 import com.artigianhair.view.cli.GestioneInputCLI;
 
 import java.io.IOException;
-import java.lang.reflect.GenericArrayType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +36,12 @@ public class EcommerceController {
 
     public void processaOrdine(CarrelloBean carrello) {
         try {
-             List<String> nomiProdotti = carrello.getProdotti().stream()
-                    .map(Prodotto::nome) // <-- ATTENZIONE: Se Prodotto è un record, si usa nome(), non getNome()
-                    .toList();
+            List<String> righeProdotti = new ArrayList<>();
+            carrello.getProdottiConQuantita().forEach((prodotto, quantita) -> {righeProdotti.add(prodotto.nome() + " x" + quantita);});
 
             Ordine nuovoOrdine = new Ordine(
                     carrello.getEmailCliente(),
-                    nomiProdotti,
+                    righeProdotti,
                     StatoOrdine.IN_LAVORAZIONE
             );
 

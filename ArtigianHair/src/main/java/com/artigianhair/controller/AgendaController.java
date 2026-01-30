@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 import static com.artigianhair.view.cli.PrenotazioneCLI.MESI_VALIDI;

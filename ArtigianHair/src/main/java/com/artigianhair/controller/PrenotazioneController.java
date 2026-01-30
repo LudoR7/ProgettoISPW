@@ -4,7 +4,7 @@ import com.artigianhair.bean.AppuntamentoBean;
 import com.artigianhair.engineering.exception.PrenotazioneException;
 import com.artigianhair.engineering.factory.DAOfactory;
 import com.artigianhair.model.Appuntamento;
-import com.artigianhair.persistence.dao.AppuntamentoDAO;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;

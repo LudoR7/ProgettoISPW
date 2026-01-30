@@ -1,13 +1,13 @@
 package com.artigianhair.view.cli;
 
 import com.artigianhair.bean.AppuntamentoBean;
-import com.artigianhair.bean.UserBean;
+
 import com.artigianhair.controller.AgendaController;
 import com.artigianhair.controller.PrenotazioneController;
 import com.artigianhair.engineering.exception.AppuntamentoException;
 import com.artigianhair.engineering.exception.PrenotazioneException;
 import com.artigianhair.engineering.singleton.SessioneAttuale;
-import com.artigianhair.model.Appuntamento;
+
 import com.artigianhair.model.User;
 
 import java.io.IOException;

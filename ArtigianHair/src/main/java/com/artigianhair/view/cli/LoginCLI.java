@@ -4,7 +4,7 @@ import com.artigianhair.controller.LoginController;
 import com.artigianhair.bean.UserBean;
 import com.artigianhair.engineering.exception.LoginException;
 import com.artigianhair.model.Ruolo;
-import java.io.IOException;
+
 
 public class LoginCLI {
     private final LoginController loginController = new LoginController();
