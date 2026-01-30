@@ -20,7 +20,7 @@ public class PrenotazioneCLI {
             "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
 
 
-    public boolean start1(){
+    public void start1(){
         System.out.println("\n1) Effettua una nuova prenotazione.");
         System.out.println("2) Recupera prenotazione.");
         System.out.println("3) Annulla una prenotazione.");
@@ -28,19 +28,20 @@ public class PrenotazioneCLI {
         switch (scelta) {
             case 1 : {
                 new PrenotazioneCLI().start();
-                return true;
+                break;
             }
             case 2 : {
                 //
                 recuperaPrenotazione();
-                return true;
+                break;
             }
             case 3 : {
-                annullaPrenotazione(); return true;
+                annullaPrenotazione();
+                break;
             }
             default : {
                 System.out.println("Opzione non valida.");
-                return true;
+                break;
             }
         }
     }
