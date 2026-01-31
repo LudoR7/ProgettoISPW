@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class LoginController {
 
-    public void registraUtente(UserBean userBean) throws IOException, LoginException {
+    public boolean registraUtente(UserBean userBean) throws IOException, LoginException {
 
         UserDAO userDAO = DAOfactory.getUser();
         if (userDAO.findUserByEmail(userBean.getEmail(), userBean.getPassword()) != null) {
@@ -25,6 +25,16 @@ public class LoginController {
         );
 
         userDAO.saveUser(newUser);
+
+        UserDAO userRegistratoDAO = DAOfactory.getUser();
+        User user = userRegistratoDAO.findUserByEmail(userBean.getEmail(), userBean.getPassword());
+        SessioneAttuale.getInstance().login(user);
+
+        if(user.getPassword().equals(userBean.getPassword())) {
+            SessioneAttuale.getInstance().login(user);
+            return true;
+        }
+        return false;
     }
 
     public boolean login(UserBean loginBean) throws LoginException, IOException {

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="800.0" spacing="0.0"
+      style="-fx-background-color: #B59E8D;" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artigianhair.view.fx.PrenotazioneGUIController">
+
+    <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0" style="-fx-background-color: #9C8677;">
+        <Hyperlink text="Login" textFill="WHITE" />
+        <Hyperlink text="Dicono di noi" textFill="WHITE" />
+        <Hyperlink text="Prenota" textFill="WHITE" style="-fx-underline: true;" />
+        <Hyperlink text="Acquista Prodotto" textFill="WHITE" />
+    </HBox>
+
+    <VBox alignment="CENTER" spacing="25.0" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets bottom="30.0" left="50.0" right="50.0" top="20.0" />
+        </padding>
+
+        <Label text="Prenotazione appuntamento:" textFill="WHITE">
+            <font>
+                <Font name="Serif Bold" size="28.0" />
+            </font>
+        </Label>
+
+        <VBox alignment="CENTER" spacing="10.0">
+            <Label text="1. Scegli la data dal calendario:" textFill="#4D3E33">
+                <font><Font name="System Bold" size="14.0" /></font>
+            </Label>
+            <DatePicker fx:id="datePicker" prefWidth="250.0"
+                        style="-fx-background-color: #E6D2C1; -fx-control-inner-background: #E6D2C1;" />
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="10.0">
+            <Label text="2. Scegli la fascia oraria:" textFill="#4D3E33">
+                <font><Font name="System Bold" size="14.0" /></font>
+            </Label>
+            <HBox alignment="CENTER" spacing="30.0">
+                <RadioButton fx:id="mattinaRadio" text="Mattina (M)" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </RadioButton>
+                <RadioButton fx:id="pomeriggioRadio" text="Pomeriggio (P)" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </RadioButton>
+            </HBox>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="10.0">
+            <Label text="3. Seleziona i trattamenti:" textFill="#4D3E33">
+                <font><Font name="System Bold" size="14.0" /></font>
+            </Label>
+
+            <VBox alignment="CENTER_LEFT" spacing="5.0" maxWidth="200.0">
+                <CheckBox fx:id="piegaCheck" text="Piega" textFill="WHITE" />
+                <CheckBox fx:id="taglioCheck" text="Taglio" textFill="WHITE" />
+                <CheckBox fx:id="coloreCheck" text="Colore" textFill="WHITE" />
+                <CheckBox fx:id="keratinaCheck" text="Keratina" textFill="WHITE" />
+            </VBox>
+
+            <Text fill="#4D3E33" text="(Puoi selezionare più trattamenti)" fontSmoothingType="LCD">
+                <font><Font size="11.0" /></font>
+            </Text>
+        </VBox>
+        <Button onAction="#handlePrenotazione" prefHeight="45.0" prefWidth="250.0" text="CONFERMA PRENOTAZIONE"
+                style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
+
+        <Hyperlink onAction="#goToHome" text="Home page" textFill="#4D3E33" />
+    </VBox>
+</VBox>
+

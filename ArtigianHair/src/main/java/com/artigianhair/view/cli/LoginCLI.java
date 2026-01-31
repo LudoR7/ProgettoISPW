@@ -28,7 +28,10 @@ public class LoginCLI {
                     }
                     break;
                 case 2:
-                    eseguiRegistrazione();
+                    if(eseguiRegistrazione()){
+                        HomeCLI home = new HomeCLI();
+                        home.start();
+                    }
                     break;
                 case 3:
                     valido = false;
@@ -45,7 +48,7 @@ public class LoginCLI {
             }
         }
     }
-    private void eseguiRegistrazione(){
+    private boolean eseguiRegistrazione(){
         UserBean userBean = new UserBean();
         System.out.println("\nREGISTRAZIONE: ");
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
@@ -58,14 +61,18 @@ public class LoginCLI {
         userBean.setRuolo(Ruolo.UTENTE);
 
         try{
-            loginController.registraUtente(userBean);
-            System.out.println("\nRegistrazione eseguita. \nOra esegui il Login per accedere.");
-
-
-
+            boolean b = loginController.registraUtente(userBean);
+            if(b){
+                System.out.println("\nRegistrazione eseguita");
+                return true;
+            }else{
+                System.out.println("\nATTENZIONE: Credenziale non valide, riprova. ");
+                return false;
+            }
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        return false;
     }
 
     private boolean eseguiLogin(){

@@ -332,6 +332,8 @@ public class PrenotazioneCLI {
         GestioneInputCLI.leggiString("\nPremi invio per tornare al menù...");
     }
 
+
+
     private void annullaPrenotazione() {
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         try {

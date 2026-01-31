@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" spacing="0.0"
+      style="-fx-background-color: #B59E8D;" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artigianhair.view.fx.EcommerceGUIController">
+
+    <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0" style="-fx-background-color: #9C8677;">
+        <Hyperlink text="Login" textFill="WHITE" />
+        <Hyperlink text="Prenota" textFill="WHITE" />
+        <Hyperlink text="Acquista Prodotto" textFill="WHITE" style="-fx-underline: true;" />
+    </HBox>
+
+    <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="ALWAYS">
+        <padding><Insets bottom="20" left="20" right="20" top="10" /></padding>
+
+        <Label text="Acquista Prodotto:" textFill="WHITE">
+            <font><Font name="Serif Bold" size="30.0" /></font>
+        </Label>
+
+        <HBox alignment="CENTER" spacing="25.0">
+            <VBox alignment="CENTER" prefWidth="180.0" spacing="10.0"
+                  style="-fx-background-color: #E6D2C1; -fx-padding: 20; -fx-background-radius: 15;">
+                <Text text="SHAMPOO" style="-fx-font-weight: bold;" />
+                <Text text="Hydra-Soft" />
+                <Text text="44€" />
+                <Button onAction="#addShampoo" text="AGGIUNGI"
+                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-cursor: hand;" />
+            </VBox>
+
+            <VBox alignment="CENTER" prefWidth="180.0" spacing="10.0"
+                  style="-fx-background-color: #E6D2C1; -fx-padding: 20; -fx-background-radius: 15;">
+                <Text text="BALSAMO" style="-fx-font-weight: bold;" />
+                <Text text="Nutri-Gloss" />
+                <Text text="38€" />
+                <Button onAction="#addBalsamo" text="AGGIUNGI"
+                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-cursor: hand;" />
+            </VBox>
+
+            <VBox alignment="CENTER" prefWidth="180.0" spacing="10.0"
+                  style="-fx-background-color: #E6D2C1; -fx-padding: 20; -fx-background-radius: 15;">
+                <Text text="MASCHERA" style="-fx-font-weight: bold;" />
+                <Text text="Silk-Drop" />
+                <Text text="35€" />
+                <Button onAction="#addMaschera" text="AGGIUNGI"
+                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-cursor: hand;" />
+            </VBox>
+        </HBox>
+
+        <Button onAction="#handleOrder" prefHeight="50.0" prefWidth="250.0" text="PROCEDI ALL'ORDINE"
+                style="-fx-background-color: #4D3E33; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+
+
+
+
+        <Hyperlink onAction="#goToHome" text="Home page" textFill="#4D3E33" />
+    </VBox>
+</VBox>
