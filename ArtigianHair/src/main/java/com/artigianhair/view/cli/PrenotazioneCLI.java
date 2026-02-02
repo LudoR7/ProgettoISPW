@@ -103,7 +103,7 @@ public class PrenotazioneCLI {
     private void stampaCalendarioMensile(String mese){
         int meseIndice = MESI_VALIDI.indexOf(mese) + 1;
         int annoCorrente = LocalDate.now().getYear();
-        //int giorniMese = LocalDate.of(annoCorrente, meseIndice, 1).lengthOfMonth();
+
         LocalDate primoDelMese = LocalDate.of(annoCorrente, meseIndice, 1);
         int giorniMese = primoDelMese.lengthOfMonth();
         int offsetGiorno = primoDelMese.getDayOfWeek().getValue();
@@ -171,33 +171,15 @@ public class PrenotazioneCLI {
         try {
             int meseIndice = MESI_VALIDI.indexOf(mese) + 1;
             LocalDate dataTarget = LocalDate.of(LocalDate.now().getYear(), meseIndice, giorno);
-            String dataTargetStr = dataTarget.toString(); // Formato "YYYY-MM-DD"
+            String dataTargetStr = dataTarget.toString();
 
-            return AgendaController.recuperaAppuntamenti().stream()
-                    .anyMatch(a -> a.getData().equals(dataTargetStr) && a.getOrario().equalsIgnoreCase(fascia));
+            return AgendaController.recuperaAppuntamenti().stream().anyMatch(a -> a.getData().equals(dataTargetStr) && a.getOrario().equalsIgnoreCase(fascia));
         } catch (Exception e) {
             return false;
         }
     }
 
     private String validazioneMese(){
-        /*boolean meseValido = false;
-        String meseInserito = "";
-        while (!meseValido) {
-            meseInserito = GestioneInputCLI.leggiString("Inserisci il mese (Gennaio, Febbraio, Marzo...): ");
-
-            for (String m : MESI_VALIDI) {
-                if (m.equalsIgnoreCase(meseInserito)) {
-                    meseValido = true;
-                    break;
-                }
-            }
-
-            if (!meseValido) {
-                System.out.println("Errore: '" + meseInserito + "' non è un mese valido. Riprova.");
-            }
-        }
-        return meseInserito;*/
         while (true) {
             String input = GestioneInputCLI.leggiString("Inserisci il mese (es. Gennaio): ");
             for (String m : MESI_VALIDI) {
@@ -209,59 +191,11 @@ public class PrenotazioneCLI {
         }
     }
 
-    private String cambiaData(int giorno, String mese){
-        int meseIndice = MESI_VALIDI.indexOf(mese) + 1;
-        return String.format("%02d-%02d", giorno, meseIndice);
-    }
+
 
     private void selezionaTrattamenti(AppuntamentoBean bean){
         System.out.println("\nTrattamenti disponibili:\n- Piega (1), \n- Taglio (2),\n- Colore (3), \n- Keratina (4)");
         System.out.println("Puoi scegliere massimo 3 trattamenti.\n(Premi 0 per terminare.) ");
-        /*boolean piega = false;
-        boolean taglio = false;
-        boolean colore = false;
-        boolean keratina = false;
-        boolean inserimentoTrattamenti = true;
-
-        while(inserimentoTrattamenti && bean.getTrattamenti().size()<3){
-            int scelta = GestioneInputCLI.leggiInt("Inserisci ID del trattamento: ");
-
-            String t = mappaTrattamento(scelta);
-            if(scelta == 1 && !piega){
-                if(t != null){
-                    bean.addTrattamento(t);
-                    System.out.println("Aggiunto:  " + t);
-                }else{
-                    System.out.println("Scelta non valida.");
-                }
-                piega = true;
-            }else if(scelta == 2 && !taglio){
-                if(t != null){
-                    bean.addTrattamento(t);
-                    System.out.println("Aggiunto:  " + t);
-                }else{
-                    System.out.println("Scelta non valida.");
-                }
-                taglio = true;
-            }else if(scelta == 3 && !colore){
-                if(t != null){
-                    bean.addTrattamento(t);
-                    System.out.println("Aggiunto:  " + t);
-                }else{
-                    System.out.println("Scelta non valida.");
-                }
-                colore = true;
-            }else if(scelta == 4 && !keratina){
-                if(t != null){
-                    bean.addTrattamento(t);
-                    System.out.println("Aggiunto:  " + t);
-                }else{
-                    System.out.println("Scelta non valida.");
-                }
-                keratina = true;
-            }else if(scelta == 0){
-                inserimentoTrattamenti = false;
-            }*/
 
             boolean inserimentoTrattamenti = true;
 

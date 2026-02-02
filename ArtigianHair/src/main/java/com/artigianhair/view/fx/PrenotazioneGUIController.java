@@ -1,7 +1,6 @@
 package com.artigianhair.view.fx;
 
 import com.artigianhair.bean.AppuntamentoBean;
-import com.artigianhair.bean.UserBean;
 import com.artigianhair.controller.AgendaController;
 import com.artigianhair.controller.PrenotazioneController;
 import com.artigianhair.engineering.exception.PrenotazioneException;

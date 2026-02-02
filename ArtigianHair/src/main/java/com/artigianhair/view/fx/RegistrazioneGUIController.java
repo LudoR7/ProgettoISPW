@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import java.io.IOException;
+
 
 public class RegistrazioneGUIController {
 
@@ -49,10 +49,6 @@ public class RegistrazioneGUIController {
     @FXML
     protected void goToHome() {
         SceneManager.changeScene("HomeGUI.fxml");
-    }
-    @FXML
-    protected void goToPrenotazione() {
-        SceneManager.changeScene("PrenotazioneGUI.fxml");
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

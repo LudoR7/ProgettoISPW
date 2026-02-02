@@ -11,7 +11,6 @@ public class SerializableAppuntamentoDAO implements AppuntamentoDAO {
     private static final String FILE_NAME = "appuntamenti.ser";
 
     @Override
-    @SuppressWarnings("unchecked")
     public void save(Appuntamento appuntamento) throws IOException {
         List<Appuntamento> list = findAll();
         list.add(appuntamento);

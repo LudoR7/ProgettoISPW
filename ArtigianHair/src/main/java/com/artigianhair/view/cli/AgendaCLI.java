@@ -2,10 +2,8 @@ package com.artigianhair.view.cli;
 
 import com.artigianhair.bean.AppuntamentoBean;
 import com.artigianhair.controller.AgendaController;
-import com.artigianhair.model.Appuntamento;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AgendaCLI {

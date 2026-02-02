@@ -1,10 +1,14 @@
 package com.artigianhair.engineering.factory;
 
 import com.artigianhair.persistence.dao.AppuntamentoDAO;
+import com.artigianhair.persistence.dao.OrdineDAO;
 import com.artigianhair.persistence.dao.UserDAO;
 import com.artigianhair.persistence.fs.FileSystemAppuntamentoDAO;
+import com.artigianhair.persistence.fs.FileSystemOrdineDAO;
 import com.artigianhair.persistence.fs.FileSystemUserDAO;
+import com.artigianhair.persistence.memory.MemoryOrdineDAO;
 import com.artigianhair.persistence.serializable.SerializableAppuntamentoDAO;
+import com.artigianhair.persistence.serializable.SerializableOrdineDAO;
 import com.artigianhair.persistence.serializable.SerializableUserDAO;
 import com.artigianhair.persistence.memory.MemoryAppuntamentoDAO;
 import com.artigianhair.persistence.memory.MemoryUserDAO;
@@ -62,6 +66,15 @@ public class DAOfactory {
             case "FS" -> new FileSystemAppuntamentoDAO();
             case "SER" -> new SerializableAppuntamentoDAO();
             default ->  new com.artigianhair.persistence.memory.MemoryAppuntamentoDAO();
+        };
+    }
+    public static OrdineDAO getOrdineDAO() throws IOException {
+        String type = readPersistenceTypeFromConfiguration();
+        return switch (type.toUpperCase()) {
+            case "DEMO" -> new MemoryOrdineDAO();
+            case "FS" -> (OrdineDAO) new FileSystemOrdineDAO();
+            case "SER" -> new SerializableOrdineDAO();
+            default -> new MemoryOrdineDAO();
         };
     }
 }

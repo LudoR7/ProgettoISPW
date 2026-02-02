@@ -31,24 +31,8 @@ public class EcommerceCLI {
         prodotti.forEach(carrello::addProdotto);
         confermaCarrello(carrello);
 
-        /*boolean shopping = true;
-        while (shopping) {
-            System.out.println("\n1) Aggiungi tutti al carrello e procedi");
-            System.out.println("2) Torna alla Home (Annulla ordine)");
-            int scelta2 = GestioneInputCLI.leggiInt("Scegli: ");
-
-            if (scelta2 == 1) {
-                prodotti.forEach(carrello::addProdotto);
-                confermaCarrello(carrello);
-                shopping = false;
-            } else if (scelta2 == 2) {
-                shopping = false;
-            }
-        }*/
     }
 
-
-//METTI LE QUANTITA DEI PRODOTTI NEL CARRELLO
     private void confermaCarrello(CarrelloBean carrello) {
         System.out.println("\nIL TUO CARRELLO: ");
 

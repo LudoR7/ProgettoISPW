@@ -19,7 +19,6 @@ public class AppuntamentoBean {
         this.data = data;
     }
 
-    // Getter e Setter per il mese
     public String getMese() {
         return mese;
     }
@@ -27,7 +26,7 @@ public class AppuntamentoBean {
         this.mese = mese;
     }
 
-    // Getter e Setter per la fascia oraria
+
     public String getOrario() {
         return orario;
     }
@@ -35,6 +34,7 @@ public class AppuntamentoBean {
         this.orario = orario;
     }
     public List<String> getTrattamenti() { return trattamenti;}
+
     public void setTrattamenti(List<String> trattamenti) {
         this.trattamenti = trattamenti;
     }

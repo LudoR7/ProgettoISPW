@@ -2,7 +2,6 @@ package com.artigianhair.view.fx;
 
 import com.artigianhair.engineering.singleton.SessioneAttuale;
 import com.artigianhair.model.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;

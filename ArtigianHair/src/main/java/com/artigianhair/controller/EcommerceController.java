@@ -16,11 +16,11 @@ import java.util.List;
 
 public class EcommerceController {
 
-    private final FileSystemOrdineDAO OrdineDAO = new FileSystemOrdineDAO();
+    private final FileSystemOrdineDAO ordineDAO = new FileSystemOrdineDAO();
 
     public List<Prodotto> generaProdottiPersonalizzati(int scelta) {
         List<Prodotto> personalizzati = new ArrayList<>();
-        CarrelloBean carrello = new CarrelloBean();
+        //CarrelloBean carrello = new CarrelloBean();
 
         System.out.println("\nAbbiamo creato questi prodotti per te: aggiungi al carrello quelli che preferisci");
 
@@ -45,7 +45,7 @@ public class EcommerceController {
                     StatoOrdine.IN_LAVORAZIONE
             );
 
-            OrdineDAO.salvaOrdine(nuovoOrdine);
+            ordineDAO.salvaOrdine(nuovoOrdine);
             System.out.println("Ordine processato con successo per: " + carrello.getEmailCliente());
 
         } catch (IOException e) {
@@ -83,31 +83,6 @@ public class EcommerceController {
     }
 
     private void selezionaProdotti(List<Prodotto> lista, Prodotto p1, Prodotto p2, Prodotto p3) {
-        /*boolean continua = true;
-        while (continua && lista.size() < 3) {
-            int input = GestioneInputCLI.leggiInt("Inserisci ID prodotto: ");
-
-            Prodotto scelto = null;
-            switch (input) {
-                case 0 -> continua = false;
-                case 1 -> scelto = p1;
-                case 2 -> scelto = p2;
-                case 3 -> scelto = p3;
-                default -> System.out.println("Opzione non valida.");
-            }
-
-            if (scelto != null) {
-                // IL CONTROLLO CRUCIALE:
-                // Se la lista non contiene già il prodotto scelto, lo aggiunge.
-                if (!lista.contains(scelto)) {
-                    lista.add(scelto);
-                    System.out.println("Aggiunto: " + scelto.nome());
-                } else {
-                    // Se l'utente clicca due volte, riceve questo feedback
-                    System.out.println("Hai già aggiunto " + scelto.nome() + " al carrello.");
-                }
-            }*/
-
             boolean b = true;
             while (b) {
                 int input = GestioneInputCLI.leggiInt("Scelta: ");

@@ -56,14 +56,10 @@ public class HomeCLI {
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         switch (scelta) {
             case 1 : {
-
-                // da implementare...
                 new AgendaCLI().start();
                 return true;
             }
             case 2 : {
-
-                // da implementare...
                 new GestioneProdottiCLI().start();
                 return true;
             }

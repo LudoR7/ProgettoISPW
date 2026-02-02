@@ -1,7 +1,5 @@
 package com.artigianhair.model;
 
-
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,9 +38,9 @@ public class Appuntamento implements Serializable {
 
     public String getFasciaOraria() {
         if (orario.isBefore(LocalTime.of(13, 0))) {
-            return "M"; // Mattina
+            return "M";
         } else {
-            return "P"; // Pomeriggio
+            return "P";
         }
     }
 

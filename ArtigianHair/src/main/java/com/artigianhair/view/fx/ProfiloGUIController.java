@@ -148,9 +148,6 @@ public class ProfiloGUIController {
         recuperaBox.setManaged(false);
     }
 
-    @FXML protected void handleDisdici() {
-        showAlert(Alert.AlertType.INFORMATION, "Info", "Funzionalità 'Disdici' in fase di implementazione.");
-    }
 
 
 
@@ -397,10 +394,6 @@ public class ProfiloGUIController {
     @FXML
     protected void goToProfilo() {
         SceneManager.changeScene("ProfiloGUI.fxml");
-    }
-    @FXML
-    protected void goToLogin() {
-        SceneManager.changeScene("LoginGUI.fxml");
     }
 
 
