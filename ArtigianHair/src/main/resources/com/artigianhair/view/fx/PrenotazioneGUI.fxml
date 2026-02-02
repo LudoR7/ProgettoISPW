@@ -10,10 +10,11 @@
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artigianhair.view.fx.PrenotazioneGUIController">
 
     <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0" style="-fx-background-color: #9C8677;">
-        <Hyperlink text="Login" textFill="WHITE" />
-        <Hyperlink text="Dicono di noi" textFill="WHITE" />
-        <Hyperlink text="Prenota" textFill="WHITE" style="-fx-underline: true;" />
-        <Hyperlink text="Acquista Prodotto" textFill="WHITE" />
+        <Hyperlink onAction="#goToLogin" text="Login" textFill="WHITE" />
+        <Hyperlink onAction="#goToPrenotazione" text="Prenota" textFill="WHITE" />
+        <Hyperlink onAction="#goToEcommerce" text="Acquista Prodotto" textFill="WHITE" />
+        <Hyperlink onAction="#goToProfilo" text="Profilo" textFill="WHITE" />
+        <Hyperlink onAction="#handleLogout" text="Logout" textFill="#FFCCCC" style="-fx-font-weight: bold;" />
     </HBox>
 
     <VBox alignment="CENTER" spacing="25.0" VBox.vgrow="ALWAYS">
@@ -71,7 +72,9 @@
         </VBox>
         <Button onAction="#handlePrenotazione" prefHeight="45.0" prefWidth="250.0" text="CONFERMA PRENOTAZIONE"
                 style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
-
+        <Button onAction="#handleVediMieiAppuntamenti" prefHeight="45.0" prefWidth="250.0"
+                text="RECUPERA ULTIMO APPUNTAMENTO"
+                style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
         <Hyperlink onAction="#goToHome" text="Home page" textFill="#4D3E33" />
     </VBox>
 </VBox>

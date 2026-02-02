@@ -58,27 +58,27 @@ public class EcommerceController {
     private void generaCaso1(List<Prodotto> lista) {
         System.out.println("\n1) Shampoo: Hydra-Soft. Arricchito con olio di Argan per idratare in profondità.\n2) Maschera: Nutri-Gloss. Trattamento intensivo emolliente.\n3) Siero: Silk-Drop. Elimina l'effetto crespo istantaneamente.");
         selezionaProdotti(lista,
-                new Prodotto("Shampoo", "Hydra-Soft", "Idratazione profonda"),
-                new Prodotto("Maschera", "Nutri-Gloss", "Trattamento emolliente"),
-                new Prodotto("Siero", "Silk-Drop", "Effetto seta")
+                new Prodotto("Shampoo", "Hydra-Soft", "Idratazione profonda", 15.50),
+                new Prodotto("Maschera", "Nutri-Gloss", "Trattamento emolliente", 22.00),
+                new Prodotto("Siero", "Silk-Drop", "Effetto seta", 18.90)
         );
     }
 
     private void generaCaso2(List<Prodotto> lista) {
-        System.out.println("\n1) Shampoo: Pure-Balance. Estratti di menta e argilla per purificare la cute.\n2) Maschera: Light-Touch. Idratazione leggera che non appesantisce.\n3) Siero: Fresh-Scalp. Riequilibrante del sebo a lunga durata.");
+        System.out.println("\n1) Shampoo: Pure-Balance. Estratti di menta e argilla per purificare la cute.\n2) Maschera: Light-Touch. Idratazione leggera che non appesantisce.\n3) Siero: Fresh-Scalp. Riequilibrante a lunga durata.");
         selezionaProdotti(lista,
-                new Prodotto("Shampoo", "Pure-Balance", "Purificante"),
-                new Prodotto("Maschera", "Light-Touch", "Idratazione leggera"),
-                new Prodotto("Siero", "Fresh-Scalp", "Riequilibrante")
+                new Prodotto("Shampoo", "Pure-Balance", "Purificante", 14.00),
+                new Prodotto("Maschera", "Light-Touch", "Idratazione leggera", 20.00),
+                new Prodotto("Siero", "Fresh-Scalp", "Riequilibrante", 17.50)
         );
     }
 
     private void generaCaso3(List<Prodotto> lista) {
-        System.out.println("\n1) Shampoo: Universal-Care. Detergente delicato per uso quotidiano.\n2) Maschera: Basic-Repair. Protezione standard per tutti i tipi di capelli.\n3) Siero: Shine-Boost. Per una lucentezza naturale.");
+        System.out.println("\n1) Shampoo: Universal-Care. Deterge con delicatezza, per uso quotidiano.\n2x) Maschera: Basic-Repair. Riforza la struttura del capello.\n3) Siero: Shine-Boost. Per una lucentezza naturale.");
         selezionaProdotti(lista,
-                new Prodotto("Shampoo", "Universal-Care", "Detergente delicato"),
-                new Prodotto("Maschera", "Basic-Repair", "Protezione standard"),
-                new Prodotto("Siero", "Shine-Boost", "Lucentezza naturale")
+                new Prodotto("Shampoo", "Universal-Care", "Detergente delicato", 12.00),
+                new Prodotto("Maschera", "Basic-Repair", "Protezione standard", 19.00),
+                new Prodotto("Siero", "Shine-Boost", "Lucentezza naturale", 16.00)
         );
     }
 

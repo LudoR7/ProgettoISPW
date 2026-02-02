@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" spacing="0.0"
+      style="-fx-background-color: #B59E8D;"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.artigianhair.view.fx.ProfiloGUIController">
+
+    <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0" style="-fx-background-color: #9C8677;">
+        <Hyperlink onAction="#goToPrenotazione" text="Prenota" textFill="WHITE" />
+        <Hyperlink onAction="#goToEcommerce" text="Acquista Prodotto" textFill="WHITE" />
+        <Hyperlink onAction="#goToProfilo" text="Profilo" textFill="WHITE" />
+    </HBox>
+
+    <StackPane VBox.vgrow="ALWAYS">
+
+        <VBox alignment="TOP_CENTER" spacing="25.0">
+            <padding>
+                <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+            </padding>
+
+            <Label fx:id="labelBenvenuto" text="Area Riservata" textFill="WHITE">
+                <font>
+                    <Font name="Serif Bold" size="32.0" />
+                </font>
+            </Label>
+
+            <VBox fx:id="guestContainer" alignment="CENTER" spacing="20.0" managed="false" visible="false">
+                <Text fill="WHITE" text="Per gestire i tuoi appuntamenti e ordini devi essere autenticato."
+                      textAlignment="CENTER" wrappingWidth="350.0">
+                    <font><Font size="14.0" /></font>
+                </Text>
+                <HBox alignment="CENTER" spacing="20.0">
+                    <Button onAction="#handleGoToLogin" prefHeight="40.0" prefWidth="150.0" text="LOGIN"
+                            style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                    <Button onAction="#handleGoToRegistration" prefHeight="40.0" prefWidth="150.0" text="REGISTRATI"
+                            style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="clientContainer" alignment="CENTER" spacing="15.0" managed="false" visible="false">
+                <Label text="AREA CLIENTI" textFill="WHITE">
+                    <font><Font name="Serif Bold" size="28.0" /></font>
+                </Label>
+                <Button onAction="#goToPrenotazione" prefWidth="320.0" prefHeight="45.0" text="PRENOTA APPUNTAMENTO"
+                        style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                <Button onAction="#handleRecupera" prefWidth="320.0" prefHeight="45.0" text="I MIEI APPUNTAMENTI"
+                        style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                <Button onAction="#handleMostraDisdetta" prefWidth="320.0" prefHeight="45.0" text="DISDICI APPUNTAMENTO"
+                        style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                <Button onAction="#handleMieiOrdini" prefWidth="320.0" prefHeight="45.0" text="I MIEI ORDINI"
+                        style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                <Button onAction="#handleEcommerce" prefWidth="320.0" prefHeight="45.0" text="ACQUISTA PRODOTTI"
+                        style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+
+            </VBox>
+
+            <VBox fx:id="ownerContainer" alignment="CENTER" spacing="15.0" managed="false" visible="false">
+                <Label text="AREA RISERVATA" textFill="WHITE">
+                    <font><Font name="Serif Bold" size="28.0" /></font>
+                </Label>
+                <HBox alignment="CENTER" spacing="20.0">
+                    <Button onAction="#handleVisualizzaAgenda" prefWidth="250.0" prefHeight="45.0" text="VISUALIZZA AGENDA"
+                            style="-fx-background-color: #4D3E33; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                    <Button onAction="#handleVisualizzaOrdini" prefWidth="250.0" prefHeight="45.0" text="VISUALIZZA ORDINI"
+                            style="-fx-background-color: #4D3E33; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                </HBox>
+
+                <VBox fx:id="agendaBox" spacing="10" alignment="CENTER" visible="false" managed="false"
+                      style="-fx-background-color: #9C8677; -fx-padding: 15; -fx-background-radius: 10;">
+                    <Label text="Agenda Appuntamenti" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 18px;" />
+                    <TableView fx:id="tabellaAgenda" prefHeight="400.0" prefWidth="750.0">
+                        <columns>
+                            <TableColumn fx:id="colData" text="Data" prefWidth="120.0" />
+                            <TableColumn fx:id="colOrario" text="Fascia" prefWidth="100.0" />
+                            <TableColumn fx:id="colCliente" text="Cliente" prefWidth="230.0" />
+                            <TableColumn fx:id="colTrattamenti" text="Trattamenti" prefWidth="300.0" />
+                        </columns>
+                    </TableView>
+                    <Button onAction="#handleNascondiAgenda" text="CHIUDI AGENDA"
+                            style="-fx-background-color: #4D3E33; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" />
+                </VBox>
+
+                <VBox fx:id="ordiniBox" spacing="10" alignment="CENTER" visible="false" managed="false"
+                      style="-fx-background-color: #9C8677; -fx-padding: 15; -fx-background-radius: 10;">
+                    <Label text="Gestione Ordini" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 18px;" />
+                    <TableView fx:id="tabellaOrdini" prefHeight="400.0" prefWidth="750.0">
+                        <columns>
+                            <TableColumn fx:id="colClienteOrdine" text="Email Cliente" prefWidth="200.0" />
+                            <TableColumn fx:id="colProdottiOrdine" text="Prodotti" prefWidth="350.0" />
+                            <TableColumn fx:id="colStatoOrdine" text="Stato (Click per cambiare)" prefWidth="200.0" />
+                        </columns>
+                    </TableView>
+                    <Button onAction="#handleNascondiOrdini" text="CHIUDI ORDINI"
+                            style="-fx-background-color: #4D3E33; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" />
+                </VBox>
+            </VBox>
+
+            <Separator maxWidth="500.0" style="-fx-opacity: 0.5;" />
+
+            <Button fx:id="logoutBtn" onAction="#handleLogout" prefWidth="150.0" prefHeight="35.0" text="LOGOUT"
+                    style="-fx-background-color: #A64444; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"
+                    managed="false" visible="false" />
+        </VBox>
+
+        <VBox fx:id="mieiOrdiniBox" alignment="TOP_CENTER" maxWidth="550.0" maxHeight="450.0" spacing="15"
+              visible="false" managed="false"
+              style="-fx-background-color: rgba(77, 62, 51, 0.98); -fx-padding: 25; -fx-background-radius: 20; -fx-border-color: #E6D2C1; -fx-border-width: 2;">
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Storico dei tuoi Ordini" textFill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 20px;" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#handleNascondiMieiOrdini" text="X" style="-fx-background-color: #A64444; -fx-text-fill: white; -fx-background-radius: 15;" />
+            </HBox>
+
+            <TableView fx:id="tabellaMieiOrdini" prefHeight="350.0" prefWidth="500.0">
+                <columns>
+                    <TableColumn fx:id="colMieiProdotti" text="Prodotti" prefWidth="300.0" />
+                    <TableColumn fx:id="colMioStato" text="Stato" prefWidth="150.0" />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <VBox fx:id="disdettaBox" alignment="TOP_CENTER" maxWidth="500.0" maxHeight="400.0" spacing="15"
+              visible="false" managed="false"
+              style="-fx-background-color: rgba(77, 62, 51, 0.98); -fx-padding: 25; -fx-background-radius: 20;
+                     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 20, 0, 0, 0);
+                     -fx-border-color: #E6D2C1; -fx-border-width: 2; -fx-border-radius: 20;">
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Seleziona gli appuntamenti da eliminare:" textFill="WHITE"
+                       style="-fx-font-weight: bold; -fx-font-size: 18px;" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#handleNascondiDisdetta" text="X"
+                        prefHeight="25.0" prefWidth="25.0"
+                        style="-fx-background-color: #A64444; -fx-text-fill: white; -fx-font-weight: bold;
+                               -fx-background-radius: 15; -fx-cursor: hand; -fx-font-size: 10px;" />
+            </HBox>
+
+            <ScrollPane prefHeight="380.0" prefWidth="600.0"
+                        style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: #9C8677;">
+                <VBox fx:id="listaCheckDisdetta" spacing="12" style="-fx-padding: 15;" />
+            </ScrollPane>
+
+            <Button onAction="#confermaEliminazione" prefWidth="280.0" prefHeight="50.0" text="ELIMINA SELEZIONATI"
+                    style="-fx-background-color: #A64444; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 10; -fx-cursor: hand;" />
+        </VBox>
+
+        <VBox fx:id="recuperaBox" alignment="TOP_CENTER" maxWidth="500.0" maxHeight="400.0" spacing="15"
+              visible="false" managed="false"
+              style="-fx-background-color: rgba(77, 62, 51, 0.98); -fx-padding: 25; -fx-background-radius: 20;
+             -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 20, 0, 0, 0);
+             -fx-border-color: #E6D2C1; -fx-border-width: 2; -fx-border-radius: 20;">
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="I Tuoi Appuntamenti" textFill="WHITE"
+                       style="-fx-font-weight: bold; -fx-font-size: 20px;" />
+                <Pane HBox.hgrow="ALWAYS" />
+                </HBox>
+
+            <ScrollPane prefHeight="400.0" prefWidth="600.0"
+                        style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: #9C8677;">
+                <VBox fx:id="listaAppuntamentiRecupera" spacing="15" style="-fx-padding: 15;" />
+            </ScrollPane>
+
+            <Button onAction="#handleNascondiRecupera" prefWidth="200.0" prefHeight="40.0" text="CHIUDI"
+                    style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-font-weight: bold;
+                   -fx-background-radius: 10; -fx-cursor: hand;" />
+
+        </VBox>
+
+
+    </StackPane>
+    <VBox alignment="CENTER" spacing="25.0" VBox.vgrow="ALWAYS">
+        <Hyperlink onAction="#goToHome" text="Home page" textFill="#4D3E33" />
+    </VBox>
+</VBox>

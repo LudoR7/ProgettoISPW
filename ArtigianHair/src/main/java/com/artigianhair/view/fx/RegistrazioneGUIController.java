@@ -35,7 +35,7 @@ public class RegistrazioneGUIController {
         try {
             loginController.registraUtente(newUserBean);
             showAlert(Alert.AlertType.INFORMATION, "Successo", "Registrazione completata!");
-            goToPrenotazione();
+            goToHome();
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Errore Registrazione", e.getMessage());
         }

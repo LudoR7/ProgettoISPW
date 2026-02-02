@@ -4,108 +4,157 @@ import com.artigianhair.bean.CarrelloBean;
 import com.artigianhair.controller.EcommerceController;
 import com.artigianhair.engineering.singleton.SessioneAttuale;
 import com.artigianhair.model.Prodotto;
-import javafx.event.ActionEvent;
+import com.artigianhair.model.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.TextInputDialog;
-import java.util.Optional;
 
 public class EcommerceGUIController {
 
-    private final EcommerceController ecommerceController = new EcommerceController();
+    @FXML private VBox paneSceltaCapelli, paneSelezioneProdotti, paneCarrello;
+    @FXML private Button btnProd1, btnProd2, btnProd3;
+    @FXML private TextArea txtAreaCarrello;
+    @FXML private Label lblStatus;
+    @FXML private Text txtTitoloCategoria;
+    @FXML private Text txtDesc1, txtDesc2, txtDesc3;
+
+    private final EcommerceController appController = new EcommerceController();
     private final CarrelloBean carrello = new CarrelloBean();
-    private List<Prodotto> prodottiSuggeriti;
+    private List<Prodotto> prodottiDisponibili;
+
+
+    private final Prodotto[] caso1 = {
+            new Prodotto("Shampoo", "Hydra-Soft", " Arricchito con olio di Argan per idratare in profondità.", 15.50),
+            new Prodotto("Maschera", "Nutri-Gloss", " Nutri-Gloss. Trattamento intensivo emolliente.", 22.00),
+            new Prodotto("Siero", "Silk-Drop", "Elimina l'effetto crespo istantaneamente.", 18.90)
+    };
+    private final Prodotto[] caso2 = {
+            new Prodotto("Shampoo", "Pure-Balance", "Estratti di menta e argilla per purificare la cute.", 14.00),
+            new Prodotto("Maschera", "Light-Touch", "Idratazione leggera che non appesantisce.", 20.00),
+            new Prodotto("Siero", "Fresh-Scalp", "Riequilibrante a lunga durata.", 17.50)
+    };
+    private final Prodotto[] caso3 = {
+            new Prodotto("Shampoo", "Universal-Care", "Deterge con delicatezza, per uso quotidiano.", 12.00),
+            new Prodotto("Maschera", "Basic-Repair", "Riforza la struttura del capello.", 19.00),
+            new Prodotto("Siero", "Shine-Boost", "Per una lucentezza naturale.", 16.00)
+    };
 
     @FXML
     public void initialize() {
-
-        var user = SessioneAttuale.getInstance().getCurrentUser();
+        User user = SessioneAttuale.getInstance().getCurrentUser();
         if (user != null) {
-            carrello.setEmailCliente(user.getEmail());
+            carrello.setEmailCliente(user.getEmail()); // Logica start() CLI
         } else {
-            carrello.setEmailCliente("Ospite"); // Identificativo temporaneo
-        }
-
-        int tipoSuggerimento = (user != null) ? 1 : 3;
-        prodottiSuggeriti = ecommerceController.generaProdottiPersonalizzati(tipoSuggerimento);
-    }
-
-    @FXML
-    protected void addShampoo() {
-        aggiungiAlCarrello(0);
-    }
-
-    @FXML
-    protected void addBalsamo() {
-        aggiungiAlCarrello(1);
-    }
-
-    @FXML
-    protected void addMaschera() {
-        aggiungiAlCarrello(2);
-    }
-
-    private void aggiungiAlCarrello(int index) {
-        if (prodottiSuggeriti != null && index < prodottiSuggeriti.size()) {
-            Prodotto p = prodottiSuggeriti.get(index);
-            carrello.addProdotto(p);
-            showInfo("Carrello", "Aggiunto: " + p.nome());
+            lblStatus.setText("Errore: Sessione non valida.");
         }
     }
 
+    @FXML private void onSceltaSecchi() { mostraSelezione(caso1, "Capelli Secchi"); }
+    @FXML private void onSceltaGrassi() { mostraSelezione(caso2, "Capelli Grassi"); }
+    @FXML private void onSceltaNormali() { mostraSelezione(caso3, "Capelli Normali"); }
+
+    private void mostraSelezione(Prodotto[] prodotti, String titolo) {
+        prodottiDisponibili = List.of(prodotti);
+        txtTitoloCategoria.setText("Prodotti per " + titolo + ":");
+
+
+        btnProd1.setText(prodotti[0].nome() + " (€" + prodotti[0].prezzo() + ")");
+        btnProd2.setText(prodotti[1].nome() + " (€" + prodotti[1].prezzo() + ")");
+        btnProd3.setText(prodotti[2].nome() + " (€" + prodotti[2].prezzo() + ")");
+
+
+        txtDesc1.setText(prodotti[0].descrizione());
+        txtDesc2.setText(prodotti[1].descrizione());
+        txtDesc3.setText(prodotti[2].descrizione());
+
+        paneSceltaCapelli.setVisible(false);
+        paneSceltaCapelli.setManaged(false);
+        paneSelezioneProdotti.setVisible(true);
+        paneSelezioneProdotti.setManaged(true);
+    }
+
+    @FXML private void addProd1() { aggiungiAlCarrello(prodottiDisponibili.get(0)); }
+    @FXML private void addProd2() { aggiungiAlCarrello(prodottiDisponibili.get(1)); }
+    @FXML private void addProd3() { aggiungiAlCarrello(prodottiDisponibili.get(2)); }
+
+    private void aggiungiAlCarrello(Prodotto p) {
+        carrello.addProdotto(p);
+        lblStatus.setText("Aggiunto: " + p.nome());
+    }
+
     @FXML
-    protected void handleOrder() {
+    private void confermaSelezione() {
+        aggiornaAreaCarrello();
+        paneSelezioneProdotti.setVisible(false);
+        paneSelezioneProdotti.setManaged(false);
+        paneCarrello.setVisible(true);
+        paneCarrello.setManaged(true);
+    }
+
+    private void aggiornaAreaCarrello() {
+        StringBuilder sb = new StringBuilder();
+        carrello.getProdottiConQuantita().forEach((p, qta) -> {
+            double parziale = p.prezzo() * qta;
+            sb.append(" - ").append(p.nome())
+                    .append(" [Qta: ").append(qta).append("]")
+                    .append(" - Subtotale: €").append(String.format("%.2f", parziale))
+                    .append("\n");
+        });
+
+
+        sb.append("\n--------------------------\n");
+        sb.append("TOTALE ORDINE: €").append(String.format("%.2f", carrello.getTotale()));
+
+        txtAreaCarrello.setText(sb.toString());
+    }
+
+    @FXML
+    private void handleConfermaOrdine() {
         if (carrello.getProdottiConQuantita().isEmpty()) {
-            showWarning("Carrello vuoto", "Aggiungi almeno un prodotto prima di ordinare.");
+            lblStatus.setText("Il carrello è vuoto!");
             return;
         }
-
-        if ("Ospite".equals(carrello.getEmailCliente())) {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Ordine Ospite");
-            dialog.setHeaderText("Acquisto come ospite");
-            dialog.setContentText("Inserisci la tua email per ricevere la conferma:");
-
-            Optional<String> result = dialog.showAndWait();
-            if (result.isPresent() && !result.get().isEmpty()) {
-                carrello.setEmailCliente(result.get());
-            } else {
-                showWarning("Email mancante", "È necessaria un'email per processare l'ordine.");
-                return;
-            }
-        }
-
-        ecommerceController.processaOrdine(carrello);
-        showInfo("Ordine Effettuato", "Grazie! Ordine registrato per: " + carrello.getEmailCliente());
-    }
-
-    @FXML
-    protected void goToHome() {
-        SceneManager.changeScene("HomeGUI.fxml");
-    }
-
-    @FXML
-    protected void goToEcommerce() {
+        appController.processaOrdine(carrello); // Processo finale
+        lblStatus.setText("Ordine inviato con successo!");
+        showAlert(Alert.AlertType.INFORMATION, "I Tuoi Appuntamenti", "Il tuo ordine è stato salvato con successo!");
+        paneCarrello.setDisable(true);
         SceneManager.changeScene("EcommerceGUI.fxml");
+
     }
-
-
-
-    private void showInfo(String title, String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private void showAlert(Alert.AlertType type, String title, String msg) {
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
     }
+    @FXML
+    private void handleCancellaOrdine() {
+        paneCarrello.setDisable(true);
+        SceneManager.changeScene("EcommerceGUI.fxml");
 
-    private void showWarning(String title, String msg) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
+    @FXML
+    private void resetShopping() {
+        paneCarrello.setVisible(false);
+        paneCarrello.setManaged(false);
+        paneSceltaCapelli.setVisible(true);
+        paneSceltaCapelli.setManaged(true);
+        lblStatus.setText("Continua i tuoi acquisti.");
+    }
+
+
+    @FXML private void goToHome() { SceneManager.changeScene("HomeGUI.fxml"); }
+    @FXML private void goToPrenotazione() { SceneManager.changeScene("PrenotazioneGUI.fxml"); }
+    @FXML private void goToProfilo() { SceneManager.changeScene("ProfiloGUI.fxml"); }
+    @FXML private void goToEcommerce() { SceneManager.changeScene("EcommerceGUI.fxml"); }
+    @FXML private void handleLogout() {
+        SessioneAttuale.getInstance().logout();
+        SceneManager.changeScene("LoginGUI.fxml");
+    }
 }

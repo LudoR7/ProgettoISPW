@@ -10,10 +10,9 @@
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artigianhair.view.fx.HomeGUIController">
 
     <HBox alignment="CENTER" prefHeight="60.0" spacing="40.0" style="-fx-background-color: #9C8677;">
-        <Hyperlink onAction="#goToLogin" text="Login" textFill="WHITE" />
-        <Hyperlink text="Dicono di noi" textFill="WHITE" />
         <Hyperlink onAction="#goToPrenotazione" text="Prenota" textFill="WHITE" />
         <Hyperlink onAction="#goToEcommerce" text="Acquista Prodotto" textFill="WHITE" />
+        <Hyperlink onAction="#goToProfilo" text="Profilo" textFill="WHITE" />
         <Hyperlink onAction="#handleLogout" text="Logout" textFill="#FFCCCC" style="-fx-font-weight: bold;" />
     </HBox>
 
@@ -62,7 +61,5 @@
             <Text fill="WHITE" text="Lun - Sab: 09:00 - 19:00" />
             <Text fill="WHITE" text="Dom : Chiuso" />
         </VBox>
-
-        <Hyperlink onAction="#goToHome" text="Torna su" textFill="WHITE" />
     </HBox>
 </VBox>

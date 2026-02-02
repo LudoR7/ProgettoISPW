@@ -16,6 +16,13 @@ public class CarrelloBean {
     public Map<Prodotto, Integer> getProdottiConQuantita() {
         return prodottiQuantita;
     }
+
+    public double getTotale() {
+        return prodottiQuantita.entrySet().stream()
+                .mapToDouble(entry -> entry.getKey().prezzo() * entry.getValue())
+                .sum();
+    }
+
     public void setEmailCliente(String email) { this.emailCliente = email; }
     public String getEmailCliente() { return emailCliente; }
 }

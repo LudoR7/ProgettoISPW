@@ -10,11 +10,7 @@
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artigianhair.view.fx.LoginGUIController">
 
     <HBox alignment="CENTER" prefHeight="50.0" spacing="30.0" style="-fx-background-color: #9C8677;">
-        <Hyperlink text="Login" textFill="WHITE" style="-fx-underline: true;" />
-        <Hyperlink text="Dicono di noi" textFill="WHITE" />
-        <Hyperlink text="Prenota" textFill="WHITE" />
-        <Hyperlink text="Acquista Prodotto" textFill="WHITE" />
-        <Hyperlink onAction="#handleLogout" text="Logout" textFill="#FFCCCC" style="-fx-font-weight: bold;" />
+        <Text fill="WHITE" text="Benvenuta/o da ArtigianHair. Il tuo parruchiere di fiducia" />
     </HBox>
 
     <VBox alignment="CENTER" spacing="25.0" VBox.vgrow="ALWAYS">
@@ -39,16 +35,9 @@
 
         <Button onAction="#handleLogin" prefWidth="120.0" text="Invio"
                 style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" />
-        <Button onAction="#handleLogout" prefWidth="120.0" text="Logout"
-                style="-fx-background-color: #A64444; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" />
-        <Button onAction="#handleRecuperaAppuntamento" prefHeight="45.0" prefWidth="250.0"
-                text="RECUPERA ULTIMO APPUNTAMENTO"
-                style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" />
-
         <Button onAction="#goToRegistration" prefWidth="120.0" text="Registrati"
                 style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-background-radius: 5; -fx-cursor: hand;" />
         <HBox alignment="CENTER" spacing="20.0">
-            <Hyperlink onAction="#handleRecovery" text="Recupera Prenotazione" textFill="#4D3E33" />
             <Hyperlink onAction="#goToHome" text="Home page" textFill="#4D3E33" />
         </HBox>
     </VBox>
