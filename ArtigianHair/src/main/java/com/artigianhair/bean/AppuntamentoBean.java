@@ -35,9 +35,6 @@ public class AppuntamentoBean {
     }
     public List<String> getTrattamenti() { return trattamenti;}
 
-    public void setTrattamenti(List<String> trattamenti) {
-        this.trattamenti = trattamenti;
-    }
     public String getClienteEmail() { return clienteEmail;}
     public void setClienteEmail(String clienteEmail) {
         this.clienteEmail = clienteEmail;

@@ -2,7 +2,6 @@ package com.artigianhair.persistence.serializable;
 
 import com.artigianhair.model.Ordine;
 import com.artigianhair.model.StatoOrdine;
-import com.artigianhair.model.User;
 import com.artigianhair.persistence.dao.OrdineDAO;
 
 import java.io.*;

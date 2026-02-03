@@ -1,7 +1,9 @@
 package com.artigianhair.view.cli;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class GestioneInputCLI {
+
     private static final Scanner scanner = new Scanner(System.in);
     private GestioneInputCLI() {}
     public static int leggiInt(String messaggio) {

@@ -30,8 +30,8 @@ public class FileSystemUserDAO implements UserDAO {
     }
     private void writeToFile(User user) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            String Line = String.format("%s,%s,%s,%s,%s", user.getNome(), user.getCognome(), user.getEmail(), user.getPassword(), user.getRuolo());
-            writer.write(Line);
+            String line = String.format("%s,%s,%s,%s,%s", user.getNome(), user.getCognome(), user.getEmail(), user.getPassword(), user.getRuolo());
+            writer.write(line);
             writer.newLine();
         }catch (IOException ex){
             logger.log(Level.SEVERE, "Errore scrittura", ex);

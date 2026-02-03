@@ -13,17 +13,19 @@ import com.artigianhair.model.User;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class PrenotazioneCLI {
+    Logger logger = Logger.getLogger(getClass().getName());
     private final PrenotazioneController controller = new PrenotazioneController();
-    public static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+    protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
             "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
 
 
     public void start1(){
-        System.out.println("\n1) Effettua una nuova prenotazione.");
-        System.out.println("2) Recupera prenotazione.");
-        System.out.println("3) Annulla una prenotazione.");
+        logger.info("\n1) Effettua una nuova prenotazione.");
+        logger.info("2) Recupera prenotazione.");
+        logger.info("3) Annulla una prenotazione.");
         int scelta = GestioneInputCLI.leggiInt("\nScegli un'opzione: ");
         switch (scelta) {
             case 1 : {
@@ -40,7 +42,7 @@ public class PrenotazioneCLI {
                 break;
             }
             default : {
-                System.out.println("Opzione non valida.");
+                logger.info("Opzione non valida.");
                 break;
             }
         }
@@ -49,8 +51,8 @@ public class PrenotazioneCLI {
     public void start(){
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
 
-        System.out.println("--------------------------------------------------");
-        System.out.println("\nNUOVA PRENOTAZIONE:  ");
+        logger.info("--------------------------------------------------");
+        logger.info("\nNUOVA PRENOTAZIONE:  ");
         AppuntamentoBean bean = new AppuntamentoBean();
 
         String meseScelto = validazioneMese();
@@ -81,12 +83,12 @@ public class PrenotazioneCLI {
 
         try{
             controller.confermaAppuntamento(bean);
-            System.out.println("\nPrenotazione effettuata con successo.");
-            System.out.println("\nRiceverai a breve una mail di conferma, all'indirizzo: " + userCorrente.getEmail());
+            logger.info("\nPrenotazione effettuata con successo.");
+            logger.info("\nRiceverai a breve una mail di conferma, all'indirizzo: " + userCorrente.getEmail());
         } catch(PrenotazioneException e){
-            System.out.println("Errore durante la prenotazione: " + e.getMessage());
+            logger.info("Errore durante la prenotazione: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Errore nel sistema, riprovare più tardi: " + e.getMessage());
+            logger.info("Errore nel sistema, riprovare più tardi: " + e.getMessage());
         }
     }
 
@@ -106,7 +108,6 @@ public class PrenotazioneCLI {
 
         LocalDate primoDelMese = LocalDate.of(annoCorrente, meseIndice, 1);
         int giorniMese = primoDelMese.lengthOfMonth();
-        int offsetGiorno = primoDelMese.getDayOfWeek().getValue();
 
         List<AppuntamentoBean> appuntamentiPresenti;
         try {
@@ -126,9 +127,9 @@ public class PrenotazioneCLI {
             } catch (Exception ignored) {}
         }
 
-        System.out.println("\nCALENDARIO " + mese.toUpperCase() + " " + annoCorrente);
-        System.out.println("\nLegenda: (-,P) = Mattina occupata, (M,-) = Pomeriggio occupato, X = Pieno");System.out.println("LUN     MAR     MER     GIO     VEN     SAB     DOM");
-        System.out.println("--------------------------------------------------");
+        logger.info("\nCALENDARIO " + mese.toUpperCase() + " " + annoCorrente);
+        logger.info("\nLegenda: (-,P) = Mattina occupata, (M,-) = Pomeriggio occupato, X = Pieno");System.out.println("LUN     MAR     MER     GIO     VEN     SAB     DOM");
+        logger.info("--------------------------------------------------");
 
         for (int i = 1; i <= giorniMese; i++) {
             boolean mOcc = isFasciaOccupata(i, mese, "M");
@@ -148,19 +149,21 @@ public class PrenotazioneCLI {
             }
 
             System.out.printf("%-8s", marker);
-            if (i % 7 == 0) System.out.println();
+            if (i % 7 == 0) {
+                System.out.println();
+            }
         }
-        System.out.println("\n--------------------------------------------------\n");
+        logger.info("\n--------------------------------------------------\n");
     }
 
     private String validazioneFasciaOraria(int giorno, String mese){
             String fascia = GestioneInputCLI.leggiString("Scegli fascia (Mattina: M, Pomeriggio: P):").toUpperCase();
             if(!fascia.equals("M") && !fascia.equals("P")){
-                System.out.println("Opzione non valida.\n");
+                logger.info("Opzione non valida.\n");
                 return "";
             }
             if(isFasciaOccupata(giorno, mese, fascia)){
-                System.out.println("Spiacenti, la fascia - " + fascia + " - è già occupata per questo giorno.\n");
+                logger.info("Spiacenti, la fascia - " + fascia + " - è già occupata per questo giorno.\n");
                 return "";
             } else{
                 return fascia;
@@ -187,15 +190,15 @@ public class PrenotazioneCLI {
                     return m;
                 }
             }
-            System.out.println("Mese non valido. Inserire il nome completo del mese.");
+            logger.info("Mese non valido. Inserire il nome completo del mese.");
         }
     }
 
 
 
     private void selezionaTrattamenti(AppuntamentoBean bean){
-        System.out.println("\nTrattamenti disponibili:\n- Piega (1), \n- Taglio (2),\n- Colore (3), \n- Keratina (4)");
-        System.out.println("Puoi scegliere massimo 3 trattamenti.\n(Premi 0 per terminare.) ");
+        logger.info("\nTrattamenti disponibili:\n- Piega (1), \n- Taglio (2),\n- Colore (3), \n- Keratina (4)");
+        logger.info("Puoi scegliere massimo 3 trattamenti.\n(Premi 0 per terminare.) ");
 
             boolean inserimentoTrattamenti = true;
 
@@ -211,7 +214,7 @@ public class PrenotazioneCLI {
                     String t = mappaTrattamento(scelta);
 
                     if (t == null) {
-                        System.out.println("Scelta non valida.");
+                        logger.info("Scelta non valida.");
                         continue;
                     }
 
@@ -221,11 +224,11 @@ public class PrenotazioneCLI {
                     }
 
                     bean.addTrattamento(t);
-                    System.out.println("Aggiunto: " + t);
+                    logger.info("Aggiunto: " + t);
 
                 } catch (AppuntamentoException e) {
-                    System.out.println("\nATTENZIONE: " + e.getMessage());
-                    System.out.println("Scegli un trattamento diverso o premi 0 per terminare.");
+                    logger.info("\nATTENZIONE: " + e.getMessage());
+                    logger.info("Scegli un trattamento diverso o premi 0 per terminare.");
                 }
             }
     }
@@ -235,7 +238,7 @@ public class PrenotazioneCLI {
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         String emailUtente = userCorrente.getEmail();
 
-        System.out.println("\nLE TUE PRENOTAZIONI: ");
+        logger.info("\nLE TUE PRENOTAZIONI: ");
         try {
 
             List<AppuntamentoBean> tuttiAppuntamenti = AgendaController.recuperaAppuntamenti();
@@ -243,7 +246,7 @@ public class PrenotazioneCLI {
 
 
             System.out.printf("%-12s | %-8s | %-30s%n", "DATA", "ORA", "TRATTAMENTI");
-            System.out.println("------------------------------------------------------------");
+            logger.info("------------------------------------------------------------");
 
             for (AppuntamentoBean b : tuttiAppuntamenti) {
                 if (b.getClienteEmail().equalsIgnoreCase(emailUtente)) {
@@ -256,11 +259,11 @@ public class PrenotazioneCLI {
             }
 
             if (!trovato) {
-                System.out.println("Nessuna prenotazione trovata per l'account:  " + emailUtente);
+                logger.info("Nessuna prenotazione trovata per l'account:  " + emailUtente);
             }
 
         } catch (Exception e) {
-            System.out.println("Errore durante il recupero delle prenotazioni: " + e.getMessage());
+            logger.info("Errore durante il recupero delle prenotazioni: " + e.getMessage());
         }
 
         GestioneInputCLI.leggiString("\nPremi invio per tornare al menù...");
@@ -281,11 +284,11 @@ public class PrenotazioneCLI {
             }
 
             if (iMieiAppuntamenti.isEmpty()) {
-                System.out.println("Non hai appuntamenti da annullare.");
+                logger.info("Non hai appuntamenti da annullare.");
                 return;
             }
 
-            System.out.println("\nSELEZIONA L'APPUNTAMENTO DA ANNULLARE: ");
+            logger.info("\nSELEZIONA L'APPUNTAMENTO DA ANNULLARE: ");
             for (int i = 0; i < iMieiAppuntamenti.size(); i++) {
                 AppuntamentoBean b = iMieiAppuntamenti.get(i);
                 System.out.printf("%d) Data: %s | Ora: %s | Trattamenti: %s%n",
@@ -299,14 +302,14 @@ public class PrenotazioneCLI {
             }
             if (index >= 0 && index < iMieiAppuntamenti.size()) {
                 AgendaController.cancellaAppuntamento(iMieiAppuntamenti.get(index));
-                System.out.println("Appuntamento annullato con successo.");
+                logger.info("Appuntamento annullato con successo.");
             } else {
-                System.out.println("Scelta non valida.");
+                logger.info("Scelta non valida.");
                 annullaPrenotazione();
             }
 
         } catch (IOException e) {
-            System.out.println("Errore durante l'operazione: " + e.getMessage());
+            logger.info("Errore durante l'operazione: " + e.getMessage());
         }
 
     }

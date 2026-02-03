@@ -15,6 +15,8 @@ import java.util.List;
 import static com.artigianhair.view.cli.PrenotazioneCLI.MESI_VALIDI;
 
 public class AgendaController {
+
+    public AgendaController() {}
     public static List<AppuntamentoBean> recuperaAppuntamenti() throws IOException {
         List<AppuntamentoBean> beans = new ArrayList<>();
         AppuntamentoDAO dao = DAOfactory.getAppuntamentoDAO();

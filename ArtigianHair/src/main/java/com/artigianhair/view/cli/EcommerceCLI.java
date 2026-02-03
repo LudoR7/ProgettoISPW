@@ -5,8 +5,10 @@ import com.artigianhair.controller.EcommerceController;
 import com.artigianhair.engineering.singleton.SessioneAttuale;
 import com.artigianhair.model.Prodotto;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class EcommerceCLI {
+    Logger logger = Logger.getLogger(getClass().getName());
     private final EcommerceController controller = new EcommerceController();
     public void start() {
         CarrelloBean carrello = new CarrelloBean();
@@ -14,11 +16,11 @@ public class EcommerceCLI {
         start(carrello);
     }
     public void start(CarrelloBean carrello) {
-        System.out.println("\nACQUISTO PRODOTTI PERSONALIZZATI \n");
-        System.out.println("\nScegli le caratteristiche che si avvicinano meglio ai tuoi capelli: ");
-        System.out.println(" 1) Secchi e sfibrati.");
-        System.out.println(" 2) Grassi.");
-        System.out.println(" 3) Normali.");
+        logger.info("\nACQUISTO PRODOTTI PERSONALIZZATI \n");
+        logger.info("\nScegli le caratteristiche che si avvicinano meglio ai tuoi capelli: ");
+        logger.info(" 1) Secchi e sfibrati.");
+        logger.info(" 2) Grassi.");
+        logger.info(" 3) Normali.");
 
         int scelta = GestioneInputCLI.leggiInt("___");
         List<Prodotto> prodotti = controller.generaProdottiPersonalizzati(scelta);
@@ -26,7 +28,7 @@ public class EcommerceCLI {
         carrello.setEmailCliente(SessioneAttuale.getInstance().getCurrentUser().getEmail());
 
         for (int i = 0; i < prodotti.size(); i++) {
-            System.out.println(" - " + prodotti.get(i));
+            logger.info(" - " + prodotti.get(i));
         }
         prodotti.forEach(carrello::addProdotto);
         confermaCarrello(carrello);
@@ -34,22 +36,22 @@ public class EcommerceCLI {
     }
 
     private void confermaCarrello(CarrelloBean carrello) {
-        System.out.println("\nIL TUO CARRELLO: ");
+        logger.info("\nIL TUO CARRELLO: ");
 
-        carrello.getProdottiConQuantita().forEach((p, qta) -> System.out.println(" - " + p.nome() + " [Quantità: " + qta + "]"));
+        carrello.getProdottiConQuantita().forEach((p, qta) -> logger.info(" - " + p.nome() + " [Quantità: " + qta + "]"));
 
-        System.out.println("\n1) Conferma e Procedi all'ordine");
-        System.out.println("2) Continua lo shopping");
-        System.out.println("3) Torna alla Home");
+        logger.info("\n1) Conferma e Procedi all'ordine");
+        logger.info("2) Continua lo shopping");
+        logger.info("3) Torna alla Home");
 
         int scelta3 = GestioneInputCLI.leggiInt("Scelta: ");
         switch (scelta3) {
             case 1 -> {
                 controller.processaOrdine(carrello);
-                System.out.println("Grazie! Ordine effettuato. Riceverai i prodotti a breve.");
+                logger.info("Grazie! Ordine effettuato. Riceverai i prodotti a breve.");
             }
             case 2 -> start(carrello);
-            default -> System.out.println("Ritorno alla home...");
+            default -> logger.info("Ritorno alla home...");
         }
     }
 }

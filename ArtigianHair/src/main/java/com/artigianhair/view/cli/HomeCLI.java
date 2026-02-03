@@ -4,7 +4,10 @@ import com.artigianhair.engineering.singleton.SessioneAttuale;
 import com.artigianhair.model.Ruolo;
 import com.artigianhair.model.User;
 
+import java.util.logging.Logger;
+
 public class HomeCLI {
+    Logger logger = Logger.getLogger(getClass().getName());
 
     public HomeCLI() {}
 
@@ -13,8 +16,8 @@ public class HomeCLI {
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         boolean valido = true;
         while (valido) {
-            System.out.println("\nHOME (" + userCorrente.getRuolo() + ") ");
-            System.out.println("Ciao, " + userCorrente.getNome() + " " + userCorrente.getCognome());
+            logger.info("\nHOME (" + userCorrente.getRuolo() + ") ");
+            logger.info("Ciao, " + userCorrente.getNome() + " " + userCorrente.getCognome());
 
             if (userCorrente.getRuolo() == Ruolo.PROPRIETARIA) {
                 valido = mostraMenuProprietaria();
@@ -25,9 +28,9 @@ public class HomeCLI {
     }
 
     private boolean mostraMenuUtente() {
-        System.out.println("1) Prenota Appuntamento ");
-        System.out.println("2) Acquista Prodotti Personalizzati ");
-        System.out.println("3) Logout");
+        logger.info("1) Prenota Appuntamento ");
+        logger.info("2) Acquista Prodotti Personalizzati ");
+        logger.info("3) Logout");
 
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         switch (scelta) {
@@ -42,16 +45,16 @@ public class HomeCLI {
             case 3: {
                 return false; }
             default: {
-                System.out.println("Opzione non valida.");
+                logger.info("Opzione non valida.");
                 return true;
             }
         }
     }
 
     private boolean mostraMenuProprietaria() {
-        System.out.println("1) Visualizza Agenda");
-        System.out.println("2) Gestione Prodotti ");
-        System.out.println("3) Logout");
+        logger.info("1) Visualizza Agenda");
+        logger.info("2) Gestione Prodotti ");
+        logger.info("3) Logout");
 
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         switch (scelta) {
@@ -67,7 +70,7 @@ public class HomeCLI {
                 return false;
             }
             default : {
-                System.out.println("Opzione non valida.");
+                logger.info("Opzione non valida.");
                 return true;
             }
         }

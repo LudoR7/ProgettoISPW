@@ -10,10 +10,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.artigianhair.view.cli.PrenotazioneCLI.MESI_VALIDI;
 
 public class PrenotazioneController {
+    Logger logger = Logger.getLogger(getClass().getName());
     public void confermaAppuntamento(AppuntamentoBean bean) throws PrenotazioneException {
         try {
             if (bean.getOrario() == null) {
@@ -51,15 +53,15 @@ public class PrenotazioneController {
         }catch (NumberFormatException e) {
             throw new PrenotazioneException("Il giorno inserito non è un numero valido.");
         }catch (Exception e){
-            System.out.println("erooresss");
+            logger.info("erooresss");
             throw new PrenotazioneException("Erroresss");
         }
     }
     private void inviaEmailConferma(String email){
-        System.out.println("E-mail di conferma inviata a: " + email);
+        logger.info("E-mail di conferma inviata a: " + email);
     }
     private void notificaProprietaria(Appuntamento appuntamento){
-        System.out.println("Notifica appuntamento del: " + appuntamento.getData() + ", inviata alla proprietaria");
+        logger.info("Notifica appuntamento del: " + appuntamento.getData() + ", inviata alla proprietaria");
     }
 
     public List<AppuntamentoBean> recuperaAppuntamentiUtente(String email) throws Exception {
