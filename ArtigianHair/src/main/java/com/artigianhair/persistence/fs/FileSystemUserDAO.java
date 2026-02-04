@@ -17,9 +17,15 @@ public class FileSystemUserDAO implements UserDAO {
         this.file = new File(CSV_FILE_NAME);
         if (!this.file.exists()) {
             try{
-                file.createNewFile();
+                boolean result = file.createNewFile();
+
+                if(result){
+                    logger.info("Nuovo database utenti.csv creato!");
+                }else {
+                    logger.warning("Errore nella creazione utenti.csv!");
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new IllegalStateException("Errore: impossibile creare il file utenti.csv!");
             }
         }
     }

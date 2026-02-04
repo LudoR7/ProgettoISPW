@@ -16,7 +16,6 @@ import com.artigianhair.persistence.memory.MemoryUserDAO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DAOfactory {
@@ -26,7 +25,7 @@ public class DAOfactory {
 
     private DAOfactory() {}
 
-    public static UserDAO getUser() throws IOException {
+    public static UserDAO getUser() {
         String type = readPersistenceTypeFromConfiguration();
 
         if("DEMO".equalsIgnoreCase(type)){
@@ -43,7 +42,7 @@ public class DAOfactory {
 
 
 
-    private static String readPersistenceTypeFromConfiguration() throws IOException {
+    private static String readPersistenceTypeFromConfiguration() {
         Properties properties = new Properties();
 
         try (InputStream inputStream = DAOfactory.class.getClassLoader().getResourceAsStream(CONFIGURATION_FILE)) {
@@ -54,12 +53,12 @@ public class DAOfactory {
             properties.load(inputStream);
             return properties.getProperty(PERSISTENCE_TYPE_KEY);
         }catch (IOException e) {
-            logger.log(Level.WARNING, "File illeggibile: " + e);
+            logger.warning( () -> "File illeggibile: %s" + e.getMessage());
             return "DEMO";
         }
 
     }
-    public static AppuntamentoDAO getAppuntamentoDAO() throws IOException {
+    public static AppuntamentoDAO getAppuntamentoDAO() {
         String type = readPersistenceTypeFromConfiguration();
         return switch (type.toUpperCase()){
             case "DEMO" -> new MemoryAppuntamentoDAO();
@@ -68,7 +67,9 @@ public class DAOfactory {
             default ->  new com.artigianhair.persistence.memory.MemoryAppuntamentoDAO();
         };
     }
-    public static OrdineDAO getOrdineDAO() throws IOException {
+
+    // PROBLEMA
+    public static OrdineDAO getOrdineDAO() {
         String type = readPersistenceTypeFromConfiguration();
         return switch (type.toUpperCase()) {
             case "DEMO" -> new MemoryOrdineDAO();

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CarrelloBean {
-    private Map<Prodotto, Integer> prodottiQuantita = new HashMap<>();
+    private final Map<Prodotto, Integer> prodottiQuantita = new HashMap<>();
     private String emailCliente;
 
     public void addProdotto(Prodotto p) {

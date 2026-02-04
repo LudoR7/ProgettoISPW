@@ -10,7 +10,7 @@ public class UserBean {
 
 
     public UserBean() {
-
+        // Costruttore di default
     }
 
     public String getEmail() {

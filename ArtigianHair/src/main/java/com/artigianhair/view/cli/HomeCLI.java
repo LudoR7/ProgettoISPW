@@ -9,7 +9,9 @@ import java.util.logging.Logger;
 public class HomeCLI {
     Logger logger = Logger.getLogger(getClass().getName());
 
-    public HomeCLI() {}
+    public HomeCLI() {
+        //Costruttore di default
+    }
 
     public void start() {
 

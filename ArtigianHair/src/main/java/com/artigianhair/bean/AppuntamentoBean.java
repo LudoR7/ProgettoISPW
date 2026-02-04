@@ -7,10 +7,12 @@ public class AppuntamentoBean {
     private String data;
     private String mese;
     private String orario;
-    private List<String> trattamenti = new ArrayList<>();
+    private final List<String> trattamenti = new ArrayList<>();
     private String clienteEmail;
 
-    public AppuntamentoBean() {}
+    public AppuntamentoBean() {
+        // Costruttore di default
+    }
 
     public String getData() {
         return data;

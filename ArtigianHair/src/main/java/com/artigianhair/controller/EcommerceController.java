@@ -21,7 +21,12 @@ public class EcommerceController {
 
     public List<Prodotto> generaProdottiPersonalizzati(int scelta) {
         List<Prodotto> personalizzati = new ArrayList<>();
+
+
+        // DA LEVARE*******
         //CarrelloBean carrello = new CarrelloBean();
+        // DA LEVARE*******
+
         logger.info("\nAbbiamo creato questi prodotti per te: aggiungi al carrello quelli che preferisci");
 
         switch (scelta) {
@@ -49,9 +54,9 @@ public class EcommerceController {
             logger.info("Ordine processato con successo per: " + carrello.getEmailCliente());
 
         } catch (IOException e) {
-            System.err.println("Errore durante il salvataggio dell'ordine: " + e.getMessage());
+            logger.warning("Errore durante il salvataggio dell'ordine: " + e.getMessage());
         } catch (NullPointerException e) {
-            System.err.println("Errore: Dati del carrello incompleti.");
+            logger.warning("Errore: Dati del carrello incompleti.");
         }
     }
 
@@ -83,11 +88,9 @@ public class EcommerceController {
     }
 
     private void selezionaProdotti(List<Prodotto> lista, Prodotto p1, Prodotto p2, Prodotto p3) {
-            boolean b = true;
-            while (b) {
+            while (true) {
                 int input = GestioneInputCLI.leggiInt("Scelta: ");
                 if (input == 0) {
-                    b = false;
                     break;
                 }
 

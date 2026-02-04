@@ -58,7 +58,7 @@ public class PrenotazioneController {
         }
     }
     private void inviaEmailConferma(String email){
-        logger.info("E-mail di conferma inviata a: " + email);
+        logger.info( () -> "E-mail di conferma inviata a: %s" + email);
     }
     private void notificaProprietaria(Appuntamento appuntamento){
         logger.info("Notifica appuntamento del: " + appuntamento.getData() + ", inviata alla proprietaria");

@@ -57,8 +57,8 @@ public class PrenotazioneCLI {
 
         String meseScelto = validazioneMese();
         bean.setMese(meseScelto);
-        int meseIndice = MESI_VALIDI.indexOf(meseScelto) + 1;
-        int maxGiorni = LocalDate.of(LocalDate.now().getYear(), meseIndice, 1).lengthOfMonth();
+        //int meseIndice = MESI_VALIDI.indexOf(meseScelto) + 1;
+        //int maxGiorni = LocalDate.of(LocalDate.now().getYear(), meseIndice, 1).lengthOfMonth();
         stampaCalendarioMensile(meseScelto);
 
         // CHECK
@@ -102,58 +102,48 @@ public class PrenotazioneCLI {
         };
     }
 
-    private void stampaCalendarioMensile(String mese){
+    private void stampaCalendarioMensile(String mese) {
         int meseIndice = MESI_VALIDI.indexOf(mese) + 1;
         int annoCorrente = LocalDate.now().getYear();
+        int giorniMese = LocalDate.of(annoCorrente, meseIndice, 1).lengthOfMonth();
 
-        LocalDate primoDelMese = LocalDate.of(annoCorrente, meseIndice, 1);
-        int giorniMese = primoDelMese.lengthOfMonth();
-
-        List<AppuntamentoBean> appuntamentiPresenti;
-        try {
-            appuntamentiPresenti = AgendaController.recuperaAppuntamenti();
-        } catch (Exception e) {
-            appuntamentiPresenti = new ArrayList<>();
-        }
-
-        Set<Integer> giorniOccupati = new HashSet<>();
-        LocalDate oggi = LocalDate.now();
-        for (AppuntamentoBean b : appuntamentiPresenti) {
-            try {
-                LocalDate dataApp = LocalDate.parse(b.getData());
-                if (dataApp.getMonth() == oggi.getMonth()) {
-                    giorniOccupati.add(dataApp.getDayOfMonth());
-                }
-            } catch (Exception ignored) {}
-        }
-
-        logger.info("\nCALENDARIO " + mese.toUpperCase() + " " + annoCorrente);
-        logger.info("\nLegenda: (-,P) = Mattina occupata, (M,-) = Pomeriggio occupato, X = Pieno");System.out.println("LUN     MAR     MER     GIO     VEN     SAB     DOM");
-        logger.info("--------------------------------------------------");
+        stampaIntestazione(mese, annoCorrente);
 
         for (int i = 1; i <= giorniMese; i++) {
-            boolean mOcc = isFasciaOccupata(i, mese, "M");
-            boolean pOcc = isFasciaOccupata(i, mese, "P");
-
-            String marker;
-            if (mOcc && pOcc) {
-                marker = "X";
-            } else if (mOcc) {
-                marker = String.valueOf(i) + "(-,P)";
-            } else if (pOcc) {
-                marker = String.valueOf(i) + "(M,-)";
-            } else if(i % 7 == 0){
-                marker = "-";
-            }else {
-                marker = String.valueOf(i);
-            }
-
+            String marker = determinaMarkerGiorno(i, mese);
             System.out.printf("%-8s", marker);
+
             if (i % 7 == 0) {
                 System.out.println();
             }
         }
         logger.info("\n--------------------------------------------------\n");
+    }
+
+    private void stampaIntestazione(String mese, int anno) {
+        logger.info("\nCALENDARIO " + mese.toUpperCase() + " " + anno);
+        logger.info("\nLegenda: (-,P) = Mattina occupata, (M,-) = Pomeriggio occupato, X = Pieno");
+        System.out.println("LUN     MAR     MER     GIO     VEN     SAB     DOM");
+        logger.info("--------------------------------------------------");
+    }
+
+    private String determinaMarkerGiorno(int giorno, String mese) {
+        boolean mOcc = isFasciaOccupata(giorno, mese, "M");
+        boolean pOcc = isFasciaOccupata(giorno, mese, "P");
+
+        if (mOcc && pOcc) {
+            return "X";
+        }
+        if (mOcc) {
+            return giorno + "(-,P)";
+        }
+        if (pOcc) {
+            return giorno + "(M,-)";
+        }
+        if (giorno % 7 == 0) {
+            return "-";
+        }
+        return String.valueOf(giorno);
     }
 
     private String validazioneFasciaOraria(int giorno, String mese){

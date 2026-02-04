@@ -1,11 +1,13 @@
 package com.artigianhair.view.cli;
 import java.util.Scanner;
-import java.util.logging.Logger;
+
 
 public class GestioneInputCLI {
 
     private static final Scanner scanner = new Scanner(System.in);
     private GestioneInputCLI() {}
+
+    @SuppressWarnings("java:S106")
     public static int leggiInt(String messaggio) {
         System.out.print(messaggio);
         while (!scanner.hasNextInt()) {
@@ -18,6 +20,7 @@ public class GestioneInputCLI {
         return valore;
     }
 
+    @SuppressWarnings("java:S106")
     public static String leggiString(String messaggio) {
         System.out.print(messaggio);
         return scanner.nextLine();
