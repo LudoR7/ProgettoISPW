@@ -109,10 +109,10 @@ public class PrenotazioneCLI {
 
         for (int i = 1; i <= giorniMese; i++) {
             String marker = determinaMarkerGiorno(i, mese);
-            System.out.printf("%-8s", marker);
+            logger.info(() -> String.format("%-8s", marker));
 
             if (i % 7 == 0) {
-                System.out.println();
+                logger.info(() -> "");
             }
         }
         logger.info("\n--------------------------------------------------\n");

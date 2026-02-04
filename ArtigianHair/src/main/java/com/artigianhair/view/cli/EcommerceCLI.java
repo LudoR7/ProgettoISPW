@@ -28,7 +28,7 @@ public class EcommerceCLI {
         carrello.setEmailCliente(SessioneAttuale.getInstance().getCurrentUser().getEmail());
 
         for (Prodotto prodotto : prodotti) {
-            logger.info(String.format(" - %s", prodotto));
+            logger.info(() -> String.format(" - %s", prodotto));
         }
         prodotti.forEach(carrello::addProdotto);
         confermaCarrello(carrello);
