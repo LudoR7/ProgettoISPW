@@ -59,6 +59,7 @@ public class ProfiloGUIController {
 
     private static final String ACTION_1 = "Errore";
     private static final String ACTION_2 = "ProfiloGUI.fxml";
+    private static final String ACTION_3 = "EcommerceGUI.fxml";
     private final PrenotazioneController prenoController = new PrenotazioneController();
     private final GestioneOrdiniController ordiniController = new GestioneOrdiniController();
     private final Map<CheckBox, AppuntamentoBean> mappaSelezioni = new HashMap<>();
@@ -93,7 +94,7 @@ public class ProfiloGUIController {
 
 
     @FXML protected void handleGoToLogin() {
-        SceneManager.setLastScene("ProfiloGUI.fxml");
+        SceneManager.setLastScene(ACTION_2);
         if (checkLogin()) {
             SceneManager.changeScene(SceneManager.getLastScene());
         }
@@ -107,7 +108,7 @@ public class ProfiloGUIController {
         return true;
     }
     @FXML protected void handleGoToRegistration() {
-        SceneManager.setLastScene("ProfiloGUI.fxml");
+        SceneManager.setLastScene(ACTION_2);
         if (checkRegistrazione()) {
             SceneManager.changeScene(SceneManager.getLastScene());
         }
@@ -228,9 +229,9 @@ public class ProfiloGUIController {
     }
 
     @FXML protected void goToEcommerce() {
-        SceneManager.setLastScene("EcommerceGUI.fxml");
+        SceneManager.setLastScene(ACTION_3);
         if(checkLogin()){
-            SceneManager.changeScene("EcommerceGUI.fxml");
+            SceneManager.changeScene(ACTION_3);
         }
 
     }
@@ -348,7 +349,7 @@ public class ProfiloGUIController {
 
     @FXML
     protected void handleEcommerce() {
-        SceneManager.changeScene("EcommerceGUI.fxml");
+        SceneManager.changeScene(ACTION_3);
     }
     @FXML
     protected void confermaEliminazione() {

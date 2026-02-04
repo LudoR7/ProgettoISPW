@@ -60,7 +60,7 @@ public class EcommerceGUIController {
         if (user != null) {
             carrello.setEmailCliente(user.getEmail());
         }else{
-            SceneManager.setLastScene("EcommerceGUI.fxml");
+            SceneManager.setLastScene(ACTION_4);
             SceneManager.changeScene("LoginGUI.fxml");
         }
     }
@@ -145,7 +145,6 @@ public class EcommerceGUIController {
         User user = SessioneAttuale.getInstance().getCurrentUser();
 
         appController.processaOrdine(carrello);
-        //lblStatus.setText("Ordine inviato con successo!");
         showAlert(Alert.AlertType.INFORMATION, "I Tuoi Appuntamenti", "Il tuo ordine è stato salvato con successo!");
         paneCarrello.setDisable(true);
         SceneManager.changeScene(ACTION_4);
