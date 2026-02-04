@@ -35,7 +35,7 @@ public class RegistrazioneGUIController {
         try {
             loginController.registraUtente(newUserBean);
             showAlert(Alert.AlertType.INFORMATION, "Successo", "Registrazione completata!");
-            goToHome();
+            SceneManager.changeScene(SceneManager.getLastScene());
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Errore Registrazione", e.getMessage());
         }
@@ -43,6 +43,7 @@ public class RegistrazioneGUIController {
 
     @FXML
     protected void goToLogin() {
+
         SceneManager.changeScene("LoginGUI.fxml");
     }
 

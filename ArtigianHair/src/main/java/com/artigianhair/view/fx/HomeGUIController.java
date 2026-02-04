@@ -13,12 +13,18 @@ public class HomeGUIController {
 
     @FXML
     protected void goToPrenotazione() {
-        if (checkLogin()) SceneManager.changeScene("PrenotazioneGUI.fxml");
+        SceneManager.setLastScene("PrenotazioneGUI.fxml");
+        if (checkLogin()) {
+            SceneManager.changeScene(SceneManager.getLastScene());
+        }
     }
 
     @FXML
     protected void goToEcommerce() {
-        SceneManager.changeScene("EcommerceGUI.fxml");
+        SceneManager.setLastScene("EcommerceGUI.fxml");
+        if (checkLogin()) {
+            SceneManager.changeScene(SceneManager.getLastScene());
+        }
     }
     @FXML
     protected void goToProfilo() {
@@ -48,11 +54,9 @@ public class HomeGUIController {
     protected void handleLogout() {
         if (SessioneAttuale.getInstance().getCurrentUser() != null) {
             SessioneAttuale.getInstance().logout();
-
             emailField.clear();
             passwordField.clear();
-
-            showInfo("Logout", "Sessione chiusa con successo.");
+            showError("Logout", "Sessione chiusa con successo.");
         } else {
             showError("Operazione non valida", "Nessun utente risulta attualmente loggato.");
         }

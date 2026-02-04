@@ -23,8 +23,6 @@ public class LoginGUIController {
         if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             showError("Campi Obbligatori", "Inserire Email e Password: ");
             return;
-        }else {
-            showError("Errore", "Credenziali non valide o errore di autenticazione.");
         }
 
         UserBean loginBean = new UserBean();
@@ -33,10 +31,11 @@ public class LoginGUIController {
 
         try {
             if (loginController.login(loginBean)) {
-                SceneManager.changeScene("ProfiloGUI.fxml");
+                SceneManager.changeScene(SceneManager.getLastScene());
             }
         } catch (LoginException e) {
             showError("Credenziali Errate", e.getMessage());
+            SceneManager.changeScene("LoginGUI.fxml");
         } catch (IOException e) {
             showError("Errore di Sistema", "Impossibile accedere ai dati di persistenza.");
         }

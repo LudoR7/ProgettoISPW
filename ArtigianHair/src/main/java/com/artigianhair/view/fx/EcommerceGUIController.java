@@ -33,7 +33,7 @@ public class EcommerceGUIController {
     @FXML private Text txtDesc3;
 
     private final EcommerceController appController = new EcommerceController();
-    private final CarrelloBean carrello = new CarrelloBean();
+    private CarrelloBean carrello;
     private List<Prodotto> prodottiDisponibili;
 
 
@@ -55,11 +55,13 @@ public class EcommerceGUIController {
 
     @FXML
     public void initialize() {
+        this.carrello = SessioneAttuale.getInstance().getCarrello();
         User user = SessioneAttuale.getInstance().getCurrentUser();
         if (user != null) {
             carrello.setEmailCliente(user.getEmail());
-        } else {
-            lblStatus.setText("Errore: Sessione non valida.");
+        }else{
+            SceneManager.setLastScene("EcommerceGUI.fxml");
+            SceneManager.changeScene("LoginGUI.fxml");
         }
     }
 
@@ -104,6 +106,17 @@ public class EcommerceGUIController {
         paneCarrello.setVisible(true);
         paneCarrello.setManaged(true);
     }
+    @FXML
+    private void tornaIndietro() {
+        paneCarrello.setVisible(false);
+        paneCarrello.setManaged(false);
+
+        paneSelezioneProdotti.setVisible(false);
+        paneSelezioneProdotti.setManaged(false);
+
+        paneSceltaCapelli.setVisible(true);
+        paneSceltaCapelli.setManaged(true);
+    }
 
     private void aggiornaAreaCarrello() {
         StringBuilder sb = new StringBuilder();
@@ -125,11 +138,14 @@ public class EcommerceGUIController {
     @FXML
     private void handleConfermaOrdine() {
         if (carrello.getProdottiConQuantita().isEmpty()) {
-            lblStatus.setText("Il carrello è vuoto!");
+            showAlert(Alert.AlertType.INFORMATION, "Carrello vuoto", "Attenzione, il tuo carrello è vuoto!");
             return;
         }
+
+        User user = SessioneAttuale.getInstance().getCurrentUser();
+
         appController.processaOrdine(carrello);
-        lblStatus.setText("Ordine inviato con successo!");
+        //lblStatus.setText("Ordine inviato con successo!");
         showAlert(Alert.AlertType.INFORMATION, "I Tuoi Appuntamenti", "Il tuo ordine è stato salvato con successo!");
         paneCarrello.setDisable(true);
         SceneManager.changeScene(ACTION_4);

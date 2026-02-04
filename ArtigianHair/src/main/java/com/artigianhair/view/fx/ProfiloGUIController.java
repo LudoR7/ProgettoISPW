@@ -93,11 +93,32 @@ public class ProfiloGUIController {
 
 
     @FXML protected void handleGoToLogin() {
-        SceneManager.changeScene("LoginGUI.fxml");
+        SceneManager.setLastScene("ProfiloGUI.fxml");
+        if (checkLogin()) {
+            SceneManager.changeScene(SceneManager.getLastScene());
+        }
     }
-
+    private boolean checkLogin() {
+        User currentUser = SessioneAttuale.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            SceneManager.changeScene("LoginGUI.fxml");
+            return false;
+        }
+        return true;
+    }
     @FXML protected void handleGoToRegistration() {
-        SceneManager.changeScene("RegistrazioneGUI.fxml");
+        SceneManager.setLastScene("ProfiloGUI.fxml");
+        if (checkRegistrazione()) {
+            SceneManager.changeScene(SceneManager.getLastScene());
+        }
+    }
+    private boolean checkRegistrazione() {
+        User currentUser = SessioneAttuale.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            SceneManager.changeScene("RegistrazioneGUI.fxml");
+            return false;
+        }
+        return true;
     }
 
 
@@ -198,13 +219,22 @@ public class ProfiloGUIController {
     @FXML protected void goToHome() {
         SceneManager.changeScene("HomeGUI.fxml");
     }
+
     @FXML protected void goToPrenotazione() {
-        SceneManager.changeScene("PrenotazioneGUI.fxml");
+        SceneManager.setLastScene("PrenotazioneGUI.fxml");
+        if(checkLogin()){
+            SceneManager.changeScene("PrenotazioneGUI.fxml");
+        }
     }
 
     @FXML protected void goToEcommerce() {
-        SceneManager.changeScene("EcommerceGUI.fxml");
+        SceneManager.setLastScene("EcommerceGUI.fxml");
+        if(checkLogin()){
+            SceneManager.changeScene("EcommerceGUI.fxml");
+        }
+
     }
+
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
         Alert alert = new Alert(type);

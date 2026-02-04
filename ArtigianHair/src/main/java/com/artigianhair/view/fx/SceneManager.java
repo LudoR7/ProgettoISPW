@@ -8,6 +8,7 @@ import java.io.IOException;
 public class SceneManager {
 
     private static Stage stage;
+    private static String lastScene;
 
     private SceneManager() {}
 
@@ -30,5 +31,13 @@ public class SceneManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setLastScene(String scene) {
+        lastScene = scene;
+    }
+
+    public static String getLastScene() {
+        return lastScene;
     }
 }

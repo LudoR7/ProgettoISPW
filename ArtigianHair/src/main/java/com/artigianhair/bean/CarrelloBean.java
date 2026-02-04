@@ -22,6 +22,9 @@ public class CarrelloBean {
                 .mapToDouble(entry -> entry.getKey().prezzo() * entry.getValue())
                 .sum();
     }
+    public void svuota() {
+        this.prodottiQuantita.clear();
+    }
 
     public void setEmailCliente(String email) { this.emailCliente = email; }
     public String getEmailCliente() { return emailCliente; }

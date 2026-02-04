@@ -16,7 +16,7 @@ import static com.artigianhair.view.cli.PrenotazioneCLI.MESI_VALIDI;
 
 public class AgendaController {
 
-    public AgendaController() {
+    private AgendaController() {
         // Costruttore di default
     }
     public static List<AppuntamentoBean> recuperaAppuntamenti() throws IOException {
