@@ -29,58 +29,63 @@ public class PrenotazioneGUIController {
     @FXML private CheckBox coloreCheck;
     @FXML private CheckBox keratinaCheck;
 
+    private static final String ACTION_1 = "LoginGUI.fxml";
     private final PrenotazioneController controller = new PrenotazioneController();
     private List<AppuntamentoBean> appuntamentiEsistenti = new ArrayList<>();
 
     @FXML
     public void initialize() {
+        inizializzaDatiAppuntamenti();
+        setupRadioButtons();
+        configuraCelleCalendario();
+        setupDatePicker();
+        setupServiceLimitLogic();
+        setupConstraintTrattamenti();
+    }
+
+    private void inizializzaDatiAppuntamenti() {
         try {
             appuntamentiEsistenti = AgendaController.recuperaAppuntamenti();
         } catch (IOException e) {
             appuntamentiEsistenti = new ArrayList<>();
         }
+    }
 
+    private void setupRadioButtons() {
         ToggleGroup group = new ToggleGroup();
         mattinaRadio.setToggleGroup(group);
         pomeriggioRadio.setToggleGroup(group);
         mattinaRadio.setSelected(true);
+    }
 
-        configuraCelleCalendario();
-
-        datePicker.valueProperty().addListener((observable, oldDate, newDate) -> {
+    private void setupDatePicker() {
+        datePicker.valueProperty().addListener((obs, oldDate, newDate) -> {
             if (newDate != null) {
                 aggiornaDisponibilitaFasce(newDate);
             }
         });
-
-        CheckBox[] allChecks = {piegaCheck, taglioCheck, coloreCheck, keratinaCheck};
-
-        for (CheckBox cb : allChecks) {
-            cb.selectedProperty().addListener((observable, wasSelected, isNowSelected) -> {
-
-                long count = 0;
-                for (CheckBox c : allChecks) {
-                    if (c.isSelected()) count++;
-                }
-
-                if (count >= 3) {
-
-                    for (CheckBox c : allChecks) {
-                        if (!c.isSelected()) {
-                            c.setDisable(true);
-                        }
-                    }
-                } else {
-
-                    for (CheckBox c : allChecks) {
-                        c.setDisable(false);
-                    }
-                }
-            });
-        }
-        setupConstraintTrattamenti();
     }
 
+    private void setupServiceLimitLogic() {
+        CheckBox[] allChecks = {piegaCheck, taglioCheck, coloreCheck, keratinaCheck};
+        for (CheckBox cb : allChecks) {
+            cb.selectedProperty().addListener((obs, wasSel, isNowSel) -> aggiornaStatoCheckBox(allChecks)
+            );
+        }
+    }
+
+    private void aggiornaStatoCheckBox(CheckBox[] allChecks) {
+        long count = java.util.Arrays.stream(allChecks).filter(CheckBox::isSelected).count();
+        boolean limiteRaggiunto = count >= 3;
+
+        for (CheckBox cb : allChecks) {
+            if (!cb.isSelected()) {
+                cb.setDisable(limiteRaggiunto);
+            } else {
+                cb.setDisable(false);
+            }
+        }
+    }
     private void configuraCelleCalendario() {
         Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell() {
             @Override
@@ -158,7 +163,7 @@ public class PrenotazioneGUIController {
     protected void handlePrenotazione() {
 
         if (SessioneAttuale.getInstance().getCurrentUser() == null) {
-            SceneManager.changeScene("LoginGUI.fxml");
+            SceneManager.changeScene(ACTION_1);
             return;
         }
 
@@ -263,11 +268,11 @@ public class PrenotazioneGUIController {
     }
     @FXML
     protected void goToLogin() {
-        SceneManager.changeScene("LoginGUI.fxml");
+        SceneManager.changeScene(ACTION_1);
     }
     @FXML
     protected void handleLogout() {
         SessioneAttuale.getInstance().logout();
-        SceneManager.changeScene("LoginGUI.fxml");
+        SceneManager.changeScene(ACTION_1);
     }
 }

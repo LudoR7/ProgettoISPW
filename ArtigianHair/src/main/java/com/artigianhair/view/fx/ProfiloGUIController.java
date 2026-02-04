@@ -57,7 +57,8 @@ public class ProfiloGUIController {
     @FXML private TableColumn<Ordine, String> colMieiProdotti;
     @FXML private TableColumn<Ordine, String> colMioStato;
 
-
+    private static final String ACTION_1 = "Errore";
+    private static final String ACTION_2 = "ProfiloGUI.fxml";
     private final PrenotazioneController prenoController = new PrenotazioneController();
     private final GestioneOrdiniController ordiniController = new GestioneOrdiniController();
     private final Map<CheckBox, AppuntamentoBean> mappaSelezioni = new HashMap<>();
@@ -138,7 +139,7 @@ public class ProfiloGUIController {
             recuperaBox.setManaged(true);
 
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Impossibile recuperare lo storico appuntamenti.");
+            showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile recuperare lo storico appuntamenti.");
         }
     }
 
@@ -178,7 +179,7 @@ public class ProfiloGUIController {
             agendaBox.setManaged(true);
 
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Impossibile caricare l'agenda dal database.");
+            showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile caricare l'agenda dal database.");
         }
     }
 
@@ -191,7 +192,7 @@ public class ProfiloGUIController {
 
     @FXML protected void handleLogout() {
         SessioneAttuale.getInstance().logout();
-        SceneManager.changeScene("ProfiloGUI.fxml");
+        SceneManager.changeScene(ACTION_2);
     }
 
     @FXML protected void goToHome() {
@@ -251,7 +252,7 @@ public class ProfiloGUIController {
             disdettaBox.setManaged(true);
 
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Impossibile caricare gli appuntamenti.");
+            showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile caricare gli appuntamenti.");
         }
     }
     @FXML
@@ -292,7 +293,7 @@ public class ProfiloGUIController {
                     showAlert(Alert.AlertType.INFORMATION, "Stato Aggiornato",
                             "L'ordine di " + ordine.getEmailCliente() + " è ora in stato: " + nuovoStato);
                 } catch (IOException e) {
-                    showAlert(Alert.AlertType.ERROR, "Errore", "Impossibile aggiornare lo stato su file.");
+                    showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile aggiornare lo stato su file.");
                 }
             });
 
@@ -301,7 +302,7 @@ public class ProfiloGUIController {
             ordiniBox.setManaged(true);
 
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Impossibile caricare gli ordini.");
+            showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile caricare gli ordini.");
         }
     }
     @FXML
@@ -345,10 +346,10 @@ public class ProfiloGUIController {
 
 
             handleMostraDisdetta();
-            SceneManager.changeScene("ProfiloGUI.fxml");
+            SceneManager.changeScene(ACTION_2);
 
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Errore durante la cancellazione su file.");
+            showAlert(Alert.AlertType.ERROR, ACTION_1, "Errore durante la cancellazione su file.");
         }
     }
     @FXML
@@ -382,7 +383,7 @@ public class ProfiloGUIController {
             mieiOrdiniBox.setManaged(true);
 
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Impossibile caricare i tuoi ordini.");
+            showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile caricare i tuoi ordini.");
         }
     }
 
@@ -393,7 +394,7 @@ public class ProfiloGUIController {
     }
     @FXML
     protected void goToProfilo() {
-        SceneManager.changeScene("ProfiloGUI.fxml");
+        SceneManager.changeScene(ACTION_2);
     }
 
 

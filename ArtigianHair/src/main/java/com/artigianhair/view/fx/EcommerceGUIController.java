@@ -13,13 +13,24 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 public class EcommerceGUIController {
+    private static final String ACTION_1 = "Shampoo";
+    private static final String ACTION_2 = "Maschera";
+    private static final String ACTION_3 = "Siero";
+    private static final String ACTION_4 = "EcommerceGUI.fxml";
 
-    @FXML private VBox paneSceltaCapelli, paneSelezioneProdotti, paneCarrello;
-    @FXML private Button btnProd1, btnProd2, btnProd3;
+
+    @FXML private VBox paneSceltaCapelli;
+    @FXML private VBox paneSelezioneProdotti;
+    @FXML private VBox paneCarrello;
+    @FXML private Button btnProd1;
+    @FXML private Button btnProd2;
+    @FXML private Button btnProd3;
     @FXML private TextArea txtAreaCarrello;
     @FXML private Label lblStatus;
     @FXML private Text txtTitoloCategoria;
-    @FXML private Text txtDesc1, txtDesc2, txtDesc3;
+    @FXML private Text txtDesc1;
+    @FXML private Text txtDesc2;
+    @FXML private Text txtDesc3;
 
     private final EcommerceController appController = new EcommerceController();
     private final CarrelloBean carrello = new CarrelloBean();
@@ -27,26 +38,26 @@ public class EcommerceGUIController {
 
 
     private final Prodotto[] caso1 = {
-            new Prodotto("Shampoo", "Hydra-Soft", " Arricchito con olio di Argan per idratare in profondità.", 15.50),
-            new Prodotto("Maschera", "Nutri-Gloss", " Nutri-Gloss. Trattamento intensivo emolliente.", 22.00),
-            new Prodotto("Siero", "Silk-Drop", "Elimina l'effetto crespo istantaneamente.", 18.90)
+            new Prodotto(ACTION_1, "Hydra-Soft", " Arricchito con olio di Argan per idratare in profondità.", 15.50),
+            new Prodotto(ACTION_2, "Nutri-Gloss", " Nutri-Gloss. Trattamento intensivo emolliente.", 22.00),
+            new Prodotto(ACTION_3, "Silk-Drop", "Elimina l'effetto crespo istantaneamente.", 18.90)
     };
     private final Prodotto[] caso2 = {
-            new Prodotto("Shampoo", "Pure-Balance", "Estratti di menta e argilla per purificare la cute.", 14.00),
-            new Prodotto("Maschera", "Light-Touch", "Idratazione leggera che non appesantisce.", 20.00),
-            new Prodotto("Siero", "Fresh-Scalp", "Riequilibrante a lunga durata.", 17.50)
+            new Prodotto(ACTION_1, "Pure-Balance", "Estratti di menta e argilla per purificare la cute.", 14.00),
+            new Prodotto(ACTION_2, "Light-Touch", "Idratazione leggera che non appesantisce.", 20.00),
+            new Prodotto(ACTION_3, "Fresh-Scalp", "Riequilibrante a lunga durata.", 17.50)
     };
     private final Prodotto[] caso3 = {
-            new Prodotto("Shampoo", "Universal-Care", "Deterge con delicatezza, per uso quotidiano.", 12.00),
-            new Prodotto("Maschera", "Basic-Repair", "Riforza la struttura del capello.", 19.00),
-            new Prodotto("Siero", "Shine-Boost", "Per una lucentezza naturale.", 16.00)
+            new Prodotto(ACTION_1, "Universal-Care", "Deterge con delicatezza, per uso quotidiano.", 12.00),
+            new Prodotto(ACTION_2, "Basic-Repair", "Riforza la struttura del capello.", 19.00),
+            new Prodotto(ACTION_3, "Shine-Boost", "Per una lucentezza naturale.", 16.00)
     };
 
     @FXML
     public void initialize() {
         User user = SessioneAttuale.getInstance().getCurrentUser();
         if (user != null) {
-            carrello.setEmailCliente(user.getEmail()); // Logica start() CLI
+            carrello.setEmailCliente(user.getEmail());
         } else {
             lblStatus.setText("Errore: Sessione non valida.");
         }
@@ -117,11 +128,11 @@ public class EcommerceGUIController {
             lblStatus.setText("Il carrello è vuoto!");
             return;
         }
-        appController.processaOrdine(carrello); // Processo finale
+        appController.processaOrdine(carrello);
         lblStatus.setText("Ordine inviato con successo!");
         showAlert(Alert.AlertType.INFORMATION, "I Tuoi Appuntamenti", "Il tuo ordine è stato salvato con successo!");
         paneCarrello.setDisable(true);
-        SceneManager.changeScene("EcommerceGUI.fxml");
+        SceneManager.changeScene(ACTION_4);
 
     }
     private void showAlert(Alert.AlertType type, String title, String msg) {
@@ -134,7 +145,7 @@ public class EcommerceGUIController {
     @FXML
     private void handleCancellaOrdine() {
         paneCarrello.setDisable(true);
-        SceneManager.changeScene("EcommerceGUI.fxml");
+        SceneManager.changeScene(ACTION_4);
 
     }
 
@@ -151,7 +162,7 @@ public class EcommerceGUIController {
     @FXML private void goToHome() { SceneManager.changeScene("HomeGUI.fxml"); }
     @FXML private void goToPrenotazione() { SceneManager.changeScene("PrenotazioneGUI.fxml"); }
     @FXML private void goToProfilo() { SceneManager.changeScene("ProfiloGUI.fxml"); }
-    @FXML private void goToEcommerce() { SceneManager.changeScene("EcommerceGUI.fxml"); }
+    @FXML private void goToEcommerce() { SceneManager.changeScene(ACTION_4); }
     @FXML private void handleLogout() {
         SessioneAttuale.getInstance().logout();
         SceneManager.changeScene("LoginGUI.fxml");
