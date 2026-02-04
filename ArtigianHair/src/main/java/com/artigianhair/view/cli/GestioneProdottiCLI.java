@@ -43,7 +43,8 @@ public class GestioneProdottiCLI {
             while (b) {
                 for (int i = 0; i < ordini.size(); i++) {
                     Ordine o = ordini.get(i);
-                    logger.info(String.format("%d) [%s] Cliente: %s", i + 1, o.getStato(), o.getEmailCliente()));
+                    int finalI = i;
+                    logger.info(() -> (finalI + 1) + ") [" + o.getStato() + "] Cliente: " + o.getEmailCliente());
                 }
                 int index = GestioneInputCLI.leggiInt("Seleziona ID ordine per cambiare stato (0 per annullare): ") - 1;
                 if (index >= 0 && index < ordini.size()) {

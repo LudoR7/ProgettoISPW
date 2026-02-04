@@ -29,7 +29,6 @@ public class EcommerceCLI {
 
         for (Prodotto prodotto : prodotti) {
             logger.info(String.format(" - %s", prodotto));
-            // prova
         }
         prodotti.forEach(carrello::addProdotto);
         confermaCarrello(carrello);
