@@ -154,7 +154,7 @@ public class PrenotazioneCLI {
                 return "";
             }
             if(isFasciaOccupata(giorno, mese, fascia)){
-                String header = String.format("%nSpiacenti, la fascia - %s - è già occupata per questo giorno.\n", fascia);
+                String header = String.format("%nSpiacenti, la fascia - %s - è già occupata per questo giorno.%n", fascia);
                 logger.info(header);
                 return "";
             } else{
