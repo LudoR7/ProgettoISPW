@@ -120,7 +120,7 @@ public class PrenotazioneCLI {
 
     private void stampaIntestazione(String mese, int anno) {
 
-        String header = String.format("\nCALENDARIO %s %s", mese.toUpperCase(), anno);
+        String header = String.format("%nCALENDARIO %s %s", mese.toUpperCase(), anno);
         logger.info(header);
 
         logger.info("\nLegenda: (-,P) = Mattina occupata, (M,-) = Pomeriggio occupato, X = Pieno");
@@ -154,7 +154,7 @@ public class PrenotazioneCLI {
                 return "";
             }
             if(isFasciaOccupata(giorno, mese, fascia)){
-                String header = String.format("\nSpiacenti, la fascia - %s - è già occupata per questo giorno.\n", fascia);
+                String header = String.format("%nSpiacenti, la fascia - %s - è già occupata per questo giorno.\n", fascia);
                 logger.info(header);
                 return "";
             } else{
@@ -243,7 +243,8 @@ public class PrenotazioneCLI {
             }
 
             if (!trovato) {
-                logger.info(String.format("Nessuna prenotazione trovata per l'account:  %s", emailUtente));
+                String s = String.format("Nessuna trattamento: %s", emailUtente);
+                logger.info(s);
             }
 
         } catch (Exception e) {
@@ -275,7 +276,8 @@ public class PrenotazioneCLI {
             logger.info("\nSELEZIONA L'APPUNTAMENTO DA ANNULLARE: ");
             for (int i = 0; i < iMieiAppuntamenti.size(); i++) {
                 AppuntamentoBean b = iMieiAppuntamenti.get(i);
-                logger.info(String.format("%d) Data: %s | Ora: %s | Trattamenti: %s%n", i + 1, b.getData(), b.getOrario(), String.join(", ", b.getTrattamenti())));
+                String string = String.format("%d) Data: %s | Ora: %s | Trattamenti: %s%n", i + 1, b.getData(), b.getOrario(), String.join(", ", b.getTrattamenti()));
+                logger.info(string);
             }
 
             int index = GestioneInputCLI.leggiInt("\nInserisci il numero dell'appuntamento (0 per tornare indietro): ") - 1;

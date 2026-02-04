@@ -142,8 +142,6 @@ public class EcommerceGUIController {
             return;
         }
 
-        User user = SessioneAttuale.getInstance().getCurrentUser();
-
         appController.processaOrdine(carrello);
         showAlert(Alert.AlertType.INFORMATION, "I Tuoi Appuntamenti", "Il tuo ordine è stato salvato con successo!");
         paneCarrello.setDisable(true);
