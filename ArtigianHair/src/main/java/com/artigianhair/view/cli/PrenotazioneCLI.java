@@ -57,8 +57,6 @@ public class PrenotazioneCLI {
 
         String meseScelto = validazioneMese();
         bean.setMese(meseScelto);
-        //int meseIndice = MESI_VALIDI.indexOf(meseScelto) + 1;
-        //int maxGiorni = LocalDate.of(LocalDate.now().getYear(), meseIndice, 1).lengthOfMonth();
         stampaCalendarioMensile(meseScelto);
 
         // CHECK

@@ -18,16 +18,14 @@ import java.util.logging.Logger;
 public class EcommerceController {
     Logger logger = Logger.getLogger(getClass().getName());
     private final FileSystemOrdineDAO ordineDAO = new FileSystemOrdineDAO();
+    private static final String ACTION_1 = "Shampoo";
+    private static final String ACTION_2 = "Maschera";
+    private static final String ACTION_3 = "Siero";
 
     public List<Prodotto> generaProdottiPersonalizzati(int scelta) {
         List<Prodotto> personalizzati = new ArrayList<>();
 
-
-        // DA LEVARE*******
-        //CarrelloBean carrello = new CarrelloBean();
-        // DA LEVARE*******
-
-        logger.info("\nAbbiamo creato questi prodotti per te: aggiungi al carrello quelli che preferisci");
+    logger.info("\nAbbiamo creato questi prodotti per te: aggiungi al carrello quelli che preferisci");
 
         switch (scelta) {
             case 1 -> generaCaso1(personalizzati);
@@ -63,27 +61,27 @@ public class EcommerceController {
     private void generaCaso1(List<Prodotto> lista) {
         logger.info("\n1) Shampoo: Hydra-Soft. Arricchito con olio di Argan per idratare in profondità.\n2) Maschera: Nutri-Gloss. Trattamento intensivo emolliente.\n3) Siero: Silk-Drop. Elimina l'effetto crespo istantaneamente.");
         selezionaProdotti(lista,
-                new Prodotto("Shampoo", "Hydra-Soft", "Idratazione profonda", 15.50),
-                new Prodotto("Maschera", "Nutri-Gloss", "Trattamento emolliente", 22.00),
-                new Prodotto("Siero", "Silk-Drop", "Effetto seta", 18.90)
+                new Prodotto(ACTION_1, "Hydra-Soft", "Idratazione profonda", 15.50),
+                new Prodotto(ACTION_2, "Nutri-Gloss", "Trattamento emolliente", 22.00),
+                new Prodotto(ACTION_3, "Silk-Drop", "Effetto seta", 18.90)
         );
     }
 
     private void generaCaso2(List<Prodotto> lista) {
         logger.info("\n1) Shampoo: Pure-Balance. Estratti di menta e argilla per purificare la cute.\n2) Maschera: Light-Touch. Idratazione leggera che non appesantisce.\n3) Siero: Fresh-Scalp. Riequilibrante a lunga durata.");
         selezionaProdotti(lista,
-                new Prodotto("Shampoo", "Pure-Balance", "Purificante", 14.00),
-                new Prodotto("Maschera", "Light-Touch", "Idratazione leggera", 20.00),
-                new Prodotto("Siero", "Fresh-Scalp", "Riequilibrante", 17.50)
+                new Prodotto(ACTION_1, "Pure-Balance", "Purificante", 14.00),
+                new Prodotto(ACTION_2, "Light-Touch", "Idratazione leggera", 20.00),
+                new Prodotto(ACTION_3, "Fresh-Scalp", "Riequilibrante", 17.50)
         );
     }
 
     private void generaCaso3(List<Prodotto> lista) {
         logger.info("\n1) Shampoo: Universal-Care. Deterge con delicatezza, per uso quotidiano.\n2x) Maschera: Basic-Repair. Riforza la struttura del capello.\n3) Siero: Shine-Boost. Per una lucentezza naturale.");
         selezionaProdotti(lista,
-                new Prodotto("Shampoo", "Universal-Care", "Detergente delicato", 12.00),
-                new Prodotto("Maschera", "Basic-Repair", "Protezione standard", 19.00),
-                new Prodotto("Siero", "Shine-Boost", "Lucentezza naturale", 16.00)
+                new Prodotto(ACTION_1, "Universal-Care", "Detergente delicato", 12.00),
+                new Prodotto(ACTION_2, "Basic-Repair", "Protezione standard", 19.00),
+                new Prodotto(ACTION_3, "Shine-Boost", "Lucentezza naturale", 16.00)
         );
     }
 
