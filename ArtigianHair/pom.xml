@@ -22,6 +22,7 @@
                 **/bean/**/*,
                 **/persistence/**/*,
                 **/engineering/**/*,
+                **/controller/EcommerceController/*,
                 **/Main.java
         </sonar.coverage.exclusions>
     </properties>

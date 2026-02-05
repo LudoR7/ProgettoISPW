@@ -38,7 +38,6 @@ public class Main extends Application {
             properties.load(inputStream);
             return properties.getProperty("view.type");
         }catch(IOException e){
-            e.printStackTrace(); //da aggiustare dopo
             return "CLI";
         }
     }

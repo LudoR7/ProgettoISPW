@@ -2,6 +2,7 @@ package com.artigianhair.view.fx;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -29,7 +30,10 @@ public class SceneManager {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errores");
+            alert.setHeaderText("Errore nel caricamento della scena");
+            alert.showAndWait();
         }
     }
 
