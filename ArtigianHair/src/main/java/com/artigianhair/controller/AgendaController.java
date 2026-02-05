@@ -10,12 +10,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+import java.util.Arrays;
 import java.util.List;
-
-import static com.artigianhair.view.cli.PrenotazioneCLI.MESI_VALIDI;
 
 public class AgendaController {
 
+    protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
     private AgendaController() {
         // Costruttore di default
     }

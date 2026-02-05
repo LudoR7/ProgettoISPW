@@ -11,12 +11,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static com.artigianhair.view.cli.PrenotazioneCLI.MESI_VALIDI;
 
 public class PrenotazioneController {
+    protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
     Logger logger = Logger.getLogger(getClass().getName());
     public void confermaAppuntamento(AppuntamentoBean bean) throws PrenotazioneException {
         try {

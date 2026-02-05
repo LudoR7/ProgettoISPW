@@ -68,5 +68,5 @@ public class HomeGUIController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
+
 }

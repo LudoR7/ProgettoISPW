@@ -18,8 +18,7 @@ import java.util.logging.Logger;
 public class PrenotazioneCLI {
     Logger logger = Logger.getLogger(getClass().getName());
     private final PrenotazioneController controller = new PrenotazioneController();
-    public static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
-            "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
+    protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
 
 
     public void start1(){

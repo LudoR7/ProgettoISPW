@@ -32,6 +32,7 @@ public class PrenotazioneGUIController {
     private static final String ACTION_1 = "LoginGUI.fxml";
     private final PrenotazioneController controller = new PrenotazioneController();
     private List<AppuntamentoBean> appuntamentiEsistenti = new ArrayList<>();
+    protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
 
     @FXML
     public void initialize() {
@@ -187,7 +188,7 @@ public class PrenotazioneGUIController {
         bean.setData(String.valueOf(date.getDayOfMonth()));
 
 
-        String meseIta = PrenotazioneCLI.MESI_VALIDI.get(date.getMonthValue() - 1);
+        String meseIta = MESI_VALIDI.get(date.getMonthValue() - 1);
         bean.setMese(meseIta);
         bean.setOrario(mattinaRadio.isSelected() ? "M" : "P");
 
