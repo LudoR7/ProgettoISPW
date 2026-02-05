@@ -1,11 +1,13 @@
 package com.artigianhair.controller;
 
 import com.artigianhair.bean.AppuntamentoBean;
+import com.artigianhair.engineering.exception.AppuntamentoException;
 import com.artigianhair.engineering.exception.PrenotazioneException;
 import com.artigianhair.engineering.factory.DAOfactory;
 import com.artigianhair.model.Appuntamento;
 
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -59,13 +61,14 @@ public class PrenotazioneController {
     }
 
     private void inviaEmailConferma(String email){
-        logger.info( String.format("E-mail di conferma inviata a: %s",email));
+        String s = String.format("E-mail di conferma inviata a: %s",email);
+        logger.info(s);
     }
     private void notificaProprietaria(Appuntamento appuntamento){
         logger.info("Notifica appuntamento del: " + appuntamento.getData() + ", inviata alla proprietaria");
     }
 
-    public List<AppuntamentoBean> recuperaAppuntamentiUtente(String email) throws Exception {
+    public List<AppuntamentoBean> recuperaAppuntamentiUtente(String email) throws AppuntamentoException, IOException {
         List<AppuntamentoBean> tuttiAppuntamenti = AgendaController.recuperaAppuntamenti();
         List<AppuntamentoBean> iMieiAppuntamenti = new ArrayList<>();
 
