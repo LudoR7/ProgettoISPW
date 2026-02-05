@@ -6,7 +6,6 @@ import com.artigianhair.controller.PrenotazioneController;
 import com.artigianhair.engineering.exception.PrenotazioneException;
 import com.artigianhair.engineering.singleton.SessioneAttuale;
 import com.artigianhair.model.User;
-import com.artigianhair.view.cli.PrenotazioneCLI;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.time.LocalDate;
