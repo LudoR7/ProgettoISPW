@@ -64,16 +64,15 @@ public class DAOfactory {
             case "DEMO" -> new MemoryAppuntamentoDAO();
             case "FS" -> new FileSystemAppuntamentoDAO();
             case "SER" -> new SerializableAppuntamentoDAO();
-            default ->  new com.artigianhair.persistence.memory.MemoryAppuntamentoDAO();
+            default ->  new MemoryAppuntamentoDAO();
         };
     }
 
-    // PROBLEMA
     public static OrdineDAO getOrdineDAO() {
         String type = readPersistenceTypeFromConfiguration();
         return switch (type.toUpperCase()) {
             case "DEMO" -> new MemoryOrdineDAO();
-            case "FS" -> (OrdineDAO) new FileSystemOrdineDAO();
+            case "FS" -> new FileSystemOrdineDAO();
             case "SER" -> new SerializableOrdineDAO();
             default -> new MemoryOrdineDAO();
         };

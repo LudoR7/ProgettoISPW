@@ -57,8 +57,9 @@ public class PrenotazioneController {
             throw new PrenotazioneException("Erroresss");
         }
     }
+
     private void inviaEmailConferma(String email){
-        logger.info( () -> "E-mail di conferma inviata a: %s" + email);
+        logger.info( String.format("E-mail di conferma inviata a: %s",email));
     }
     private void notificaProprietaria(Appuntamento appuntamento){
         logger.info("Notifica appuntamento del: " + appuntamento.getData() + ", inviata alla proprietaria");

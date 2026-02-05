@@ -1,0 +1,92 @@
+/* Stili Generali della Finestra */
+.root {
+    -fx-background-color: #B59E8D; /* Sfondo principale */
+    -fx-font-family: "System";
+}
+
+/* Barre di Navigazione (Header e Footer) */
+.nav-bar {
+    -fx-background-color: #9C8677; /* Colore barre */
+    -fx-alignment: center;
+}
+
+/* Tipografia */
+.titolo-principale {
+    -fx-font-family: "Serif";
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-fill: white; /* Per Text */
+    -fx-text-fill: white; /* Per Label */
+}
+
+.sottotitolo {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: #4D3E33; /* */
+}
+
+/* Bottoni */
+.button-primary {
+    -fx-background-color: #7D6B5D;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand; /* */
+}
+
+.button-secondary {
+    -fx-background-color: #E6D2C1;
+    -fx-text-fill: #4D3E33;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand; /* */
+}
+
+.button-danger {
+    -fx-background-color: #A64444;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand; /* */
+}
+
+/* Campi di Input */
+.text-input {
+    -fx-background-color: #E6D2C1;
+    -fx-background-radius: 20;
+    -fx-padding: 10; /* */
+}
+
+.date-picker {
+    -fx-background-color: #E6D2C1;
+    -fx-control-inner-background: #E6D2C1; /* */
+}
+
+/* Liste e Tabelle */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #9C8677; /* */
+}
+
+.text-area {
+    -fx-control-inner-background: #E6D2C1; /* */
+}
+
+/* Link */
+.hyperlink {
+    -fx-text-fill: white;
+    -fx-underline: false;
+}
+
+.hyperlink-dark {
+    -fx-text-fill: #4D3E33; /* */
+}
+
+/* Contenitori Speciali (Popup/Modali) */
+.container-overlay {
+    -fx-background-color: rgba(77, 62, 51, 0.98);
+    -fx-background-radius: 20;
+    -fx-border-color: #E6D2C1;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 20, 0, 0, 0); /* */
+}

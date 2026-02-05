@@ -26,10 +26,11 @@ public class AgendaController {
 
         for(Appuntamento a : agenda){
             AppuntamentoBean bean = new AppuntamentoBean();
-            bean.setData(a.getData().toString());
-            int indiceMese = a.getData().getMonthValue() - 1;
+            bean.setData(String.valueOf(a.getData().getDayOfMonth()));
 
+            int indiceMese = a.getData().getMonthValue() - 1;
             bean.setMese(MESI_VALIDI.get(indiceMese));
+
             bean.setOrario(a.getFasciaOraria());
             bean.setClienteEmail(a.getClienteEmail());
 
@@ -45,7 +46,16 @@ public class AgendaController {
     public static void cancellaAppuntamento(AppuntamentoBean bean) throws IOException {
         AppuntamentoDAO dao = DAOfactory.getAppuntamentoDAO();
 
-        LocalDate data = LocalDate.parse(bean.getData());
+        int giorno = Integer.parseInt(bean.getData().trim());
+        int meseIndice = -1;
+        for (int i = 0; i < MESI_VALIDI.size(); i++) {
+            if (MESI_VALIDI.get(i).equalsIgnoreCase(bean.getMese())) {
+                meseIndice = i + 1;
+                break;
+            }
+        }
+
+        LocalDate data = LocalDate.of(LocalDate.now().getYear(), meseIndice, giorno);
         LocalTime orario = bean.getOrario().equalsIgnoreCase("M") ? LocalTime.of(9, 0) : LocalTime.of(13, 0);
 
         Appuntamento appuntamento = new Appuntamento(data, orario, bean.getTrattamenti(), bean.getClienteEmail());

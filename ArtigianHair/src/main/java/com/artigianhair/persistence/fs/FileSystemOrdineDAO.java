@@ -2,21 +2,23 @@ package com.artigianhair.persistence.fs;
 
 import com.artigianhair.model.Ordine;
 import com.artigianhair.model.StatoOrdine;
+import com.artigianhair.persistence.dao.OrdineDAO;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileSystemOrdineDAO {
+public class FileSystemOrdineDAO implements OrdineDAO {
     private static final String FILE_NAME = "ordini.csv";
 
+    @Override
     public void salvaOrdine(Ordine ordine) throws IOException {
         List<Ordine> ordini = findAll();
         ordini.add(ordine);
         saveAll(ordini);
     }
-
+    @Override
     public void aggiornaOrdine(Ordine ordineTarget, StatoOrdine nuovoStato) throws IOException {
         List<Ordine> tuttiGliOrdini = findAll();
         boolean trovato = false;
@@ -47,7 +49,7 @@ public class FileSystemOrdineDAO {
             }
         }
     }
-
+    @Override
     public List<Ordine> findAll() throws IOException {
         List<Ordine> ordini = new ArrayList<>();
         File file = new File(FILE_NAME);

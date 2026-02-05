@@ -2,11 +2,12 @@ package com.artigianhair.controller;
 
 import com.artigianhair.bean.CarrelloBean;
 
+import com.artigianhair.engineering.factory.DAOfactory;
 import com.artigianhair.model.Ordine;
 import com.artigianhair.model.Prodotto;
 import com.artigianhair.model.StatoOrdine;
 
-import com.artigianhair.persistence.fs.FileSystemOrdineDAO;
+import com.artigianhair.persistence.dao.OrdineDAO;
 import com.artigianhair.view.cli.GestioneInputCLI;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
 
 public class EcommerceController {
     Logger logger = Logger.getLogger(getClass().getName());
-    private final FileSystemOrdineDAO ordineDAO = new FileSystemOrdineDAO();
+    private final OrdineDAO ordineDAO = DAOfactory.getOrdineDAO();
     private static final String ACTION_1 = "Shampoo";
     private static final String ACTION_2 = "Maschera";
     private static final String ACTION_3 = "Siero";
@@ -37,8 +38,12 @@ public class EcommerceController {
         return personalizzati;
     }
 
-    public void processaOrdine(CarrelloBean carrello) {
+    public boolean processaOrdine(CarrelloBean carrello) {
         try {
+            if (carrello.getProdottiConQuantita().isEmpty() || carrello.getEmailCliente() == null) {
+                logger.warning("Impossibile processare l'ordine: carrello vuoto o email mancante.");
+                return false;
+            }
             List<String> righeProdotti = new ArrayList<>();
             carrello.getProdottiConQuantita().forEach((prodotto, quantita) -> righeProdotti.add(prodotto.nome() + " x" + quantita));
 
@@ -50,12 +55,14 @@ public class EcommerceController {
 
             ordineDAO.salvaOrdine(nuovoOrdine);
             logger.info("Ordine processato con successo per: " + carrello.getEmailCliente());
+            return true;
 
         } catch (IOException e) {
             logger.warning("Errore durante il salvataggio dell'ordine: " + e.getMessage());
         } catch (NullPointerException e) {
             logger.warning("Errore: Dati del carrello incompleti.");
         }
+        return false;
     }
 
     private void generaCaso1(List<Prodotto> lista) {

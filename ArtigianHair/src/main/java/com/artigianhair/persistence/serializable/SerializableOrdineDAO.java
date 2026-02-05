@@ -21,11 +21,12 @@ public class SerializableOrdineDAO implements OrdineDAO {
         ordini.add(ordine);
         saveData();
     }
+    @Override
+    public List<Ordine> findAll()  throws IOException {
 
-    public List<Ordine> findAll() {
         return new ArrayList<>(ordini);
     }
-
+    @Override
     public void aggiornaOrdine(Ordine ordineTarget, StatoOrdine nuovoStato) throws IOException {
         boolean trovato = false;
         for (Ordine o : ordini) {

@@ -25,16 +25,8 @@ public class LoginController {
         );
 
         userDAO.saveUser(newUser);
-
-        UserDAO userRegistratoDAO = DAOfactory.getUser();
-        User user = userRegistratoDAO.findUserByEmail(userBean.getEmail(), userBean.getPassword());
-        SessioneAttuale.getInstance().login(user);
-
-        if(user.getPassword().equals(userBean.getPassword())) {
-            SessioneAttuale.getInstance().login(user);
-            return true;
-        }
-        return false;
+        SessioneAttuale.getInstance().login(newUser);
+        return true;
     }
 
     public boolean login(UserBean loginBean) throws LoginException, IOException {
@@ -44,10 +36,11 @@ public class LoginController {
             throw new LoginException("Credenziali non valide");
         }
 
-        if(user.getPassword().equals(loginBean.getPassword())) {
-            SessioneAttuale.getInstance().login(user);
-            return true;
+        if(!user.getPassword().equals(loginBean.getPassword())) {
+            throw new LoginException("Credenziali non valide: password errata.");
+
         }
-        return false;
+        SessioneAttuale.getInstance().login(user);
+        return true;
     }
 }
