@@ -24,9 +24,7 @@ public class FileSystemOrdineDAO implements OrdineDAO {
         boolean trovato = false;
 
         for (Ordine o : tuttiGliOrdini) {
-            if (o.getEmailCliente().equals(ordineTarget.getEmailCliente()) &&
-                    o.getProdotti().equals(ordineTarget.getProdotti())) {
-                o.setStato(nuovoStato);
+            if (o.getEmailCliente().equals(ordineTarget.getEmailCliente()) && o.getProdotti().equals(ordineTarget.getProdotti())) {o.setStato(nuovoStato);
                 trovato = true;
                 break;
             }

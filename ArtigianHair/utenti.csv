@@ -10,3 +10,7 @@ s,s,s,s,UTENTE
 Andrea,Tarlev,b,b,UTENTE
 qw,qw,qw,qw,UTENTE
 Mario,Rossi,mario.test@email.com,password123,UTENTE
+Mario,Rossi,login_success@test.com,password123,UTENTE
+Mario,Rossi,new_user@test.com,password123,UTENTE
+Mario,Rossi,duplicate@test.com,password123,UTENTE
+Mario,Rossi,wrong_pass@test.com,password123,UTENTE

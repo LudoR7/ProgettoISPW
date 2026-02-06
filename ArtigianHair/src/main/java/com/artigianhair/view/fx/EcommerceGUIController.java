@@ -122,10 +122,7 @@ public class EcommerceGUIController {
         StringBuilder sb = new StringBuilder();
         carrello.getProdottiConQuantita().forEach((p, qta) -> {
             double parziale = p.prezzo() * qta;
-            sb.append(" - ").append(p.nome())
-                    .append(" [Qta: ").append(qta).append("]")
-                    .append(" - Subtotale: €").append(String.format("%.2f", parziale))
-                    .append("\n");
+            sb.append(" - ").append(p.nome()).append(" [Qta: ").append(qta).append("]").append(" - Subtotale: €").append(String.format("%.2f", parziale)).append("\n");
         });
 
 

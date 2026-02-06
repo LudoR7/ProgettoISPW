@@ -16,11 +16,7 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
     @Override
     public void save(Appuntamento appuntamento) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-            String line = String.format("%s,%s,%s,%s",
-                    appuntamento.getData(),
-                    appuntamento.getOrario(),
-                    String.join(" - ", appuntamento.getTrattamenti()),
-                    appuntamento.getClienteEmail());
+            String line = String.format("%s,%s,%s,%s", appuntamento.getData(), appuntamento.getOrario(), String.join(" - ", appuntamento.getTrattamenti()), appuntamento.getClienteEmail());
             writer.write(line);
             writer.newLine();
         }
@@ -40,9 +36,7 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
 
                 String[] parts = line.split(",");
                 if (parts.length == 4) {
-                    list.add(new Appuntamento(
-                            LocalDate.parse(parts[0]),
-                            LocalTime.parse(parts[1]),
+                    list.add(new Appuntamento(LocalDate.parse(parts[0]), LocalTime.parse(parts[1]),
                             new ArrayList<>(Arrays.asList(parts[2].split(";"))), parts[3]));
                 }
             }
@@ -53,9 +47,7 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
     @Override
     public void delete(Appuntamento appuntamento) throws IOException {
         List<Appuntamento> list = findAll();
-        list.removeIf(a -> a.getData().equals(appuntamento.getData()) &&
-                a.getOrario().equals(appuntamento.getOrario()) &&
-                a.getClienteEmail().equalsIgnoreCase(appuntamento.getClienteEmail()));
+        list.removeIf(a -> a.getData().equals(appuntamento.getData()) && a.getOrario().equals(appuntamento.getOrario()) && a.getClienteEmail().equalsIgnoreCase(appuntamento.getClienteEmail()));
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, false))) {
             for (Appuntamento a : list) {

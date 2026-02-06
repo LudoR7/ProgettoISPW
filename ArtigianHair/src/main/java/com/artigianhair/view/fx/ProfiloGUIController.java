@@ -403,10 +403,8 @@ public class ProfiloGUIController {
                 return;
             }
 
-            colMieiProdotti.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(String.join(", ", cellData.getValue().getProdotti())));
-            colMioStato.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getStato().toString()));
+            colMieiProdotti.setCellValueFactory(cellData -> new SimpleStringProperty(String.join(", ", cellData.getValue().getProdotti())));
+            colMioStato.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStato().toString()));
 
 
             tabellaMieiOrdini.getItems().setAll(ordiniUtente);

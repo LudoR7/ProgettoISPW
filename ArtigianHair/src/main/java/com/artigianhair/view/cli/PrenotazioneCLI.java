@@ -162,11 +162,10 @@ public class PrenotazioneCLI {
 
     private boolean isFasciaOccupata(int giorno, String mese, String fascia) {
         try {
-            int meseIndice = MESI_VALIDI.indexOf(mese) + 1;
-            LocalDate dataTarget = LocalDate.of(LocalDate.now().getYear(), meseIndice, giorno);
-            String dataTargetStr = dataTarget.toString();
+            String giornoStr = String.valueOf(giorno);
+            List<AppuntamentoBean> appuntamenti = AgendaController.recuperaAppuntamenti();
 
-            return AgendaController.recuperaAppuntamenti().stream().anyMatch(a -> a.getData().equals(dataTargetStr) && a.getOrario().equalsIgnoreCase(fascia));
+            return appuntamenti.stream().anyMatch(a -> a.getData().equals(giornoStr) && a.getMese().equalsIgnoreCase(mese) && a.getOrario().equalsIgnoreCase(fascia));
         } catch (Exception e) {
             return false;
         }

@@ -69,8 +69,7 @@ public class PrenotazioneGUIController {
     private void setupServiceLimitLogic() {
         CheckBox[] allChecks = {piegaCheck, taglioCheck, coloreCheck, keratinaCheck};
         for (CheckBox cb : allChecks) {
-            cb.selectedProperty().addListener((obs, wasSel, isNowSel) -> aggiornaStatoCheckBox(allChecks)
-            );
+            cb.selectedProperty().addListener((obs, wasSel, isNowSel) -> aggiornaStatoCheckBox(allChecks));
         }
     }
 
@@ -141,11 +140,8 @@ public class PrenotazioneGUIController {
         String giornoStr = String.valueOf(date.getDayOfMonth());
         String meseScelto = MESI_VALIDI.get(date.getMonthValue() - 1);
 
-        return appuntamentiEsistenti.stream().anyMatch(a ->
-                a.getData().equals(giornoStr) &&
-                        a.getMese().equalsIgnoreCase(meseScelto) &&
-                        a.getOrario().equalsIgnoreCase(fascia)
-        );}
+        return appuntamentiEsistenti.stream().anyMatch(a -> a.getData().equals(giornoStr) && a.getMese().equalsIgnoreCase(meseScelto) && a.getOrario().equalsIgnoreCase(fascia));
+    }
 
     private boolean isGiornoPieno(LocalDate date) {
 
