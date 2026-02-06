@@ -13,18 +13,16 @@ import com.artigianhair.model.User;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class PrenotazioneCLI {
-    Logger logger = Logger.getLogger(getClass().getName());
     private final PrenotazioneController controller = new PrenotazioneController();
     protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
 
 
     public void start1(){
-        logger.info("\n1) Effettua una nuova prenotazione.");
-        logger.info("2) Recupera prenotazione.");
-        logger.info("3) Annulla una prenotazione.");
+        GestioneInputCLI.print("\n1) Effettua una nuova prenotazione.");
+        GestioneInputCLI.print("2) Recupera prenotazione.");
+        GestioneInputCLI.print("3) Annulla una prenotazione.");
         int scelta = GestioneInputCLI.leggiInt("\nScegli un'opzione: ");
         switch (scelta) {
             case 1 : {
@@ -41,7 +39,7 @@ public class PrenotazioneCLI {
                 break;
             }
             default : {
-                logger.info("Opzione non valida.");
+                GestioneInputCLI.print("Opzione non valida.");
                 break;
             }
         }
@@ -50,8 +48,8 @@ public class PrenotazioneCLI {
     public void start(){
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
 
-        logger.info("--------------------------------------------------");
-        logger.info("\nNUOVA PRENOTAZIONE:  ");
+        GestioneInputCLI.print("--------------------------------------------------");
+        GestioneInputCLI.print("\nNUOVA PRENOTAZIONE:  ");
         AppuntamentoBean bean = new AppuntamentoBean();
 
         String meseScelto = validazioneMese();
@@ -80,12 +78,12 @@ public class PrenotazioneCLI {
 
         try{
             controller.confermaAppuntamento(bean);
-            logger.info("\nPrenotazione effettuata con successo.");
-            logger.info("\nRiceverai a breve una mail di conferma, all'indirizzo: " + userCorrente.getEmail());
+            GestioneInputCLI.print("\nPrenotazione effettuata con successo.");
+            GestioneInputCLI.print("\nRiceverai a breve una mail di conferma, all'indirizzo: " + userCorrente.getEmail());
         } catch(PrenotazioneException e){
-            logger.info("Errore durante la prenotazione: " + e.getMessage());
+            GestioneInputCLI.print("Errore durante la prenotazione: " + e.getMessage());
         } catch (Exception e) {
-            logger.info("Errore nel sistema, riprovare più tardi: " + e.getMessage());
+            GestioneInputCLI.print("Errore nel sistema, riprovare più tardi: " + e.getMessage());
         }
     }
 
@@ -108,23 +106,24 @@ public class PrenotazioneCLI {
 
         for (int i = 1; i <= giorniMese; i++) {
             String marker = determinaMarkerGiorno(i, mese);
-            logger.info(() -> String.format("%-8s", marker));
+            String s = (String.format("%-8s", marker));
+            GestioneInputCLI.print2(s);
 
             if (i % 7 == 0) {
-                logger.info(() -> "");
+                GestioneInputCLI.print("");
             }
         }
-        logger.info("\n--------------------------------------------------\n");
+        GestioneInputCLI.print("\n--------------------------------------------------\n");
     }
 
     private void stampaIntestazione(String mese, int anno) {
 
         String header = String.format("%nCALENDARIO %s %s", mese.toUpperCase(), anno);
-        logger.info(header);
+        GestioneInputCLI.print(header);
 
-        logger.info("\nLegenda: (-,P) = Mattina occupata, (M,-) = Pomeriggio occupato, X = Pieno");
-        logger.info("LUN     MAR     MER     GIO     VEN     SAB     DOM");
-        logger.info("--------------------------------------------------");
+        GestioneInputCLI.print("\nLegenda: (-,P) = Mattina occupata, (M,-) = Pomeriggio occupato, X = Pieno");
+        GestioneInputCLI.print("LUN     MAR     MER     GIO     VEN     SAB     DOM");
+        GestioneInputCLI.print("--------------------------------------------------");
     }
 
     private String determinaMarkerGiorno(int giorno, String mese) {
@@ -149,12 +148,12 @@ public class PrenotazioneCLI {
     private String validazioneFasciaOraria(int giorno, String mese){
             String fascia = GestioneInputCLI.leggiString("Scegli fascia (Mattina: M, Pomeriggio: P):").toUpperCase();
             if(!fascia.equals("M") && !fascia.equals("P")){
-                logger.info("Opzione non valida.\n");
+                GestioneInputCLI.print("Opzione non valida.\n");
                 return "";
             }
             if(isFasciaOccupata(giorno, mese, fascia)){
                 String header = String.format("%nSpiacenti, la fascia - %s - è già occupata per questo giorno.%n", fascia);
-                logger.info(header);
+                GestioneInputCLI.print(header);
                 return "";
             } else{
                 return fascia;
@@ -181,15 +180,15 @@ public class PrenotazioneCLI {
                     return m;
                 }
             }
-            logger.info("Mese non valido. Inserire il nome completo del mese.");
+            GestioneInputCLI.print("Mese non valido. Inserire il nome completo del mese.");
         }
     }
 
 
 
     private void selezionaTrattamenti(AppuntamentoBean bean){
-        logger.info("\nTrattamenti disponibili:\n- Piega (1), \n- Taglio (2),\n- Colore (3), \n- Keratina (4)");
-        logger.info("Puoi scegliere massimo 3 trattamenti.\n(Premi 0 per terminare.) ");
+        GestioneInputCLI.print("\nTrattamenti disponibili:\n- Piega (1), \n- Taglio (2),\n- Colore (3), \n- Keratina (4)");
+        GestioneInputCLI.print("Puoi scegliere massimo 3 trattamenti.\n(Premi 0 per terminare.) ");
         while (bean.getTrattamenti().size() < 3) {
             try {
                 int scelta = GestioneInputCLI.leggiInt("Scegli il trattamento: ");
@@ -201,7 +200,7 @@ public class PrenotazioneCLI {
                 String t = mappaTrattamento(scelta);
 
                 if (t == null) {
-                    logger.info("Scelta non valida.");
+                    GestioneInputCLI.print("Scelta non valida.");
                 } else {
                     if (bean.getTrattamenti().contains(t)) {
                         throw new AppuntamentoException("Il trattamento - " + t + " - è già stato inserito.");
@@ -209,11 +208,11 @@ public class PrenotazioneCLI {
 
                     bean.addTrattamento(t);
                     String s = String.format("Aggiunto: %s", t);
-                    logger.info(s);
+                    GestioneInputCLI.print(s);
                 }
                 } catch (AppuntamentoException e) {
-                    logger.info("\nATTENZIONE: " + e.getMessage());
-                    logger.info("Scegli un trattamento diverso o premi 0 per terminare.");
+                    GestioneInputCLI.print("\nATTENZIONE: " + e.getMessage());
+                    GestioneInputCLI.print("Scegli un trattamento diverso o premi 0 per terminare.");
                 }
             }
     }
@@ -223,31 +222,31 @@ public class PrenotazioneCLI {
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         String emailUtente = userCorrente.getEmail();
 
-        logger.info("\nLE TUE PRENOTAZIONI: ");
+        GestioneInputCLI.print("\nLE TUE PRENOTAZIONI: ");
         try {
 
             List<AppuntamentoBean> tuttiAppuntamenti = AgendaController.recuperaAppuntamenti();
             boolean trovato = false;
 
             String header = String.format("%-12s | %-8s | %-30s%n", "DATA", "ORA", "TRATTAMENTI");
-            logger.info(header);
-            logger.info("------------------------------------------------------------");
+            GestioneInputCLI.print(header);
+            GestioneInputCLI.print("------------------------------------------------------------");
 
             for (AppuntamentoBean b : tuttiAppuntamenti) {
                 if (b.getClienteEmail().equalsIgnoreCase(emailUtente)) {
                     String string = String.format("%-12s | %-8s | %-30s%n", b.getData(), b.getOrario(), String.join(", ", b.getTrattamenti()));
-                    logger.info(string);
+                    GestioneInputCLI.print(string);
                     trovato = true;
                 }
             }
 
             if (!trovato) {
                 String s = String.format("Nessuna trattamento: %s", emailUtente);
-                logger.info(s);
+                GestioneInputCLI.print(s);
             }
 
         } catch (Exception e) {
-            logger.info("Errore durante il recupero delle prenotazioni: " + e.getMessage());
+            GestioneInputCLI.print("Errore durante il recupero delle prenotazioni: " + e.getMessage());
         }
 
         GestioneInputCLI.leggiString("\nPremi invio per tornare al menù...");
@@ -268,15 +267,15 @@ public class PrenotazioneCLI {
             }
 
             if (iMieiAppuntamenti.isEmpty()) {
-                logger.info("Non hai appuntamenti da annullare.");
+                GestioneInputCLI.print("Non hai appuntamenti da annullare.");
                 return;
             }
 
-            logger.info("\nSELEZIONA L'APPUNTAMENTO DA ANNULLARE: ");
+            GestioneInputCLI.print("\nSELEZIONA L'APPUNTAMENTO DA ANNULLARE: ");
             for (int i = 0; i < iMieiAppuntamenti.size(); i++) {
                 AppuntamentoBean b = iMieiAppuntamenti.get(i);
                 String string = String.format("%d) Data: %s | Ora: %s | Trattamenti: %s%n", i + 1, b.getData(), b.getOrario(), String.join(", ", b.getTrattamenti()));
-                logger.info(string);
+                GestioneInputCLI.print(string);
             }
 
             int index = GestioneInputCLI.leggiInt("\nInserisci il numero dell'appuntamento (0 per tornare indietro): ") - 1;
@@ -286,14 +285,14 @@ public class PrenotazioneCLI {
             }
             if (index >= 0 && index < iMieiAppuntamenti.size()) {
                 AgendaController.cancellaAppuntamento(iMieiAppuntamenti.get(index));
-                logger.info("Appuntamento annullato con successo.");
+                GestioneInputCLI.print("Appuntamento annullato con successo.");
             } else {
-                logger.info("Scelta non valida.");
+                GestioneInputCLI.print("Scelta non valida.");
                 annullaPrenotazione();
             }
 
         } catch (IOException e) {
-            logger.info("Errore durante l'operazione: " + e.getMessage());
+            GestioneInputCLI.print("Errore durante l'operazione: " + e.getMessage());
         }
 
     }

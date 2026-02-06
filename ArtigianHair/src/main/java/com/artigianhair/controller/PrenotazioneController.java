@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class PrenotazioneController {
     protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
     Logger logger = Logger.getLogger(getClass().getName());
+
     public void confermaAppuntamento(AppuntamentoBean bean) throws PrenotazioneException {
         try {
             if (bean.getOrario() == null) {
@@ -51,7 +52,7 @@ public class PrenotazioneController {
 
             DAOfactory.getAppuntamentoDAO().save(appuntamento);
             inviaEmailConferma(bean.getClienteEmail());
-            notificaProprietaria(appuntamento);
+            notificaProprietaria(bean);
 
         }catch (NumberFormatException e) {
             throw new PrenotazioneException("Il giorno inserito non è un numero valido.");
@@ -65,7 +66,7 @@ public class PrenotazioneController {
         String s = String.format("E-mail di conferma inviata a: %s",email);
         logger.info(s);
     }
-    private void notificaProprietaria(Appuntamento appuntamento){
+    private void notificaProprietaria(AppuntamentoBean appuntamento){
         logger.info("Notifica appuntamento del: " + appuntamento.getData() + ", inviata alla proprietaria");
     }
 

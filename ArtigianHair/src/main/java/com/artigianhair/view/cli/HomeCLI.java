@@ -4,10 +4,7 @@ import com.artigianhair.engineering.singleton.SessioneAttuale;
 import com.artigianhair.model.Ruolo;
 import com.artigianhair.model.User;
 
-import java.util.logging.Logger;
-
 public class HomeCLI {
-    Logger logger = Logger.getLogger(getClass().getName());
 
     public HomeCLI() {
         //Costruttore di default
@@ -18,8 +15,8 @@ public class HomeCLI {
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         boolean valido = true;
         while (valido) {
-            logger.info("\nHOME (" + userCorrente.getRuolo() + ") ");
-            logger.info("Ciao, " + userCorrente.getNome() + " " + userCorrente.getCognome());
+            GestioneInputCLI.print("\nHOME (" + userCorrente.getRuolo() + ") ");
+            GestioneInputCLI.print("Ciao, " + userCorrente.getNome() + " " + userCorrente.getCognome());
 
             if (userCorrente.getRuolo() == Ruolo.PROPRIETARIA) {
                 valido = mostraMenuProprietaria();
@@ -30,51 +27,48 @@ public class HomeCLI {
     }
 
     private boolean mostraMenuUtente() {
-        logger.info("1) Prenota Appuntamento ");
-        logger.info("2) Acquista Prodotti Personalizzati ");
-        logger.info("3) Logout");
+        GestioneInputCLI.print("1) Prenota Appuntamento ");
+        GestioneInputCLI.print("2) Acquista Prodotti Personalizzati ");
+        GestioneInputCLI.print("3) Logout");
 
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
-        switch (scelta) {
-            case 1: {
+        return switch (scelta) {
+            case 1 -> {
                 new PrenotazioneCLI().start1();
-                return true;
+                yield true;
             }
-            case 2: {
+            case 2 -> {
                 new EcommerceCLI().start();
-                return true;
+                yield true;
             }
-            case 3: {
-                return false; }
-            default: {
-                logger.info("Opzione non valida.");
-                return true;
+            case 3 -> false;
+            default -> {
+                GestioneInputCLI.print("Opzione non valida.");
+                yield true;
             }
-        }
+        };
     }
 
     private boolean mostraMenuProprietaria() {
-        logger.info("1) Visualizza Agenda");
-        logger.info("2) Gestione Prodotti ");
-        logger.info("3) Logout");
+        GestioneInputCLI.print("1) Visualizza Agenda");
+        GestioneInputCLI.print("2) Gestione Prodotti ");
+        GestioneInputCLI.print("3) Logout");
 
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
-        switch (scelta) {
-            case 1 : {
+        return switch (scelta) {
+            case 1 -> {
                 new AgendaCLI().start();
-                return true;
+                yield true;
             }
-            case 2 : {
+            case 2 -> {
                 new GestioneProdottiCLI().start();
-                return true;
+                yield true;
             }
-            case 3 : {
-                return false;
+            case 3 -> false;
+            default -> {
+                GestioneInputCLI.print("Opzione non valida.");
+                yield true;
             }
-            default : {
-                logger.info("Opzione non valida.");
-                return true;
-            }
-        }
+        };
     }
 }

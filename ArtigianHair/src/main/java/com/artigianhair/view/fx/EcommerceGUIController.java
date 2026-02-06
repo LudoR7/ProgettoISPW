@@ -157,6 +157,7 @@ public class EcommerceGUIController {
     }
     @FXML
     private void handleCancellaOrdine() {
+        this.carrello.svuota();
         paneCarrello.setDisable(true);
         SceneManager.changeScene(ACTION_4);
 

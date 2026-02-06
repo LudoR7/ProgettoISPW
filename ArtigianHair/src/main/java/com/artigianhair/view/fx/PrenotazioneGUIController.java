@@ -138,12 +138,17 @@ public class PrenotazioneGUIController {
     }
 
     private boolean isFasciaOccupata(LocalDate date, String fascia) {
-        String dataStr = date.toString();
-        return appuntamentiEsistenti.stream()
-                .anyMatch(a -> a.getData().equals(dataStr) && a.getOrario().equalsIgnoreCase(fascia));
-    }
+        String giornoStr = String.valueOf(date.getDayOfMonth());
+        String meseScelto = MESI_VALIDI.get(date.getMonthValue() - 1);
+
+        return appuntamentiEsistenti.stream().anyMatch(a ->
+                a.getData().equals(giornoStr) &&
+                        a.getMese().equalsIgnoreCase(meseScelto) &&
+                        a.getOrario().equalsIgnoreCase(fascia)
+        );}
 
     private boolean isGiornoPieno(LocalDate date) {
+
         return isFasciaOccupata(date, "M") && isFasciaOccupata(date, "P");
     }
 

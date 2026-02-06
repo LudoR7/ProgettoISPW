@@ -25,5 +25,15 @@ public class GestioneInputCLI {
         System.out.print(messaggio);
         return scanner.nextLine();
     }
+
+    @SuppressWarnings("java:S106")
+    public static void print(String messaggio) {
+        System.out.println(messaggio);
+    }
+
+    @SuppressWarnings("java:S106")
+    public static void print2(String s) {
+        System.out.print(s);
+    }
 }
 

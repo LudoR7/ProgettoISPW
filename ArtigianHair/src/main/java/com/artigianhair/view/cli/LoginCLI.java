@@ -5,26 +5,23 @@ import com.artigianhair.bean.UserBean;
 import com.artigianhair.engineering.exception.LoginException;
 import com.artigianhair.model.Ruolo;
 
-import java.util.logging.Logger;
-
 
 public class LoginCLI {
-    Logger logger = Logger.getLogger(getClass().getName());
     private final LoginController loginController = new LoginController();
     public void start(){
         boolean valido = true;
 
         while(valido){
-            logger.info("__________________________________________");
-            logger.info("[ Benvenuto da ArtigianHair ] \nScegli un'opzione:");
-            logger.info("\n1) Login");
-            logger.info("2) Registrazione");
-            logger.info("3) Esci");
+            GestioneInputCLI.print("__________________________________________");
+            GestioneInputCLI.print("[ Benvenuto da ArtigianHair ] \nScegli un'opzione:");
+            GestioneInputCLI.print("\n1) Login");
+            GestioneInputCLI.print("2) Registrazione");
+            GestioneInputCLI.print("3) Esci");
 
             int input = GestioneInputCLI.leggiInt("...");
             switch (input){
                 case 1:
-                    logger.info("\nInizio Login");
+                    GestioneInputCLI.print("\nInizio Login");
                     if(eseguiLogin()){
                         HomeCLI home = new HomeCLI();
                         home.start();
@@ -40,20 +37,20 @@ public class LoginCLI {
                     valido = false;
                     break;
                 case 4:
-                    logger.info("Nessun utente loggato al momento, impossibile eseguire il Logout.");
+                    GestioneInputCLI.print("Nessun utente loggato al momento, impossibile eseguire il Logout.");
                     LoginCLI login = new LoginCLI();
                     login.start();
                     break;
 
                 default:
-                    logger.info("Opzione non valida");
+                    GestioneInputCLI.print("Opzione non valida");
 
             }
         }
     }
     private boolean eseguiRegistrazione(){
         UserBean userBean = new UserBean();
-        logger.info("\nREGISTRAZIONE: ");
+        GestioneInputCLI.print("\nREGISTRAZIONE: ");
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
         userBean.setCognome(GestioneInputCLI.leggiString("Cognome:  "));
 
@@ -66,37 +63,37 @@ public class LoginCLI {
         try{
             boolean b = loginController.registraUtente(userBean);
             if(b){
-                logger.info("\nRegistrazione eseguita");
+                GestioneInputCLI.print("\nRegistrazione eseguita");
                 return true;
             }else{
-                logger.info("\nATTENZIONE: Credenziale non valide, riprova. ");
+                GestioneInputCLI.print("\nATTENZIONE: Credenziale non valide, riprova. ");
                 return false;
             }
         }catch (Exception e){
-            logger.info(e.getMessage());
+            GestioneInputCLI.print(e.getMessage());
         }
         return false;
     }
 
     private boolean eseguiLogin(){
         UserBean loginBean = new UserBean();
-        logger.info("\nLOGIN:  ");
+        GestioneInputCLI.print("\nLOGIN:  ");
         loginBean.setEmail(GestioneInputCLI.leggiString("Email:  "));
         loginBean.setPassword(GestioneInputCLI.leggiString("Password:  "));
 
         try{
             boolean succes = loginController.login(loginBean);
             if(succes){
-                logger.info("\nLogin eseguito");
+                GestioneInputCLI.print("\nLogin eseguito");
                 return true;
             }else{
-                logger.info("\nATTENZIONE: Credenziale non valide, riprova. ");
+                GestioneInputCLI.print("\nATTENZIONE: Credenziale non valide, riprova. ");
                 return false;
             }
         }catch (LoginException e) {
-            logger.info("\nErrore nel login. " + e.getMessage());
+            GestioneInputCLI.print("\nErrore nel login. " + e.getMessage());
         }catch (Exception e){
-            logger.info("\nErrore nel caricamento dei dati");
+            GestioneInputCLI.print("\nErrore nel caricamento dei dati");
         }
         return false;
     }
