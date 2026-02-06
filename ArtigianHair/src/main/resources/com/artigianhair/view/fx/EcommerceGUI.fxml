@@ -6,34 +6,28 @@
 <?import javafx.scene.text.*?>
 
 <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" spacing="0.0"
-      style="-fx-background-color: #B59E8D;" xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artigianhair.view.fx.EcommerceGUIController">
+      styleClass="root" stylesheets="@style.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.artigianhair.view.fx.EcommerceGUIController">
 
-    <HBox alignment="CENTER" prefHeight="60.0" spacing="40.0" style="-fx-background-color: #9C8677;">
-        <Hyperlink onAction="#goToPrenotazione" text="Prenota" textFill="WHITE" />
-        <Hyperlink onAction="#goToEcommerce" text="Acquista Prodotto" textFill="WHITE" />
-        <Hyperlink onAction="#goToProfilo" text="Profilo" textFill="WHITE" />
-        <Hyperlink onAction="#handleLogout" text="Logout" textFill="#FFCCCC" style="-fx-font-weight: bold;" />
+    <HBox alignment="CENTER" prefHeight="60.0" spacing="40.0" styleClass="nav-bar">
+        <Hyperlink onAction="#goToPrenotazione" text="Prenota" styleClass="hyperlink" />
+        <Hyperlink onAction="#goToEcommerce" text="Acquista Prodotto" styleClass="hyperlink" />
+        <Hyperlink onAction="#goToProfilo" text="Profilo" styleClass="hyperlink" />
+        <Hyperlink onAction="#handleLogout" text="Logout" styleClass="hyperlink" style="-fx-text-fill: #FFCCCC; -fx-font-weight: bold;" />
     </HBox>
 
     <VBox alignment="CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
         <padding><Insets bottom="20.0" left="40.0" right="40.0" top="20.0" /></padding>
 
-        <Text fill="WHITE" text="Acquisto prodotti">
-            <font><Font name="Serif Bold" size="36.0" /></font>
-        </Text>
+        <Text text="Acquisto prodotti" styleClass="titolo-principale" />
 
         <VBox fx:id="paneSceltaCapelli" alignment="CENTER" spacing="15.0">
-            <Text fill="#4D3E33" text="Scegli le caratteristiche dei tuoi capelli:">
-                <font><Font name="System Italic" size="18.0" /></font>
-            </Text>
+            <Text text="Scegli le caratteristiche dei tuoi capelli:" styleClass="sottotitolo" />
             <HBox alignment="CENTER" spacing="15.0">
-                <Button onAction="#onSceltaSecchi" prefWidth="180.0" text="Secchi e sfibrati"
-                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;" />
-                <Button onAction="#onSceltaGrassi" prefWidth="180.0" text="Grassi"
-                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;" />
-                <Button onAction="#onSceltaNormali" prefWidth="180.0" text="Normali"
-                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: hand;" />
+                <Button onAction="#onSceltaSecchi" prefWidth="180.0" text="Secchi e sfibrati" styleClass="button-primary" />
+                <Button onAction="#onSceltaGrassi" prefWidth="180.0" text="Grassi" styleClass="button-primary" />
+                <Button onAction="#onSceltaNormali" prefWidth="180.0" text="Normali" styleClass="button-primary" />
             </HBox>
         </VBox>
 
@@ -43,52 +37,34 @@
             </Text>
             <HBox alignment="TOP_CENTER" spacing="40.0">
                 <VBox alignment="TOP_CENTER" spacing="5.0">
-                    <Button fx:id="btnProd1" onAction="#addProd1" style="-fx-background-color: #E6D2C1; -fx-background-radius: 5;" />
-                    <Text fx:id="txtDesc1" fill="#4D3E33" wrappingWidth="100.0" textAlignment="CENTER">
-                        <font><Font name="System Italic" size="12.0" /></font>
-                    </Text>
+                    <Button fx:id="btnProd1" onAction="#addProd1" styleClass="button-secondary" />
+                    <Text fx:id="txtDesc1" styleClass="sottotitolo" wrappingWidth="100.0" textAlignment="CENTER" />
                 </VBox>
                 <VBox alignment="TOP_CENTER" spacing="5.0">
-                    <Button fx:id="btnProd2" onAction="#addProd2" style="-fx-background-color: #E6D2C1; -fx-background-radius: 5;" />
-                    <Text fx:id="txtDesc2" fill="#4D3E33" wrappingWidth="100.0" textAlignment="CENTER">
-                        <font><Font name="System Italic" size="12.0" /></font>
-                    </Text>
+                    <Button fx:id="btnProd2" onAction="#addProd2" styleClass="button-secondary" />
+                    <Text fx:id="txtDesc2" styleClass="sottotitolo" wrappingWidth="100.0" textAlignment="CENTER" />
                 </VBox>
-
                 <VBox alignment="TOP_CENTER" spacing="5.0">
-                    <Button fx:id="btnProd3" onAction="#addProd3" style="-fx-background-color: #E6D2C1; -fx-background-radius: 5;" />
-                    <Text fx:id="txtDesc3" fill="#4D3E33" wrappingWidth="100.0" textAlignment="CENTER">
-                        <font><Font name="System Italic" size="12.0" /></font>
-                    </Text>
+                    <Button fx:id="btnProd3" onAction="#addProd3" styleClass="button-secondary" />
+                    <Text fx:id="txtDesc3" styleClass="sottotitolo" wrappingWidth="100.0" textAlignment="CENTER" />
                 </VBox>
-
             </HBox>
-            <Button onAction="#confermaSelezione" text="Vai al Carrello"
-                    style="-fx-background-color: #4D3E33; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
-            <Button onAction="#tornaIndietro" text="Torna indietro"
-                    style="-fx-background-color: #4D3E33; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
-
-
+            <Button onAction="#confermaSelezione" text="Vai al Carrello" styleClass="button-primary" />
+            <Button onAction="#tornaIndietro" text="Torna indietro" styleClass="button-primary" />
         </VBox>
 
         <VBox fx:id="paneCarrello" alignment="CENTER" spacing="10.0" visible="false" managed="false">
             <Text fill="WHITE" text="IL TUO CARRELLO:">
                 <font><Font name="System Bold" size="18.0" /></font>
             </Text>
-            <TextArea fx:id="txtAreaCarrello" editable="false" prefHeight="100.0" prefWidth="400.0"
-                      style="-fx-control-inner-background: #E6D2C1;" />
+            <TextArea fx:id="txtAreaCarrello" editable="false" prefHeight="100.0" prefWidth="400.0" styleClass="text-area" />
             <HBox alignment="CENTER" spacing="15.0">
-                <Button onAction="#handleConfermaOrdine" text="CONFERMA ORDINE"
-                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
-                <Button onAction="#resetShopping" text="Continua Shopping"
-                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-background-radius: 10;" />
-                <Button onAction="#handleCancellaOrdine" text="CANCELLA ORDINE"
-                        style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" />
+                <Button onAction="#handleConfermaOrdine" text="CONFERMA ORDINE" style="-fx-background-color: #4CAF50;" styleClass="button-primary" />
+                <Button onAction="#resetShopping" text="Continua Shopping" styleClass="button-primary" />
+                <Button onAction="#handleCancellaOrdine" text="CANCELLA ORDINE" styleClass="button-danger" />
             </HBox>
         </VBox>
-        <HBox alignment="CENTER" spacing="20.0">
-            <Hyperlink onAction="#goToHome" text="Home page" textFill="#4D3E33" />
-        </HBox>
-        <Label fx:id="lblStatus" textFill="#4D3E33" style="-fx-font-weight: bold;" />
+        <Hyperlink onAction="#goToHome" text="Home page" styleClass="hyperlink-dark" />
+        <Label fx:id="lblStatus" styleClass="sottotitolo" />
     </VBox>
 </VBox>

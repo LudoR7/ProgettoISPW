@@ -6,14 +6,15 @@
 <?import javafx.scene.text.*?>
 
 <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" spacing="0.0"
-      style="-fx-background-color: #B59E8D;" xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artigianhair.view.fx.HomeGUIController">
+      styleClass="root" stylesheets="@style.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.artigianhair.view.fx.HomeGUIController">
 
-    <HBox alignment="CENTER" prefHeight="60.0" spacing="40.0" style="-fx-background-color: #9C8677;">
-        <Hyperlink onAction="#goToPrenotazione" text="Prenota" textFill="WHITE" />
-        <Hyperlink onAction="#goToEcommerce" text="Acquista Prodotto" textFill="WHITE" />
-        <Hyperlink onAction="#goToProfilo" text="Profilo" textFill="WHITE" />
-        <Hyperlink onAction="#handleLogout" text="Logout" textFill="#FFCCCC" style="-fx-font-weight: bold;" />
+    <HBox alignment="CENTER" prefHeight="60.0" spacing="40.0" styleClass="nav-bar">
+        <Hyperlink onAction="#goToPrenotazione" text="Prenota" styleClass="hyperlink" />
+        <Hyperlink onAction="#goToEcommerce" text="Acquista Prodotto" styleClass="hyperlink" />
+        <Hyperlink onAction="#goToProfilo" text="Profilo" styleClass="hyperlink" />
+        <Hyperlink onAction="#handleLogout" text="Logout" styleClass="hyperlink" style="-fx-text-fill: #FFCCCC; -fx-font-weight: bold;" />
     </HBox>
 
     <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="ALWAYS">
@@ -22,30 +23,20 @@
         </padding>
 
         <VBox alignment="CENTER" spacing="10.0">
-            <Text fill="WHITE" text="ARTIGIANHAIR">
-                <font>
-                    <Font name="Serif Bold" size="64.0" />
-                </font>
-            </Text>
-            <Text fill="#4D3E33" text="Il tuo parrucchiere di fiducia su Roma">
-                <font>
-                    <Font name="System Italic" size="20.0" />
-                </font>
-            </Text>
+            <Text text="ARTIGIANHAIR" styleClass="titolo-principale" />
+            <Text text="Il tuo parrucchiere di fiducia su Roma" styleClass="sottotitolo" />
         </VBox>
 
         <VBox alignment="CENTER" spacing="20.0">
             <Button onAction="#goToPrenotazione" prefHeight="50.0" prefWidth="300.0"
-                    text="PRENOTA APPUNTAMENTO"
-                    style="-fx-background-color: #7D6B5D; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                    text="PRENOTA APPUNTAMENTO" styleClass="button-primary" />
 
             <Button onAction="#goToEcommerce" prefHeight="50.0" prefWidth="300.0"
-                    text="ACQUISTA ORA"
-                    style="-fx-background-color: #E6D2C1; -fx-text-fill: #4D3E33; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" />
+                    text="ACQUISTA ORA" styleClass="button-secondary" />
         </VBox>
-
     </VBox>
-    <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0" style="-fx-background-color: #9C8677;">
+
+    <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0" styleClass="nav-bar">
         <VBox alignment="CENTER_LEFT" spacing="5">
             <Text fill="WHITE" text="CONTATTACI">
                 <font><Font name="System Bold" size="14.0" /></font>
@@ -53,7 +44,6 @@
             <Text fill="WHITE" text="Via delle Rose, 12, Roma" />
             <Text fill="WHITE" text="Tel: +39 06 1234567" />
         </VBox>
-
         <VBox alignment="CENTER_LEFT" spacing="5">
             <Text fill="WHITE" text="ORARI">
                 <font><Font name="System Bold" size="14.0" /></font>

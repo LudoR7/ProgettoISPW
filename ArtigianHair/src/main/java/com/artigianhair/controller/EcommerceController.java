@@ -26,14 +26,14 @@ public class EcommerceController {
     public List<Prodotto> generaProdottiPersonalizzati(int scelta) {
         List<Prodotto> personalizzati = new ArrayList<>();
 
-    logger.info("\nAbbiamo creato questi prodotti per te: aggiungi al carrello quelli che preferisci");
+        GestioneInputCLI.print("\nAbbiamo creato questi prodotti per te: aggiungi al carrello quelli che preferisci");
 
         switch (scelta) {
             case 1 -> generaCaso1(personalizzati);
             case 2 -> generaCaso2(personalizzati);
             case 3 -> generaCaso3(personalizzati);
             default ->
-                    logger.info("Scelta non valide.");
+                    GestioneInputCLI.print("Scelta non valide.");
         }
         return personalizzati;
     }
@@ -54,7 +54,7 @@ public class EcommerceController {
             );
 
             ordineDAO.salvaOrdine(nuovoOrdine);
-            logger.info("Ordine processato con successo per: " + carrello.getEmailCliente());
+            GestioneInputCLI.print("Ordine processato con successo per: " + carrello.getEmailCliente());
             return true;
 
         } catch (IOException e) {
@@ -66,7 +66,7 @@ public class EcommerceController {
     }
 
     private void generaCaso1(List<Prodotto> lista) {
-        logger.info("\n1) Shampoo: Hydra-Soft. Arricchito con olio di Argan per idratare in profondità.\n2) Maschera: Nutri-Gloss. Trattamento intensivo emolliente.\n3) Siero: Silk-Drop. Elimina l'effetto crespo istantaneamente.");
+        GestioneInputCLI.print("\n1) Shampoo: Hydra-Soft. Arricchito con olio di Argan per idratare in profondità.\n2) Maschera: Nutri-Gloss. Trattamento intensivo emolliente.\n3) Siero: Silk-Drop. Elimina l'effetto crespo istantaneamente.");
         selezionaProdotti(lista,
                 new Prodotto(ACTION_1, "Hydra-Soft", "Idratazione profonda", 15.50),
                 new Prodotto(ACTION_2, "Nutri-Gloss", "Trattamento emolliente", 22.00),
@@ -75,7 +75,7 @@ public class EcommerceController {
     }
 
     private void generaCaso2(List<Prodotto> lista) {
-        logger.info("\n1) Shampoo: Pure-Balance. Estratti di menta e argilla per purificare la cute.\n2) Maschera: Light-Touch. Idratazione leggera che non appesantisce.\n3) Siero: Fresh-Scalp. Riequilibrante a lunga durata.");
+        GestioneInputCLI.print("\n1) Shampoo: Pure-Balance. Estratti di menta e argilla per purificare la cute.\n2) Maschera: Light-Touch. Idratazione leggera che non appesantisce.\n3) Siero: Fresh-Scalp. Riequilibrante a lunga durata.");
         selezionaProdotti(lista,
                 new Prodotto(ACTION_1, "Pure-Balance", "Purificante", 14.00),
                 new Prodotto(ACTION_2, "Light-Touch", "Idratazione leggera", 20.00),
@@ -84,7 +84,7 @@ public class EcommerceController {
     }
 
     private void generaCaso3(List<Prodotto> lista) {
-        logger.info("\n1) Shampoo: Universal-Care. Deterge con delicatezza, per uso quotidiano.\n2x) Maschera: Basic-Repair. Riforza la struttura del capello.\n3) Siero: Shine-Boost. Per una lucentezza naturale.");
+        GestioneInputCLI.print("\n1) Shampoo: Universal-Care. Deterge con delicatezza, per uso quotidiano.\n2x) Maschera: Basic-Repair. Riforza la struttura del capello.\n3) Siero: Shine-Boost. Per una lucentezza naturale.");
         selezionaProdotti(lista,
                 new Prodotto(ACTION_1, "Universal-Care", "Detergente delicato", 12.00),
                 new Prodotto(ACTION_2, "Basic-Repair", "Protezione standard", 19.00),
@@ -103,7 +103,7 @@ public class EcommerceController {
                     case 1 -> lista.add(p1);
                     case 2 -> lista.add(p2);
                     case 3 -> lista.add(p3);
-                    default -> logger.info("Opzione non valida.");
+                    default -> GestioneInputCLI.print("Opzione non valida.");
                 }
             }
     }
