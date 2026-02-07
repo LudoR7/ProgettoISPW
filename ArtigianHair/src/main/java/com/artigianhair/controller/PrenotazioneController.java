@@ -43,12 +43,7 @@ public class PrenotazioneController {
                     ? LocalTime.of(9, 0)
                     : LocalTime.of(13, 0);
 
-            Appuntamento appuntamento = new Appuntamento(
-                    dataScelta,
-                    orarioScelto,
-                    bean.getTrattamenti(),
-                    bean.getClienteEmail()
-            );
+            Appuntamento appuntamento = new Appuntamento(dataScelta, orarioScelto, bean.getTrattamenti(), bean.getClienteEmail());
 
             DAOfactory.getAppuntamentoDAO().save(appuntamento);
             inviaEmailConferma(bean.getClienteEmail());
@@ -57,8 +52,8 @@ public class PrenotazioneController {
         }catch (NumberFormatException e) {
             throw new PrenotazioneException("Il giorno inserito non è un numero valido.");
         }catch (Exception e){
-            logger.info("erooresss");
-            throw new PrenotazioneException("Erroresss");
+            logger.info("ERRORE");
+            throw new PrenotazioneException("ERRORE");
         }
     }
 
@@ -67,7 +62,7 @@ public class PrenotazioneController {
         logger.info(s);
     }
     private void notificaProprietaria(AppuntamentoBean appuntamento){
-        logger.info("Notifica appuntamento del: " + appuntamento.getData() + ", inviata alla proprietaria");
+        logger.info("Notifica appuntamento del: [ " + appuntamento.getData() + " ], inviata alla proprietaria");
     }
 
     public List<AppuntamentoBean> recuperaAppuntamentiUtente(String email) throws AppuntamentoException, IOException {

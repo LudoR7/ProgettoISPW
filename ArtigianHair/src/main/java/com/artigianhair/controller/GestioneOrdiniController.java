@@ -14,7 +14,6 @@ public class GestioneOrdiniController {
         return ordineDAO.findAll();
     }
     public void cambiaStatoOrdine(Ordine ordine, StatoOrdine nuovoStato) throws IOException {
-
         ordineDAO.aggiornaOrdine(ordine, nuovoStato);
     }
 }

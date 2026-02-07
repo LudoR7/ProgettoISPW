@@ -32,7 +32,7 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.trim().isEmpty()) continue; //salta le righe vuote
+                if (line.trim().isEmpty()) continue;
 
                 String[] parts = line.split(",");
                 if (parts.length == 4) {

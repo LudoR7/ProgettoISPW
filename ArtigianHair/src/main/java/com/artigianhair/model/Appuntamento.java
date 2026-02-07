@@ -46,11 +46,6 @@ public class Appuntamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Appuntamento{" +
-                "data=" + data +
-                ", orario=" + orario +
-                ", trattamenti=" + trattamenti +
-                ", clienteEmail='" + clienteEmail + '\'' +
-                '}';
+        return "Appuntamento{" + "data=" + data + ", orario=" + orario + ", trattamenti=" + trattamenti + ", clienteEmail='" + clienteEmail + '\'' + '}';
     }
 }

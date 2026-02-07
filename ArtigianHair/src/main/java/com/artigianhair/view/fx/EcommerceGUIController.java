@@ -38,19 +38,19 @@ public class EcommerceGUIController {
 
 
     private final Prodotto[] caso1 = {
-            new Prodotto(ACTION_1, "Hydra-Soft", " Arricchito con olio di Argan per idratare in profondità.", 15.50),
-            new Prodotto(ACTION_2, "Nutri-Gloss", " Nutri-Gloss. Trattamento intensivo emolliente.", 22.00),
-            new Prodotto(ACTION_3, "Silk-Drop", "Elimina l'effetto crespo istantaneamente.", 18.90)
+            new Prodotto(ACTION_1, "Shampoo: Hydra-Soft", " Arricchito con olio di Argan per idratare in profondità.", 15.50),
+            new Prodotto(ACTION_2, "Maschera: Nutri-Gloss", " Nutri-Gloss. Trattamento intensivo emolliente.", 22.00),
+            new Prodotto(ACTION_3, "Siero: Silk-Drop", "Elimina l'effetto crespo istantaneamente.", 18.90)
     };
     private final Prodotto[] caso2 = {
-            new Prodotto(ACTION_1, "Pure-Balance", "Estratti di menta e argilla per purificare la cute.", 14.00),
-            new Prodotto(ACTION_2, "Light-Touch", "Idratazione leggera che non appesantisce.", 20.00),
-            new Prodotto(ACTION_3, "Fresh-Scalp", "Riequilibrante a lunga durata.", 17.50)
+            new Prodotto(ACTION_1, "Shampoo: Pure-Balance", "Estratti di menta e argilla per purificare la cute.", 14.00),
+            new Prodotto(ACTION_2, "Maschera: Light-Touch", "Idratazione leggera che non appesantisce.", 20.00),
+            new Prodotto(ACTION_3, "Siero: Fresh-Scalp", "Riequilibrante a lunga durata.", 17.50)
     };
     private final Prodotto[] caso3 = {
-            new Prodotto(ACTION_1, "Universal-Care", "Deterge con delicatezza, per uso quotidiano.", 12.00),
-            new Prodotto(ACTION_2, "Basic-Repair", "Riforza la struttura del capello.", 19.00),
-            new Prodotto(ACTION_3, "Shine-Boost", "Per una lucentezza naturale.", 16.00)
+            new Prodotto(ACTION_1, "Shampoo: Universal-Care", "Deterge con delicatezza, per uso quotidiano.", 12.00),
+            new Prodotto(ACTION_2, "Maschera: Basic-Repair", "Riforza la struttura del capello.", 19.00),
+            new Prodotto(ACTION_3, "Siero: Shine-Boost", "Per una lucentezza naturale.", 16.00)
     };
 
     @FXML

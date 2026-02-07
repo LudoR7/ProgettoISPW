@@ -14,9 +14,15 @@ public class Ordine implements Serializable {
         this.stato = stato;
     }
 
-    public String getEmailCliente() { return emailCliente; }
-    public List<String> getProdotti() { return prodotti; }
-    public StatoOrdine getStato() { return stato; }
+    public String getEmailCliente() {
+        return emailCliente;
+    }
+    public List<String> getProdotti() {
+        return prodotti;
+    }
+    public StatoOrdine getStato() {
+        return stato;
+    }
 
     public void setStato(StatoOrdine stato) {
         this.stato = stato;

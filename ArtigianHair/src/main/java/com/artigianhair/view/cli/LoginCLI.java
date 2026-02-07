@@ -54,7 +54,6 @@ public class LoginCLI {
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
         userBean.setCognome(GestioneInputCLI.leggiString("Cognome:  "));
 
-    // metti un CONTROLLO su Email e Password
         userBean.setEmail(GestioneInputCLI.leggiString("Email:  "));
         userBean.setPassword(GestioneInputCLI.leggiString("Password:  "));
 

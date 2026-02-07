@@ -17,12 +17,10 @@ public class SessioneAttuale {
         return sessioneAttuale;
     }
     public void login(User user) {
-
         this.currentUser = user;
     }
 
     public void logout() {
-
         this.currentUser = null;
         this.carrello.svuota();
     }

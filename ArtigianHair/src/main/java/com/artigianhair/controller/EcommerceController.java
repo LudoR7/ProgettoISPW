@@ -33,7 +33,7 @@ public class EcommerceController {
             case 2 -> generaCaso2(personalizzati);
             case 3 -> generaCaso3(personalizzati);
             default ->
-                    GestioneInputCLI.print("Scelta non valide.");
+                    GestioneInputCLI.print("Scelta non valida.");
         }
         return personalizzati;
     }
@@ -47,11 +47,7 @@ public class EcommerceController {
             List<String> righeProdotti = new ArrayList<>();
             carrello.getProdottiConQuantita().forEach((prodotto, quantita) -> righeProdotti.add(prodotto.nome() + " x" + quantita));
 
-            Ordine nuovoOrdine = new Ordine(
-                    carrello.getEmailCliente(),
-                    righeProdotti,
-                    StatoOrdine.IN_LAVORAZIONE
-            );
+            Ordine nuovoOrdine = new Ordine(carrello.getEmailCliente(), righeProdotti, StatoOrdine.IN_LAVORAZIONE);
 
             ordineDAO.salvaOrdine(nuovoOrdine);
             GestioneInputCLI.print("Ordine processato con successo per: " + carrello.getEmailCliente());

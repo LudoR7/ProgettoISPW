@@ -32,7 +32,7 @@
                     text="PRENOTA APPUNTAMENTO" styleClass="button-primary" />
 
             <Button onAction="#goToEcommerce" prefHeight="50.0" prefWidth="300.0"
-                    text="ACQUISTA ORA" styleClass="button-secondary" />
+                    text="ACQUISTA PRODOTTO" styleClass="button-secondary" />
         </VBox>
     </VBox>
 

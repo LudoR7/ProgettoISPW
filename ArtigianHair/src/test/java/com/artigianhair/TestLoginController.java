@@ -55,7 +55,6 @@ class TestLoginController {
         loginBean.setEmail(email);
         loginBean.setPassword("wrong_password");
 
-        // Ora il controller lancia l'eccezione, quindi il test passerà
         assertThrows(LoginException.class, () -> loginController.login(loginBean));
     }
     @Test

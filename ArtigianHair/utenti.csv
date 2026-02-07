@@ -1,4 +1,4 @@
-l,r,l.com,l,PROPRIETARIA
+Admin,r,l.com,l,PROPRIETARIA
 m,m,m,m,UTENTE
 a,a,a,a,UTENTE
 a,t,at,at,UTENTE
@@ -15,4 +15,4 @@ Mario,Rossi,new_user@test.com,password123,UTENTE
 Mario,Rossi,duplicate@test.com,password123,UTENTE
 Mario,Rossi,wrong_pass@test.com,password123,UTENTE
 qqq,qqq,qqq,qqq,UTENTE
-ee,ee,eeee,eeee,UTENTE
+Ludovica,Romita,ludo.com,111,UTENTE

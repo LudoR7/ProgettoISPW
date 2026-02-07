@@ -54,7 +54,7 @@
                 <CheckBox fx:id="coloreCheck" text="Colore" textFill="WHITE" />
                 <CheckBox fx:id="keratinaCheck" text="Keratina" textFill="WHITE" />
             </VBox>
-            <Text text="(Puoi selezionare più trattamenti)" styleClass="sottotitolo" />
+            <Text text="(Puoi selezionare massimo 3 trattamenti)" styleClass="sottotitolo" />
         </VBox>
 
         <Button onAction="#handlePrenotazione" prefHeight="45.0" prefWidth="250.0" text="CONFERMA PRENOTAZIONE" styleClass="button-primary" />

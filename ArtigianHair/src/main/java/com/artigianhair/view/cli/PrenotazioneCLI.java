@@ -56,7 +56,6 @@ public class PrenotazioneCLI {
         bean.setMese(meseScelto);
         stampaCalendarioMensile(meseScelto);
 
-        // CHECK
         bean.setClienteEmail(userCorrente.getEmail());
 
         int giorno = 0;

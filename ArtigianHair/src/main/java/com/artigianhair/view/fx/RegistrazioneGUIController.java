@@ -43,7 +43,6 @@ public class RegistrazioneGUIController {
 
     @FXML
     protected void goToLogin() {
-
         SceneManager.changeScene("LoginGUI.fxml");
     }
 

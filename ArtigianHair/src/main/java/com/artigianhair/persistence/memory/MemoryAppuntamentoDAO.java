@@ -20,8 +20,6 @@ public class MemoryAppuntamentoDAO implements AppuntamentoDAO {
     }
     @Override
     public void delete(Appuntamento appuntamento) throws IOException {
-        agenda.removeIf(a -> a.getData().equals(appuntamento.getData()) &&
-                a.getOrario().equals(appuntamento.getOrario()) &&
-                a.getClienteEmail().equalsIgnoreCase(appuntamento.getClienteEmail()));
+        agenda.removeIf(a -> a.getData().equals(appuntamento.getData()) && a.getOrario().equals(appuntamento.getOrario()) && a.getClienteEmail().equalsIgnoreCase(appuntamento.getClienteEmail()));
     }
 }

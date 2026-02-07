@@ -60,7 +60,4 @@ public class LoginGUIController {
     protected void goToRegistration() {
         SceneManager.changeScene("RegistrazioneGUI.fxml");
     }
-
-
-
 }

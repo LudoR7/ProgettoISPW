@@ -23,7 +23,6 @@ public class SerializableOrdineDAO implements OrdineDAO {
     }
     @Override
     public List<Ordine> findAll()  throws IOException {
-
         return new ArrayList<>(ordini);
     }
     @Override

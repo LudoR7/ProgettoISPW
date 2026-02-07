@@ -265,11 +265,7 @@ public class ProfiloGUIController {
 
 
             for (AppuntamentoBean app : mieiAppuntamenti) {
-                String info = String.format("%s %s - %s (%s)",
-                        app.getData(), app.getMese(),
-                        (app.getOrario().equals("M") ? "Mattina" : "Pomeriggio"),
-                        String.join(", ", app.getTrattamenti()));
-
+                String info = String.format("%s %s - %s (%s)", app.getData(), app.getMese(), (app.getOrario().equals("M") ? "Mattina" : "Pomeriggio"), String.join(", ", app.getTrattamenti()));
                 CheckBox cb = new CheckBox(info);
                 cb.setTextFill(Color.BLACK);
                 cb.setStyle("-fx-font-size: 13px;");
@@ -298,18 +294,10 @@ public class ProfiloGUIController {
 
 
             tabellaOrdini.setEditable(true);
-
             colClienteOrdine.setCellValueFactory(new PropertyValueFactory<>("emailCliente"));
-            colProdottiOrdine.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(String.join(", ", cellData.getValue().getProdotti())));
-
-
+            colProdottiOrdine.setCellValueFactory(cellData -> new SimpleStringProperty(String.join(", ", cellData.getValue().getProdotti())));
             colStatoOrdine.setCellValueFactory(new PropertyValueFactory<>("stato"));
-
-
             colStatoOrdine.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(StatoOrdine.values())));
-
-
             colStatoOrdine.setOnEditCommit(event -> {
                 Ordine ordine = event.getRowValue();
                 StatoOrdine nuovoStato = event.getNewValue();
@@ -317,12 +305,8 @@ public class ProfiloGUIController {
                 try {
 
                     ordiniController.cambiaStatoOrdine(ordine, nuovoStato);
-
-
                     ordine.setStato(nuovoStato);
-
-                    showAlert(Alert.AlertType.INFORMATION, "Stato Aggiornato",
-                            "L'ordine di " + ordine.getEmailCliente() + " è ora in stato: " + nuovoStato);
+                    showAlert(Alert.AlertType.INFORMATION, "Stato Aggiornato", "L'ordine di " + ordine.getEmailCliente() + " è ora in stato: " + nuovoStato);
                 } catch (IOException e) {
                     showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile aggiornare lo stato su file.");
                 }
@@ -354,7 +338,6 @@ public class ProfiloGUIController {
     @FXML
     protected void confermaEliminazione() {
         List<AppuntamentoBean> daEliminare = new ArrayList<>();
-
 
         for (Map.Entry<CheckBox, AppuntamentoBean> entry : mappaSelezioni.entrySet()) {
             if (entry.getKey().isSelected()) {
@@ -392,11 +375,7 @@ public class ProfiloGUIController {
             String emailLoggata = user.getEmail();
 
             List<Ordine> tuttiOrdini = ordiniController.visualizzaTuttiOrdini();
-
-
-            List<Ordine> ordiniUtente = tuttiOrdini.stream()
-                    .filter(o -> o.getEmailCliente().equalsIgnoreCase(emailLoggata))
-                    .toList();
+            List<Ordine> ordiniUtente = tuttiOrdini.stream().filter(o -> o.getEmailCliente().equalsIgnoreCase(emailLoggata)).toList();
 
             if (ordiniUtente.isEmpty()) {
                 showAlert(Alert.AlertType.INFORMATION, "Nessun Ordine", "Non hai ancora effettuato ordini.");

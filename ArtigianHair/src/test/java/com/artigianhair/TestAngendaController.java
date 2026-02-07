@@ -22,7 +22,7 @@ class TestAgendaController {
         AppuntamentoBean bean = new AppuntamentoBean();
         bean.setData("20");
         bean.setMese("Giugno");
-        bean.setOrario("P"); // Pomeriggio
+        bean.setOrario("P");
         bean.setClienteEmail("agenda@test.com");
         bean.addTrattamento("Taglio");
 
