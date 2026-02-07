@@ -54,10 +54,8 @@ public class AgendaController {
                 break;
             }
         }
-
         LocalDate data = LocalDate.of(LocalDate.now().getYear(), meseIndice, giorno);
         LocalTime orario = bean.getOrario().equalsIgnoreCase("M") ? LocalTime.of(9, 0) : LocalTime.of(13, 0);
-
         Appuntamento appuntamento = new Appuntamento(data, orario, bean.getTrattamenti(), bean.getClienteEmail());
         dao.delete(appuntamento);
     }
