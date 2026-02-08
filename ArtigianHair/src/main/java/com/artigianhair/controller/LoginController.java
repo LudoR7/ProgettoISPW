@@ -40,14 +40,14 @@ public class LoginController {
         SessioneAttuale.getInstance().login(user);
         return true;
     }
-    public boolean checkEmail(String email) throws LoginException, IOException {
+    public boolean checkEmail(String email) throws LoginException {
         if (email == null || !email.contains("@")) {
             throw new LoginException("Email non valida, deve contenere una '@'. Riprova:");
         }else{
             return true;
         }
     }
-    public boolean checkPassword(String password) throws LoginException, IOException {
+    public boolean checkPassword(String password) throws LoginException {
         if (password == null || password.length() < 8) {
             throw new LoginException("La password deve avere almeno 8 caratteri");
         }else{

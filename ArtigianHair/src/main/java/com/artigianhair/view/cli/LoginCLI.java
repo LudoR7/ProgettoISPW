@@ -30,10 +30,9 @@ public class LoginCLI {
                     }
                     break;
                 case 2:
-                    if(eseguiRegistrazione()){
-                        HomeCLI home = new HomeCLI();
-                        home.start();
-                    }
+                    eseguiRegistrazione();
+                    HomeCLI home = new HomeCLI();
+                    home.start();
                     break;
                 case 3:
                     valido = false;
@@ -50,7 +49,7 @@ public class LoginCLI {
             }
         }
     }
-    private boolean eseguiRegistrazione() throws LoginException, IOException {
+    private void eseguiRegistrazione() throws LoginException, IOException {
         UserBean userBean = new UserBean();
         GestioneInputCLI.print("\nREGISTRAZIONE: ");
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
@@ -87,7 +86,7 @@ public class LoginCLI {
                 //Controllo le duplicazioni delle email
                 if (loginController.registraUtente(userBean)) {
                     GestioneInputCLI.print("\nRegistrazione eseguita con successo!");
-                    return true;
+                    break;
                 }
             } catch (LoginException e) {
                 GestioneInputCLI.print("\nErrore: " + e.getMessage() + " Riprova l'inserimento dell'email.");
