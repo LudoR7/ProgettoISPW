@@ -2,11 +2,14 @@ package com.artigianhair.view.fx;
 
 import com.artigianhair.bean.UserBean;
 import com.artigianhair.controller.LoginController;
+import com.artigianhair.engineering.exception.LoginException;
 import com.artigianhair.model.Ruolo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 
 public class RegistrazioneGUIController {
@@ -25,6 +28,16 @@ public class RegistrazioneGUIController {
             return;
         }
 
+        try{
+            loginController.checkEmail(emailField.getText());
+            loginController.checkPassword(passwordField.getText());
+            SceneManager.changeScene(SceneManager.getLastScene());
+        } catch (LoginException | IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Errore nella Registrazione", e.getMessage());
+            return;
+        }
+
+
         UserBean newUserBean = new UserBean();
         newUserBean.setNome(nomeField.getText());
         newUserBean.setCognome(cognomeField.getText());
@@ -37,7 +50,7 @@ public class RegistrazioneGUIController {
             showAlert(Alert.AlertType.INFORMATION, "Successo", "Registrazione completata!");
             SceneManager.changeScene(SceneManager.getLastScene());
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Errore Registrazione", e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Errore nella Registrazione", e.getMessage());
         }
     }
 

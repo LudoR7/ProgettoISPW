@@ -13,6 +13,7 @@ import java.util.List;
 public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
     private static final String FILE_NAME = "appuntamenti.csv";
 
+    //Salva un nuovo appuntamento aggiungendo una riga in coda al file CSV.
     @Override
     public void save(Appuntamento appuntamento) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
@@ -22,6 +23,7 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
         }
     }
 
+    //Legge l'intero file CSV e ricostruisce la lista degli oggetti Appuntamento.
     @Override
     public List<Appuntamento> findAll() throws IOException {
         List<Appuntamento> list = new ArrayList<>();
@@ -34,6 +36,7 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
 
+                // Divide la riga in base alla virgola
                 String[] parts = line.split(",");
                 if (parts.length == 4) {
                     list.add(new Appuntamento(LocalDate.parse(parts[0]), LocalTime.parse(parts[1]),
@@ -44,9 +47,13 @@ public class FileSystemAppuntamentoDAO implements AppuntamentoDAO {
 
         return list;
     }
+
+    //Rimuove un appuntamento specifico dal file
     @Override
     public void delete(Appuntamento appuntamento) throws IOException {
         List<Appuntamento> list = findAll();
+
+        // Filtra la lista rimuovendo l'appuntamento che corrisponde a data, ora ed email
         list.removeIf(a -> a.getData().equals(appuntamento.getData()) && a.getOrario().equals(appuntamento.getOrario()) && a.getClienteEmail().equalsIgnoreCase(appuntamento.getClienteEmail()));
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, false))) {

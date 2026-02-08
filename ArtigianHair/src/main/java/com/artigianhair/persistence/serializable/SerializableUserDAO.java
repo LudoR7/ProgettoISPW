@@ -11,9 +11,11 @@ public class SerializableUserDAO implements UserDAO {
     private Map<String, User> users = new HashMap<>();
 
     public SerializableUserDAO() {
+        // Carica i dati dal file quando l'oggetto viene istanziato
         loadData();
     }
 
+    //Aggiunge un utente alla mappa e salva l'intera mappa aggiornata sul file.
     @Override
     public void saveUser(User user) throws IOException {
         users.put(user.getEmail(), user);
@@ -23,14 +25,20 @@ public class SerializableUserDAO implements UserDAO {
     }
 
     @Override
-    public User findUserByEmail(String email, String password) throws IOException {
+    public User findUserByEmail(String email) throws IOException {
         return users.get(email);
     }
+    @Override
+    public User findUserByEmailAndPassword(String email, String password) throws IOException {
+        return users.get(email);
+    }
+
 
     @SuppressWarnings("unchecked")
     private void loadData() {
         File file = new File(FILE_NAME);
         if (file.exists()) {
+            // ObjectInputStream legge il flusso binario e ricostruisce l'oggetto originale
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
                 users = (Map<String, User>) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {

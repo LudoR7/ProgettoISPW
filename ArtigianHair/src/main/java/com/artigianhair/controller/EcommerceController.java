@@ -18,7 +18,9 @@ import java.util.logging.Logger;
 
 public class EcommerceController {
     Logger logger = Logger.getLogger(getClass().getName());
+    // Accesso ai dati degli ordini tramite interfaccia DAO
     private final OrdineDAO ordineDAO = DAOfactory.getOrdineDAO();
+    // Costanti per i nomi base delle categorie di prodotto
     private static final String ACTION_1 = "Shampoo";
     private static final String ACTION_2 = "Maschera";
     private static final String ACTION_3 = "Siero";
@@ -40,15 +42,19 @@ public class EcommerceController {
 
     public boolean processaOrdine(CarrelloBean carrello) {
         try {
+            // Controllo che il carrello non sia vuoto e ci sia un utente associato
             if (carrello.getProdottiConQuantita().isEmpty() || carrello.getEmailCliente() == null) {
                 logger.warning("Impossibile processare l'ordine: carrello vuoto o email mancante.");
                 return false;
             }
+            // Converte la mappa dei prodotti in una lista di stringhe che siano leggibili per il modello Ordine
             List<String> righeProdotti = new ArrayList<>();
             carrello.getProdottiConQuantita().forEach((prodotto, quantita) -> righeProdotti.add(prodotto.nome() + " x" + quantita));
 
+            // Crea il nuovo oggetto di dominio Ordine impostando lo stato iniziale
             Ordine nuovoOrdine = new Ordine(carrello.getEmailCliente(), righeProdotti, StatoOrdine.IN_LAVORAZIONE);
 
+            // Salvataggio permanente tramite DAO
             ordineDAO.salvaOrdine(nuovoOrdine);
             GestioneInputCLI.print("Ordine processato con successo per: " + carrello.getEmailCliente());
             return true;

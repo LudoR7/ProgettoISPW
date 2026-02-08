@@ -9,15 +9,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//Memorizza le informazioni degli ordini in "ordini.csv".
 public class FileSystemOrdineDAO implements OrdineDAO {
     private static final String FILE_NAME = "ordini.csv";
 
+    //Aggiunge un nuovo ordine al sistema
     @Override
     public void salvaOrdine(Ordine ordine) throws IOException {
         List<Ordine> ordini = findAll();
         ordini.add(ordine);
         saveAll(ordini);
     }
+
+    //Modifica lo stato di un ordine
     @Override
     public void aggiornaOrdine(Ordine ordineTarget, StatoOrdine nuovoStato) throws IOException {
         List<Ordine> tuttiGliOrdini = findAll();
@@ -47,6 +51,8 @@ public class FileSystemOrdineDAO implements OrdineDAO {
             }
         }
     }
+
+    //Legge tutti gli ordini dal file CSV e li trasforma in una lista di oggetti Ordine.
     @Override
     public List<Ordine> findAll() throws IOException {
         List<Ordine> ordini = new ArrayList<>();

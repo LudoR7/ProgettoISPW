@@ -9,12 +9,17 @@ import java.util.Map;
 public class MemoryUserDAO implements UserDAO {
     private static final Map<String, User> users = new HashMap<>();
 
+    //Salva l'utente nella mappa in memoria
     @Override
     public void saveUser(User user) {
         users.put(user.getEmail(), user);
     }
     @Override
-    public User findUserByEmail(String email,  String password) {
+    public User findUserByEmail(String email) {
+        return users.get(email);
+    }
+    @Override
+    public User findUserByEmailAndPassword(String email, String password) {
         return users.get(email);
     }
 }

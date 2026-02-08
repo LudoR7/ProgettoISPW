@@ -5,10 +5,12 @@ import com.artigianhair.bean.UserBean;
 import com.artigianhair.engineering.exception.LoginException;
 import com.artigianhair.model.Ruolo;
 
+import java.io.IOException;
+
 
 public class LoginCLI {
     private final LoginController loginController = new LoginController();
-    public void start(){
+    public void start() throws LoginException, IOException {
         boolean valido = true;
 
         while(valido){
@@ -48,30 +50,50 @@ public class LoginCLI {
             }
         }
     }
-    private boolean eseguiRegistrazione(){
+    private boolean eseguiRegistrazione() throws LoginException, IOException {
         UserBean userBean = new UserBean();
         GestioneInputCLI.print("\nREGISTRAZIONE: ");
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
         userBean.setCognome(GestioneInputCLI.leggiString("Cognome:  "));
 
-        userBean.setEmail(GestioneInputCLI.leggiString("Email:  "));
-        userBean.setPassword(GestioneInputCLI.leggiString("Password:  "));
+        //controllo email
+        String email;
+        while (true) {
+            try{
+                email = GestioneInputCLI.leggiString("Email:  ");
+                if (loginController.checkEmail(email)) {
+                    userBean.setEmail(email);
+                    break;
+                }
+            }catch(LoginException e){
+                GestioneInputCLI.print(e.getMessage());
+            }
+        }
+
+        // Controllo sulla lunghezza minima della password
+        String password;
+        while (true) {
+            password= GestioneInputCLI.leggiString("Password:  ");
+            if(loginController.checkPassword(password)){
+                userBean.setPassword(password);
+                break;
+            }
+        }
 
         userBean.setRuolo(Ruolo.UTENTE);
 
-        try{
-            boolean b = loginController.registraUtente(userBean);
-            if(b){
-                GestioneInputCLI.print("\nRegistrazione eseguita");
-                return true;
-            }else{
-                GestioneInputCLI.print("\nATTENZIONE: Credenziale non valide, riprova. ");
-                return false;
+        while (true) {
+            try {
+                //Controllo le duplicazioni delle email
+                if (loginController.registraUtente(userBean)) {
+                    GestioneInputCLI.print("\nRegistrazione eseguita con successo!");
+                    return true;
+                }
+            } catch (LoginException e) {
+                GestioneInputCLI.print("\nErrore: " + e.getMessage() + " Riprova l'inserimento dell'email.");
+                userBean.setEmail(GestioneInputCLI.leggiString("Nuova Email:  "));
             }
-        }catch (Exception e){
-            GestioneInputCLI.print(e.getMessage());
         }
-        return false;
     }
 
     private boolean eseguiLogin(){

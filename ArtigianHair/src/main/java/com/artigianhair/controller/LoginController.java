@@ -13,17 +13,14 @@ public class LoginController {
     public boolean registraUtente(UserBean userBean) throws IOException, LoginException {
 
         UserDAO userDAO = DAOfactory.getUser();
-        if (userDAO.findUserByEmail(userBean.getEmail(), userBean.getPassword()) != null) {
+        if (userDAO.findUserByEmail(userBean.getEmail()) != null) {
             throw new LoginException("\nATTENZIONE: l'email - " + userBean.getEmail() + " - esiste già.");
         }
-        User newUser = new User(
-                userBean.getNome(),
-                userBean.getCognome(),
-                userBean.getEmail(),
-                userBean.getPassword(),
-                userBean.getRuolo()
-        );
 
+        // Crea l'oggetto di tipo User a partire dai dati nel Bean
+        User newUser = new User(userBean.getNome(), userBean.getCognome(), userBean.getEmail(), userBean.getPassword(), userBean.getRuolo());
+
+        // Salvataggio dell'utente e gestione della sessione globale
         userDAO.saveUser(newUser);
         SessioneAttuale.getInstance().login(newUser);
         return true;
@@ -31,7 +28,7 @@ public class LoginController {
 
     public boolean login(UserBean loginBean) throws LoginException, IOException {
         UserDAO userDAO = DAOfactory.getUser();
-        User user = userDAO.findUserByEmail(loginBean.getEmail(), loginBean.getPassword());
+        User user = userDAO.findUserByEmailAndPassword(loginBean.getEmail(), loginBean.getPassword());
         if(user == null) {
             throw new LoginException("Credenziali non valide");
         }
@@ -42,5 +39,19 @@ public class LoginController {
         }
         SessioneAttuale.getInstance().login(user);
         return true;
+    }
+    public boolean checkEmail(String email) throws LoginException, IOException {
+        if (email == null || !email.contains("@")) {
+            throw new LoginException("Email non valida, deve contenere una '@'. Riprova:");
+        }else{
+            return true;
+        }
+    }
+    public boolean checkPassword(String password) throws LoginException, IOException {
+        if (password == null || password.length() < 8) {
+            throw new LoginException("La password deve avere almeno 8 caratteri");
+        }else{
+            return true;
+        }
     }
 }

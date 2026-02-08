@@ -15,15 +15,19 @@ import java.util.List;
 
 public class AgendaController {
 
+    // Lista per mappare i nomi dei mesi alle loro posizioni numeriche, es Gennaio: 1, Febbraio: 2...
     protected static final List<String> MESI_VALIDI = Arrays.asList("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre");
     private AgendaController() {
         // Costruttore di default
     }
     public static List<AppuntamentoBean> recuperaAppuntamenti() throws IOException {
         List<AppuntamentoBean> beans = new ArrayList<>();
+
+        // Ottiene l'interfaccia di persistenza tramite la Factory
         AppuntamentoDAO dao = DAOfactory.getAppuntamentoDAO();
         List<Appuntamento> agenda = dao.findAll();
 
+        // Converte ogni oggetto di tipo Appuntamento in un AppuntamentoBean
         for(Appuntamento a : agenda){
             AppuntamentoBean bean = new AppuntamentoBean();
             bean.setData(String.valueOf(a.getData().getDayOfMonth()));
@@ -34,6 +38,7 @@ public class AgendaController {
             bean.setOrario(a.getFasciaOraria());
             bean.setClienteEmail(a.getClienteEmail());
 
+            // Aggiunge i trattamenti selezionati nel bean
             for (String t : a.getTrattamenti()) {
                 bean.addTrattamento(t);
             }
@@ -54,8 +59,11 @@ public class AgendaController {
                 break;
             }
         }
+        // Ricostruisce la data e l'orario necessari per identificare l'appuntamento nel DB
         LocalDate data = LocalDate.of(LocalDate.now().getYear(), meseIndice, giorno);
         LocalTime orario = bean.getOrario().equalsIgnoreCase("M") ? LocalTime.of(9, 0) : LocalTime.of(13, 0);
+
+        // Crea l'oggetto Appuntamento e ne richiedo la cancellazione al DAO
         Appuntamento appuntamento = new Appuntamento(data, orario, bean.getTrattamenti(), bean.getClienteEmail());
         dao.delete(appuntamento);
     }

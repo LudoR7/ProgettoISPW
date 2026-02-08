@@ -23,10 +23,11 @@ class TestLoginController {
         bean.setNome("Mario");
         bean.setCognome("Rossi");
         bean.setEmail(email);
-        bean.setPassword("password123");
+        bean.setPassword("password123"); // 11 caratteri (Valida)
         bean.setRuolo(Ruolo.UTENTE);
         return bean;
     }
+    //Verifica avvenuta registrazione
     @Test
     void testRegistrazioneSuccesso() {
         UserBean newUser = createTestUser("new_user@test.com");
@@ -35,6 +36,27 @@ class TestLoginController {
         });
     }
 
+    //Verifica fallimento per password troppo corta
+    @Test
+    void testRegistrazioneFallitaPasswordCorta() {
+        UserBean user = createTestUser("short_pass@test.com");
+        user.setPassword("12345");
+
+        LoginException exception = assertThrows(LoginException.class, () -> loginController.checkPassword(user.getPassword()));
+        assertTrue(exception.getMessage().contains("almeno 8 caratteri"));
+    }
+
+    //Verifica fallimento per email senza @
+    @Test
+    void testRegistrazioneFallitaEmailInvalida() {
+        UserBean user = createTestUser("email_senza_at.com");
+
+        LoginException exception = assertThrows(LoginException.class, () ->
+                loginController.checkEmail(user.getEmail())
+        );
+        assertTrue(exception.getMessage().contains("Email non valida"));
+    }
+    //Verifica successo del Login
     @Test
     void testLoginSuccesso() throws LoginException, IOException {
         String email = "login_success@test.com";
@@ -44,8 +66,9 @@ class TestLoginController {
         loginBean.setEmail(email);
         loginBean.setPassword("password123");
 
-        assertTrue(loginController.login(loginBean), "Il login dovrebbe riuscire.");}
-
+        assertTrue(loginController.login(loginBean), "Il login dovrebbe riuscire.");
+    }
+    //Test password errata
     @Test
     void testLoginFallitoPasswordErrata() throws LoginException, IOException {
         String email = "wrong_pass@test.com";
@@ -57,6 +80,7 @@ class TestLoginController {
 
         assertThrows(LoginException.class, () -> loginController.login(loginBean));
     }
+    //Test email già esistente
     @Test
     void testRegistrazioneEmailDuplicata() throws LoginException, IOException {
         String email = "duplicate@test.com";

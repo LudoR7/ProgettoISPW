@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Implementazione DAO per la gestione degli ordini in memoria
 public class MemoryOrdineDAO implements OrdineDAO {
     private static final List<Ordine> ordini = new ArrayList<>();
 
@@ -22,7 +23,7 @@ public class MemoryOrdineDAO implements OrdineDAO {
         boolean trovato = false;
 
         for (Ordine o : ordini) {
-
+        // Verifica la corrispondenza dell'ordine basandosi su email cliente e lista prodotti
             if (o.getEmailCliente().equals(ordine.getEmailCliente()) && o.getProdotti().equals(ordine.getProdotti())) {o.setStato(nuovoStato);
                 trovato = true;
                 break;

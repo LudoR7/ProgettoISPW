@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// Implementazione in memoria degli Appuntamenti
 public class MemoryAppuntamentoDAO implements AppuntamentoDAO {
+    // Lista condivisa che mantiene gli appuntamenti finché l'applicazione rimane attiva
     private static final List<Appuntamento> agenda = new ArrayList<>();
 
     @Override

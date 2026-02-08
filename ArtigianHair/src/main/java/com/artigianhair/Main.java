@@ -1,5 +1,6 @@
 package com.artigianhair;
 
+import com.artigianhair.engineering.exception.LoginException;
 import com.artigianhair.view.cli.LoginCLI;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +14,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, LoginException {
         Logger logger = Logger.getLogger(Main.class.getName());
         String viewType = loadViewType();
         if ("CLI".equalsIgnoreCase(viewType)) {
