@@ -60,6 +60,7 @@ public class EcommerceGUIController {
         if (user != null) {
             carrello.setEmailCliente(user.getEmail());
         }else{
+            // Se l'utente non è loggato, viene mandato al Login e viene salvata la scena attuale per il ritorno
             SceneManager.setLastScene(ACTION_4);
             SceneManager.changeScene("LoginGUI.fxml");
         }
@@ -89,6 +90,7 @@ public class EcommerceGUIController {
         paneSelezioneProdotti.setManaged(true);
     }
 
+    // Metodi per aggiungere prodotti al carrello
     @FXML private void addProd1() { aggiungiAlCarrello(prodottiDisponibili.get(0)); }
     @FXML private void addProd2() { aggiungiAlCarrello(prodottiDisponibili.get(1)); }
     @FXML private void addProd3() { aggiungiAlCarrello(prodottiDisponibili.get(2)); }
@@ -132,6 +134,7 @@ public class EcommerceGUIController {
         txtAreaCarrello.setText(sb.toString());
     }
 
+    //Invia l'ordine al controller per completare il salvataggio
     @FXML
     private void handleConfermaOrdine() {
         if (carrello.getProdottiConQuantita().isEmpty()) {
@@ -152,6 +155,8 @@ public class EcommerceGUIController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
+    //Svuota il carrello
     @FXML
     private void handleCancellaOrdine() {
         this.carrello.svuota();

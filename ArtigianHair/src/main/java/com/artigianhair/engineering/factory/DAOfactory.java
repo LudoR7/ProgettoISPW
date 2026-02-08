@@ -18,10 +18,11 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+//Classe per la gestione della persistenza dei dati
 public class DAOfactory {
     private static final Logger logger = Logger.getLogger(DAOfactory.class.getName());
-    private static final String CONFIGURATION_FILE = "config.properties";
-    private static final String PERSISTENCE_TYPE_KEY = "persistence.type";
+    private static final String CONFIGURATION_FILE = "config.properties"; //File di configurazione esterno
+    private static final String PERSISTENCE_TYPE_KEY = "persistence.type"; //Tipo di persistenza
 
     private DAOfactory() {}
 
@@ -29,12 +30,12 @@ public class DAOfactory {
         String type = readPersistenceTypeFromConfiguration();
 
         if("DEMO".equalsIgnoreCase(type)){
-            return new MemoryUserDAO();
+            return new MemoryUserDAO(); //Dati volatili in memoria
         }
         else if("FS".equalsIgnoreCase(type)){
-            return new FileSystemUserDAO();
+            return new FileSystemUserDAO(); // Persistenza su file CSV
         }else if("SER".equalsIgnoreCase(type)){
-            return new SerializableUserDAO();
+            return new SerializableUserDAO(); // Persistenza tramite serializzazione
         }else{
             throw new IllegalArgumentException(type + " non è un tipo valido");
         }
@@ -58,6 +59,8 @@ public class DAOfactory {
         }
 
     }
+
+    //Implementazione DAO per gli appuntamenti
     public static AppuntamentoDAO getAppuntamentoDAO() {
         String type = readPersistenceTypeFromConfiguration();
         return switch (type.toUpperCase()){
@@ -68,6 +71,7 @@ public class DAOfactory {
         };
     }
 
+    //Implementazione DAO per la gestione degli ordini
     public static OrdineDAO getOrdineDAO() {
         String type = readPersistenceTypeFromConfiguration();
         return switch (type.toUpperCase()) {

@@ -11,13 +11,14 @@ public class HomeCLI {
     }
 
     public void start() {
-
+        // Recupera i dati dell'utente correntemente loggato tramite il Singleton della sessione
         User userCorrente = SessioneAttuale.getInstance().getCurrentUser();
         boolean valido = true;
         while (valido) {
             GestioneInputCLI.print("\nHOME (" + userCorrente.getRuolo() + ") ");
             GestioneInputCLI.print("Ciao, " + userCorrente.getNome() + " " + userCorrente.getCognome());
 
+            // Controllo del ruolo
             if (userCorrente.getRuolo() == Ruolo.PROPRIETARIA) {
                 valido = mostraMenuProprietaria();
             } else {
@@ -34,10 +35,12 @@ public class HomeCLI {
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         return switch (scelta) {
             case 1 -> {
+                //Avvia sezione Prenotazioni
                 new PrenotazioneCLI().start1();
                 yield true;
             }
             case 2 -> {
+                //Avvia sezione Ecommerce
                 new EcommerceCLI().start();
                 yield true;
             }
@@ -57,10 +60,12 @@ public class HomeCLI {
         int scelta = GestioneInputCLI.leggiInt("Scegli un'opzione: ");
         return switch (scelta) {
             case 1 -> {
+                // Permette alla proprietaria di vedere tutti gli appuntamenti
                 new AgendaCLI().start();
                 yield true;
             }
             case 2 -> {
+                // Gestione degli ordini effettuati
                 new GestioneProdottiCLI().start();
                 yield true;
             }

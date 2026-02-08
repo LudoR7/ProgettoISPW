@@ -20,6 +20,7 @@ public class LoginCLI {
             GestioneInputCLI.print("2) Registrazione");
             GestioneInputCLI.print("3) Esci");
 
+            // Legge l'opzione scelta dall'utente
             int input = GestioneInputCLI.leggiInt("...");
             switch (input){
                 case 1:
@@ -55,7 +56,7 @@ public class LoginCLI {
         userBean.setNome(GestioneInputCLI.leggiString("Nome:  "));
         userBean.setCognome(GestioneInputCLI.leggiString("Cognome:  "));
 
-        //controllo email
+        //Controllo il formato dell'email
         String email;
         while (true) {
             try{
@@ -79,11 +80,12 @@ public class LoginCLI {
             }
         }
 
+        // Di default, le nuove registrazioni tramite CLI sono impostate come UTENTE
         userBean.setRuolo(Ruolo.UTENTE);
 
         while (true) {
             try {
-                //Controllo le duplicazioni delle email
+                //Controllo del controller
                 if (loginController.registraUtente(userBean)) {
                     GestioneInputCLI.print("\nRegistrazione eseguita con successo!");
                     break;

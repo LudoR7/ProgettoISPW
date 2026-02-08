@@ -13,6 +13,7 @@ public class HomeGUIController {
 
     @FXML
     protected void goToPrenotazione() {
+        //Memorizza la scena dove tornare dopo il check del Login
         SceneManager.setLastScene("PrenotazioneGUI.fxml");
         if (checkLogin()) {
             SceneManager.changeScene(SceneManager.getLastScene());
@@ -21,6 +22,7 @@ public class HomeGUIController {
 
     @FXML
     protected void goToEcommerce() {
+        //Memorizza la scena dove tornare dopo il check del Login
         SceneManager.setLastScene("EcommerceGUI.fxml");
         if (checkLogin()) {
             SceneManager.changeScene(SceneManager.getLastScene());

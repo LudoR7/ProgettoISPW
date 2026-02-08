@@ -52,16 +52,18 @@ public class PrenotazioneCLI {
         GestioneInputCLI.print("\nNUOVA PRENOTAZIONE:  ");
         AppuntamentoBean bean = new AppuntamentoBean();
 
+        // 1. Selezione e validazione del mese
         String meseScelto = validazioneMese();
+        // 2. Mostra il calendario con le disponibilità per il mese scelto
         bean.setMese(meseScelto);
         stampaCalendarioMensile(meseScelto);
-
         bean.setClienteEmail(userCorrente.getEmail());
 
         int giorno = 0;
         String fascia = "";
         boolean pc = false;
 
+        // 3. Validazione data e fascia oraria (Mattina/Pomeriggio)
         while(!pc){
             giorno = GestioneInputCLI.leggiInt("Inserisci data (numero):  ");
             fascia = validazioneFasciaOraria(giorno,  meseScelto);
@@ -70,12 +72,14 @@ public class PrenotazioneCLI {
                 pc = true;
             }
         }
-
         bean.setData(String.valueOf(giorno));
         bean.setOrario(fascia);
+
+        // 4. Selezione dei trattamenti
         selezionaTrattamenti(bean);
 
         try{
+            // 5. Invio dei dati al controller per la conferma
             controller.confermaAppuntamento(bean);
             GestioneInputCLI.print("\nPrenotazione effettuata con successo.");
             GestioneInputCLI.print("\nRiceverai a breve una mail di conferma, all'indirizzo: " + userCorrente.getEmail());
@@ -282,6 +286,7 @@ public class PrenotazioneCLI {
                 return;
             }
             if (index >= 0 && index < iMieiAppuntamenti.size()) {
+                // Richiama il controller per rimuovere l'appuntamento
                 AgendaController.cancellaAppuntamento(iMieiAppuntamenti.get(index));
                 GestioneInputCLI.print("Appuntamento annullato con successo.");
             } else {

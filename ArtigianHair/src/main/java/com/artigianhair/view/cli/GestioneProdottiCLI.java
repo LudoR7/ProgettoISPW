@@ -29,6 +29,7 @@ public class GestioneProdottiCLI {
 
     private void gestisciOrdini() {
         try {
+            // Recupera tutti gli ordini presenti nel sistema tramite il controller
             List<Ordine> ordini = controller.visualizzaTuttiOrdini();
             if (ordini.isEmpty()) {
                 GestioneInputCLI.print("Nessun ordine presente.");
@@ -39,6 +40,7 @@ public class GestioneProdottiCLI {
 
             boolean b = true;
             while (b) {
+                // Stampa l'elenco degli ordini con lo stato attuale e l'email del cliente
                 for (int i = 0; i < ordini.size(); i++) {
                     Ordine o = ordini.get(i);
                     GestioneInputCLI.print(i + 1 + ") [" + o.getStato() + "] Cliente: " + o.getEmailCliente());
@@ -69,6 +71,7 @@ public class GestioneProdottiCLI {
         };
 
         try {
+            // Richiama il controller per rendere persistente il cambio di stato (es. su file CSV)
             controller.cambiaStatoOrdine(ordine, nuovo);
             GestioneInputCLI.print("[OK] Stato aggiornato con successo sul file ordini.csv!");
         } catch (IOException e) {

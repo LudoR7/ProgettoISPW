@@ -31,11 +31,11 @@ import com.artigianhair.model.StatoOrdine;
 public class ProfiloGUIController {
 
     @FXML private Label labelBenvenuto;
-    @FXML private VBox clientContainer;
-    @FXML private VBox ownerContainer;
+    @FXML private VBox clientContainer; //Box visibile solo ai clienti
+    @FXML private VBox ownerContainer; //Box visibile solo alla proprietaria
     @FXML private VBox disdettaBox;
     @FXML private VBox listaCheckDisdetta;
-    @FXML private VBox guestContainer;
+    @FXML private VBox guestContainer; // Box visibile se non loggati
     @FXML private Button logoutBtn;
     @FXML private VBox agendaBox;
     @FXML private TableView<AppuntamentoBean> tabellaAgenda;
@@ -75,6 +75,7 @@ public class ProfiloGUIController {
             logoutBtn.setVisible(true);
             logoutBtn.setManaged(true);
 
+            // Mostra il menu specifico in base al Ruolo
             if (user.getRuolo() == Ruolo.PROPRIETARIA) {
                 mostraSezione(ownerContainer);
             } else {
@@ -123,6 +124,7 @@ public class ProfiloGUIController {
     }
 
 
+    //CLIENTE: recupero dei suoi appuntamenti
     @FXML
     protected void handleRecupera() {
         try {
@@ -172,30 +174,23 @@ public class ProfiloGUIController {
     }
 
 
-
-
+    //PROPRIETARIA: recupero di tutti gli appuntamenti per mostrarli alla proprietaria
     @FXML protected void handleVisualizzaAgenda() {
 
         try {
-
             List<AppuntamentoBean> listaAppuntamenti = AgendaController.recuperaAppuntamenti();
-
             if (listaAppuntamenti.isEmpty()) {
                 showAlert(Alert.AlertType.INFORMATION, "Agenda Vuota", "Non ci sono appuntamenti registrati.");
                 return;
             }
 
-
             colData.setCellValueFactory(new PropertyValueFactory<>("data"));
             colOrario.setCellValueFactory(new PropertyValueFactory<>("orario"));
             colCliente.setCellValueFactory(new PropertyValueFactory<>("clienteEmail"));
 
-            colTrattamenti.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(String.join(", ", cellData.getValue().getTrattamenti())));
-
+            colTrattamenti.setCellValueFactory(cellData -> new SimpleStringProperty(String.join(", ", cellData.getValue().getTrattamenti())));
 
             tabellaAgenda.getItems().setAll(listaAppuntamenti);
-
 
             agendaBox.setVisible(true);
             agendaBox.setManaged(true);
@@ -204,7 +199,6 @@ public class ProfiloGUIController {
             showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile caricare l'agenda dal database.");
         }
     }
-
     @FXML
     protected void handleNascondiAgenda() {
         agendaBox.setVisible(false);
@@ -245,6 +239,7 @@ public class ProfiloGUIController {
         alert.showAndWait();
     }
 
+    //CLIENTE: disdire appuntamenti
     @FXML
     protected void handleMostraDisdetta() {
         String email = SessioneAttuale.getInstance().getCurrentUser().getEmail();
@@ -282,6 +277,8 @@ public class ProfiloGUIController {
             showAlert(Alert.AlertType.ERROR, ACTION_1, "Impossibile caricare gli appuntamenti.");
         }
     }
+
+    //PROPRIETARIA: visualizza tutti gli ordini ricevuti
     @FXML
     protected void handleVisualizzaOrdini() {
         try {
@@ -335,6 +332,7 @@ public class ProfiloGUIController {
     protected void handleEcommerce() {
         SceneManager.changeScene(ACTION_3);
     }
+
     @FXML
     protected void confermaEliminazione() {
         List<AppuntamentoBean> daEliminare = new ArrayList<>();
@@ -351,13 +349,11 @@ public class ProfiloGUIController {
         }
 
         try {
-
             for (AppuntamentoBean bean : daEliminare) {
                 AgendaController.cancellaAppuntamento(bean);
             }
 
             showAlert(Alert.AlertType.INFORMATION, "Successo", "Appuntamenti annullati con successo.");
-
 
             handleMostraDisdetta();
             SceneManager.changeScene(ACTION_2);
@@ -366,6 +362,8 @@ public class ProfiloGUIController {
             showAlert(Alert.AlertType.ERROR, ACTION_1, "Errore durante la cancellazione su file.");
         }
     }
+
+    //CLIENTE: visualizza i suoi ordini
     @FXML
     protected void handleMieiOrdini() {
         try {

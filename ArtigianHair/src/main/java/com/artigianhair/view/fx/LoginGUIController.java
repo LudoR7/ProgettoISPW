@@ -13,11 +13,14 @@ import java.io.IOException;
 
 public class LoginGUIController {
 
+    // Campi di testo collegati al file FXML
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
 
+    //Controller della logica applicativa
     private final LoginController loginController = new LoginController();
 
+    //Gestione dell'evento "premuto tasto Login"
     @FXML
     protected void handleLogin() throws LoginException, IOException {
         if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
@@ -25,12 +28,15 @@ public class LoginGUIController {
             return;
         }
 
+        // Inserimento dei dati in un UserBean per il trasferimento al controller
         UserBean loginBean = new UserBean();
         loginBean.setEmail(emailField.getText());
         loginBean.setPassword(passwordField.getText());
 
         try {
+            //Login tramite il controller
             if (loginController.login(loginBean)) {
+                //Login riuscito: cambio scena
                 SceneManager.changeScene(SceneManager.getLastScene());
             }
         } catch (LoginException e) {

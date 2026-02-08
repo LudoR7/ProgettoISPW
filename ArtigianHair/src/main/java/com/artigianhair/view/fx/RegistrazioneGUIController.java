@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 
 public class RegistrazioneGUIController {
 
+    // Campi di input collegati al file FXML
     @FXML private TextField nomeField;
     @FXML private TextField cognomeField;
     @FXML private TextField emailField;
@@ -28,6 +29,7 @@ public class RegistrazioneGUIController {
         }
 
         try{
+            //Controllo dell'email e della password tramite il controller
             loginController.checkEmail(emailField.getText());
             loginController.checkPassword(passwordField.getText());
             SceneManager.changeScene(SceneManager.getLastScene());
@@ -36,7 +38,7 @@ public class RegistrazioneGUIController {
             return;
         }
 
-
+        //Creazione del Bean per il trasferimento dei dati al controller
         UserBean newUserBean = new UserBean();
         newUserBean.setNome(nomeField.getText());
         newUserBean.setCognome(cognomeField.getText());

@@ -10,6 +10,7 @@ public class EcommerceCLI {
     private final EcommerceController controller = new EcommerceController();
     public void start() {
         CarrelloBean carrello = new CarrelloBean();
+        // Associa il carrello all'email dell'utente loggato recuperata dalla sessione
         carrello.setEmailCliente(SessioneAttuale.getInstance().getCurrentUser().getEmail());
         start(carrello);
     }
@@ -21,6 +22,8 @@ public class EcommerceCLI {
         GestioneInputCLI.print(" 3) Normali.");
 
         int scelta = GestioneInputCLI.leggiInt("___");
+
+        // Il controller genera una lista di prodotti suggeriti in base alla scelta effettuata
         List<Prodotto> prodotti = controller.generaProdottiPersonalizzati(scelta);
 
         carrello.setEmailCliente(SessioneAttuale.getInstance().getCurrentUser().getEmail());
@@ -36,6 +39,7 @@ public class EcommerceCLI {
     private void confermaCarrello(CarrelloBean carrello) {
         GestioneInputCLI.print("\nIL TUO CARRELLO: ");
 
+        // Itera sulla mappa dei prodotti nel bean per mostrare nomi e quantità
         carrello.getProdottiConQuantita().forEach((p, qta) -> GestioneInputCLI.print(" - " + p.nome() + " [Quantità: " + qta + "]"));
 
         GestioneInputCLI.print("\n1) Conferma e Procedi all'ordine");
@@ -45,10 +49,11 @@ public class EcommerceCLI {
         int scelta3 = GestioneInputCLI.leggiInt("Scelta: ");
         switch (scelta3) {
             case 1 -> {
+                // Invia il bean del carrello al controller per la creazione dell'ordine persistente
                 controller.processaOrdine(carrello);
                 GestioneInputCLI.print("Grazie! Ordine effettuato. Riceverai i prodotti a breve.");
             }
-            case 2 -> start(carrello);
+            case 2 -> start(carrello);// Continua la sessione d'acquisto, mantenendo i prodotti già salvati nel carrello
             default -> GestioneInputCLI.print("Ritorno alla home...");
         }
     }

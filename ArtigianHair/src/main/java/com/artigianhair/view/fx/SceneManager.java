@@ -6,9 +6,12 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+//Gestore centralizzato delle schermate
 public class SceneManager {
 
     private static Stage stage;
+
+    // Memorizza l'ultima scena visualizzata
     private static String lastScene;
 
     private SceneManager() {}
@@ -27,6 +30,8 @@ public class SceneManager {
             }
 
             Parent root = loader.load();
+
+            // Impostazione della nuova scena sullo stage principale
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

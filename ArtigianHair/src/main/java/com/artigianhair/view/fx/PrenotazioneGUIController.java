@@ -35,9 +35,13 @@ public class PrenotazioneGUIController {
 
     @FXML
     public void initialize() {
+        // Recupera le prenotazioni esistenti per il controllo disponibilità
         inizializzaDatiAppuntamenti();
+        // Raggruppa i RadioButton per le fasce orarie
         setupRadioButtons();
+        // Imposta le regole di disabilitazione per date passate o giorni pieni
         configuraCelleCalendario();
+        // Aggiorna le fasce orarie al cambio data
         setupDatePicker();
         setupServiceLimitLogic();
         setupConstraintTrattamenti();
@@ -91,14 +95,14 @@ public class PrenotazioneGUIController {
             public void updateItem(LocalDate item, boolean empty) {
                 super.updateItem(item, empty);
 
-
+                //Disabilita date precedenti a oggi
                 if (item.isBefore(LocalDate.now())) {
                     setDisable(true);
                     setStyle("-fx-background-color: #d3d3d3;");
                     return;
                 }
 
-
+                // Disabilita le domeniche
                 if (item.getDayOfWeek() == DayOfWeek.SUNDAY) {
                     setDisable(true);
                     setStyle("-fx-background-color: #ffcccc;");
@@ -106,7 +110,7 @@ public class PrenotazioneGUIController {
                     return;
                 }
 
-
+                // Disabilita i giorni già pieni
                 if (isGiornoPieno(item)) {
                     setDisable(true);
                     setStyle("-fx-background-color: #6e6e6e;");
@@ -160,6 +164,8 @@ public class PrenotazioneGUIController {
         }
     }
 
+
+    //Crea il Bean e invia la richiesta al controller
     @FXML
     protected void handlePrenotazione() {
 
