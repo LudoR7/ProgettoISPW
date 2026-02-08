@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
 
 
 public class RegistrazioneGUIController {
@@ -32,7 +31,7 @@ public class RegistrazioneGUIController {
             loginController.checkEmail(emailField.getText());
             loginController.checkPassword(passwordField.getText());
             SceneManager.changeScene(SceneManager.getLastScene());
-        } catch (LoginException | IOException e) {
+        } catch (LoginException e) {
             showAlert(Alert.AlertType.ERROR, "Errore nella Registrazione", e.getMessage());
             return;
         }
